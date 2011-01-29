@@ -35,6 +35,7 @@ function menu:keyreleased(key)
       selected = selected + 1
       drawMenuItemStuff()
    elseif key == 'return' then
+      wereInActualGameNowLoLGlobalsBad = true
       Gamestate.switch(levelllll)
    end
 end

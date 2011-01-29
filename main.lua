@@ -62,25 +62,27 @@ function love.load()
 end
 
 function love.update(dt)
-   updateTerrain(dt)
-   swarmUpdateFunction(dt)
-
-   -- always update camera
-   cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
-
-	for count = 1, #Swarm do
-      local csqu = Swarm[count]
-      x, y = csqu.body:getLinearVelocity( )
-      if (love.keyboard.isDown("d")) and x <= 200 then
-         csqu.body:applyImpulse(100, 0)
+   if wereInActualGameNowLoLGlobalsBad then
+      updateTerrain(dt)
+      swarmUpdateFunction(dt)
+   
+      -- always update camera
+      cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
+   
+       for count = 1, #Swarm do
+         local csqu = Swarm[count]
+         x, y = csqu.body:getLinearVelocity( )
+         if (love.keyboard.isDown("d")) and x <= 200 then
+            csqu.body:applyImpulse(100, 0)
+         end
+   
+         if (love.keyboard.isDown("a"))  and x > -200 then
+            csqu.body:applyImpulse(-100, 0)
+         end
       end
-
-      if (love.keyboard.isDown("a"))  and x > -200 then
-         csqu.body:applyImpulse(-100, 0)
-      end
+      
+      world:update(dt)
    end
-
-   world:update(dt)
 end
 
 function love.draw()
