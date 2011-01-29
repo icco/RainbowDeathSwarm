@@ -71,6 +71,10 @@ function love.update(dt)
    ball.body:applyForce(300*dt, 0)
    world:update(dt)
    cam.pos = vector.new(ball.body:getX(), ball.body:getY() - 100)
+   
+   if love.keyboard.isDown("right") and ball.body:getY() > ARENA_HEIGHT - ball.RADIUS - 20 then
+      ball.body:applyImpulse(30, 0)
+   end
 end
 
 function drawSimpleRect(obj)
@@ -113,7 +117,7 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
-   if key == " " and ball.body:getY() > ARENA_HEIGHT - ball.RADIUS - 20   then
+   if key == 'up' and ball.body:getY() > ARENA_HEIGHT - ball.RADIUS - 20 then
       ball.body:applyImpulse(0, -140)
    end
 end
