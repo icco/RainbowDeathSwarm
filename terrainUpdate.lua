@@ -9,10 +9,10 @@ print(map["counter"])
 
    -- Generate a new far right column (map[1+offset + (numColums, AKA ARENA_WIDTH/map[howLong])
    for rowCount = 1, map.howHigh, 1 do
-            local x = (boxw * colCount)
-            local y = (boxw * rowCount)
+            local x = (map["boxw"] * (1 + map["counter"] + map["howLong"]))
+            local y = (map["boxw"] * rowCount)
                                 -- + map["boxw"][rowCount]
-            map[1 + map["counter"] + map["howLong"]][rowCount] = makeCube(boxw, x, y)
+            map[1 + map["counter"] + map["howLong"]][rowCount] = makeCube(map["boxw"], x, y)
    end
 
    -- Increment the offset counter by one

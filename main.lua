@@ -7,6 +7,13 @@ require "hump.vector"
 -- Random numbers
 require "math"
 
+-- Global Vars (technically, there's no constants)
+-- Also, sadly we can't pull in from config...
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+ARENA_WIDTH = 800
+ARENA_HEIGHT = 600
+
 local menuDraw = require("menuDraw")
 local terrainLoad = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
@@ -19,12 +26,7 @@ local swarmDraw = require("swarmDraw")
 local vector = hump.vector
 local camera = hump.camera
 
--- Global Vars (technically, there's no constants)
--- Also, sadly we can't pull in from config...
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-ARENA_WIDTH = 800
-ARENA_HEIGHT = 600
+
 
 function love.load()
    -- convenience
@@ -72,7 +74,7 @@ function love.update(dt)
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
       if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
-      --updateTerrain()
+      updateTerrain()
       end
       swarmUpdateFunction(dt)
 

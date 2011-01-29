@@ -1,10 +1,11 @@
 
 -- Terrain, 2D Array
 map = {
-   counter = 0,
    howHigh = 12,
+   counter = 1,
    howLong = 16
 }
+map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
 
 -- Load function for the terrain
 function initTerrain()
@@ -12,8 +13,7 @@ function initTerrain()
 
    cubeTexture = gfx.newImage("nat.jpg")
 
-   local boxw = math.floor(ARENA_HEIGHT / map.howHigh)
-   boxw = 50 -- for consistancy, but should be same as above
+   map["boxw"] = 50 -- for consistancy, but should be same as above
    local colCount = 0
    local rowCount = 0
 
@@ -21,16 +21,16 @@ function initTerrain()
       map[colCount] = {}
       if colCount == 1 then
          for rowCount = 1, map.howHigh, 1 do
-            local x = (boxw * colCount)
-            local y = (boxw * rowCount)
-            map[colCount][rowCount] = makeCube(boxw, x, y)
+            local x = (map["boxw"] * colCount)
+            local y = (map["boxw"] * rowCount)
+            map[colCount][rowCount] = makeCube(map["boxw"], x, y)
          end
       else
          for rowCount = 1, map.howHigh, 1 do
             if rowCount == 1 or rowCount == 11 or rowCount == 12 then
-               local x = (boxw * colCount)
-               local y = (boxw * rowCount)
-               map[colCount][rowCount] = makeCube(boxw, x, y)
+               local x = (map["boxw"] * colCount)
+               local y = (map["boxw"] * rowCount)
+               map[colCount][rowCount] = makeCube(map["boxw"], x, y)
             else
                map[colCount][rowCount] = nil
             end
@@ -52,4 +52,4 @@ function makeCube(size, posx, posy)
    ret.shape = phys.newRectangleShape(ret.body, 0, 0, size, size, 0)
 
    return ret
-end
+end math.floor(ARENA_HEIGHT / map.howHigh)
