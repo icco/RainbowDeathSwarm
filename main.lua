@@ -77,7 +77,7 @@ function love.draw()
 
    -- draw the clock
    local now = love.timer.getTime() - load_time
-   printf("Playing for " .. (now) .. " seconds.")
+   print("Playing for " .. (now) .. " seconds.")
 end
 
 function love.keypressed(key, unicode)
