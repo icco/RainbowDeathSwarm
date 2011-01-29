@@ -2,7 +2,7 @@
 --require "math"
 
 local gfx = love.graphics
---local phys = love.physics
+local phys = love.physics
 
 SQUIRREL_RADIUS =2 
 SQUIRREL_SPEED = 8
