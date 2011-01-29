@@ -2,16 +2,17 @@
 -- Terrain, 2D Array
 map = {
    howHigh = 12,
-   counter = 1,
-   howLong = 16
+   counter = 0,
+   howLong = 20
 }
 map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
+print("box width is " .. map["boxw"])
 
 -- Load function for the terrain
 function initTerrain()
    local gfx = love.graphics
 
-   cubeTexture = gfx.newImage("ground.png")
+   cubeTexture = gfx.newImage("nat.jpg")
 
    map["boxw"] = 50 -- for consistancy, but should be same as above
    local colCount = 0
@@ -37,6 +38,8 @@ function initTerrain()
          end
       end
    end
+   map[40] = {}
+   
 end
 
 -- Posx and Posy should be top left
