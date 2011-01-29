@@ -31,6 +31,10 @@ function love.load()
    local gfx = love.graphics
    local phys = love.physics
 
+   -- Initialize the pseudo random number generator
+   math.randomseed(os.time())
+   math.random(); math.random(); math.random()
+
    -- lol background color
    gfx.setBackgroundColor(220, 220, 220) -- 0-255
 
@@ -41,18 +45,21 @@ function love.load()
    -- Init Terrain ... *&$#!$
    initTerrain()
 
-   --init
+   -- init
    swarmLoadFunction()
    
    Gamestate.registerEvents()
    Gamestate.switch(menuDraw)
+
+   -- Start the clock!
+   load_time = love.timer.getTime()
 end
 
 function love.update(dt)
-   world:update(dt)
-
-   updateTerrain()
+   updateTerrain(dt)
    swarmUpdateFunction(dt)
+
+   world:update(dt)
 end
 
 function drawSimpleRect(obj)
@@ -66,10 +73,15 @@ function love.draw()
    -- convenience
    local gfx = love.graphics
 
-   --draw your mom
+   -- draw the world
    drawTerrain()
 
+   -- draw the swarm
    swarmDrawFunction()
+
+   -- draw the clock
+   local now = love.timer.getTime() - load_time
+   print("Playing for " .. (now) .. " seconds.")
 end
 
 function love.keypressed(key, unicode)
