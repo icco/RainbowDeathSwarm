@@ -14,6 +14,8 @@ SCREEN_HEIGHT = 600
 ARENA_WIDTH = 40000
 ARENA_HEIGHT = 600
 
+ASSETS = { }
+
 local menuDraw      = require("menuDraw")
 local terrainLoad   = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
@@ -31,6 +33,11 @@ function love.load()
    -- convenience
    local gfx = love.graphics
    local phys = love.physics
+
+   -- Init all of our textures and fonts
+   ASSETS.swarm = gfx.newImage("assets/nat.jpg")
+   ASSETS.tile  = gfx.newImage("assets/ground.png")
+   ASSETS.wall  = gfx.newImage("assets/nat.jpg")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())

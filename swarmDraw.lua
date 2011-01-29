@@ -1,7 +1,7 @@
 -- animation and such of the swarm. Draw function goes here
-local gfx = love.graphics
-
 function swarmDrawFunction()
+   local gfx = love.graphics
+
    gfx.setColor(0,0,255)
    for count = 1, #Swarm do
       local squ = Swarm[count]

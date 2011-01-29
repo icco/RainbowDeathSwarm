@@ -20,6 +20,6 @@ function drawUnit(obj)
       local w = x3 - x2
 
       gfx.setColor(255, 255, 255)
-      gfx.draw(cubeTexture, x2, y2, 0, 1, 1, w-w, w-w-w)
+      gfx.draw(ASSETS.tile, x2, y2, 0, 1, 1, w-w, w-w-w)
    end
 end
