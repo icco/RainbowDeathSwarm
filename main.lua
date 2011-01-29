@@ -42,12 +42,13 @@ function love.load()
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
    world:setGravity(0, 750)
    world:setCallbacks(Cadd, Cpersist, nil, nil)
+
    -- Init Terrain ... *&$#!$
    initTerrain()
 
    -- init
    swarmLoadFunction()
-   
+
    Gamestate.registerEvents()
    Gamestate.switch(menuDraw)
 
@@ -65,22 +66,22 @@ function love.update(dt)
    if wereInActualGameNowLoLGlobalsBad then
       updateTerrain(dt)
       swarmUpdateFunction(dt)
-   
+
       -- always update camera
       cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
-   
+
        for count = 1, #Swarm do
          local csqu = Swarm[count]
          x, y = csqu.body:getLinearVelocity( )
          if (love.keyboard.isDown("d")) and x <= 200 then
             csqu.body:applyImpulse(100, 0)
          end
-   
+
          if (love.keyboard.isDown("a"))  and x > -200 then
             csqu.body:applyImpulse(-100, 0)
          end
       end
-      
+
       world:update(dt)
    end
 end
