@@ -5,7 +5,7 @@ local gfx = love.graphics
 local phys = love.physics
 
 SQUIRREL_RADIUS =2 
-SQUIRREL_SPEED = 48
+SQUIRREL_SPEED = 108
 NAT = gfx.newImage("nat.jpg")
 
 Squirrel = Class(function(self, posx, posy, spee)
