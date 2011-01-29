@@ -30,11 +30,8 @@ function love.load()
    -- lol background color
    gfx.setBackgroundColor(220, 220, 220) -- 0-255
 
-   --camera
-   cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_WIDTH/2))
-
    -- new physics world
-   world = phys.newWorld(0,0, ARENA_WIDTH, ARENA_HEIGHT)
+   world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
    world:setGravity(0, 350)
 
    -- Init Terrain ... *&$#!$
@@ -56,20 +53,9 @@ function love.draw()
    -- convenience
    local gfx = love.graphics
 
-   --pre-draw camera thingies
-   cam:predraw()
-
    --draw your mom
    drawTerrain()
-
-   --camera postdraw
-   cam:postdraw()
-
-   --Anything stuck to screen is drawn after postdraw
 end
 
 function love.keypressed(key, unicode)
-   if key == 'up' and ball.body:getY() > ARENA_HEIGHT - ball.RADIUS - 20 then
-      ball.body:applyImpulse(0, -140)
-   end
 end
