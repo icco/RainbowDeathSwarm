@@ -40,3 +40,8 @@ end
 function swarmLoadFunction()
 	initSwarm()
 end
+
+function swarmPoof(i)
+	Swarm[i]:poof()
+	table.remove(Swarm, i)
+end
