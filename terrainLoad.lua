@@ -8,6 +8,10 @@ map = {
 
 -- Load function for the terrain
 function initTerrain()
+   local gfx = love.graphics
+
+   cubeTexture = gfx.newImage("nat.jpg")
+
    local boxw = math.floor(ARENA_HEIGHT / map.howHigh)
    boxw = 50 -- for consistancy, but should be same as above
    local colCount = 0

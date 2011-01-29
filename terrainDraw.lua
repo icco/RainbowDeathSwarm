@@ -14,12 +14,11 @@ end
 
 function drawUnit(obj)
    local gfx = love.graphics
-   local img = gfx.newImage("nat.jpg")
 
    if obj then
       local x1, y1, x2, y2, x3, y3, x4, y4 = obj.shape:getBoundingBox()
       local w = x3 - x2
 
-      gfx.draw(img, x2, y2, 0, 1, 1, w/2, w/2)
+      gfx.draw(cubeTexture, x2, y2, 0, 1, 1, w/2, w/2)
    end
 end
