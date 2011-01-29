@@ -18,6 +18,8 @@ Squirrel = Class(function(self, posx, posy, spee)
 	self.body = phys.newBody(world, posx, posy, 10, 15)
 	self.shape = phys.newCircleShape(self.body, 0, 0, SQUIRREL_RADIUS)
 	self.shape:setRestitution(.2)
+	self.isTouching = false
+
 end)
 
 --make something that maintains a table of Squirrels that init and delete
