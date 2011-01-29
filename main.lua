@@ -15,7 +15,7 @@ local swarmLoad = require("swarmLoad")
 local swarmUpdate = require("swarmUpdate")
 local swarmDraw = require("swarmDraw")
 
--- convenience renaming (Alases for ease of typing)
+-- convenience renaming (Aliases for ease of typing)
 local vector = hump.vector
 local camera = hump.camera
 
@@ -33,6 +33,7 @@ function love.load()
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
+   -- The description page for Math says the first few values aren't so random. Burn a few.
    math.random(); math.random(); math.random()
 
    -- lol background color
@@ -56,7 +57,11 @@ function love.load()
 end
 
 function love.update(dt)
-   updateTerrain(dt)
+   -- TODO: Check if the furthest left column is completely off screen.
+   -- If it is, then we should actually update the terrain.
+   -- leftCameraBoundaryX - (boxW/2)
+   --if(map[1+map["counter"]][1].body.getX() < (leftCameraBoundaryX - (math.floor(ARENA_HEIGHT / map.howHigh))) then
+   updateTerrain()
    swarmUpdateFunction(dt)
 
    world:update(dt)
