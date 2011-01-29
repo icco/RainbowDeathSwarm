@@ -2,7 +2,7 @@
 -- Terrain, 2D Array
 map = {
    howHigh = 12,
-   counter = 1,
+   counter = 0,
    howLong = 16
 }
 map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
@@ -11,7 +11,7 @@ map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
 function initTerrain()
    local gfx = love.graphics
 
-   cubeTexture = gfx.newImage("ground.png")
+   cubeTexture = gfx.newImage("nat.jpg")
 
    map["boxw"] = 50 -- for consistancy, but should be same as above
    local colCount = 0

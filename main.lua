@@ -71,8 +71,8 @@ function love.update(dt)
       -- TODO: Check if the furthest left column is completely off screen.
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
-      if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
-         --updateTerrain()
+      if(map[1 + map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
+         updateTerrain()
       end
       swarmUpdateFunction(dt)
 
