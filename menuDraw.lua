@@ -1,5 +1,5 @@
 local gfx = love.graphics
-local selected = 0
+local selected = 1
 
 -- Levellllll
 local levelllll = Gamestate.new()
@@ -18,7 +18,8 @@ end
 
 function drawMenuItemStuff()
    local offset = 0
-   for i, text in pairs({'New Game', 'Go Shpx Yourself', 'And A Third Item'}) do
+   menuText = {'New Game', 'Go Shpx Yourself', 'And A Third Item', 'Quit'}
+   for i, text in pairs(menuText) do
       if i == selected then
          gfx.setColor(0, 255, 4)
       else
@@ -29,19 +30,41 @@ function drawMenuItemStuff()
    end
 end
 
-function menu:keyreleased(key)
 
+function menu:keyreleased(key)
    if key == 'up' then
-      selected = selected - 1
-      drawMenuItemStuff()
+      if selected ~= 1 then
+         selected = selected - 1
+         drawMenuItemStuff()
+      end
    elseif key == 'down' then
-      selected = selected + 1
-      drawMenuItemStuff()
+      if selected ~= #menuText then
+         selected = selected + 1
+         drawMenuItemStuff()
+      end
    elseif key == 'return' then
-      wereInActualGameNowLoLGlobalsBad = true
-      load_time = love.timer.getTime()
-      Gamestate.switch(levelllll)
+      if selected == 1 then
+         newGame()
+      end
+      if selected == 2 then
+         newGame()
+      end
+      if selected == 3 then
+         newGame()
+      end
+      if selected == 4 then
+         love.event.push('q')
+      end
    end
 end
 
+function newGame()
+   wereInActualGameNowLoLGlobalsBad = true
+   load_time = love.timer.getTime()
+   Gamestate.switch(levelllll)
+end
+
+
 return menu, levelllll
+
+
