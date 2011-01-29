@@ -7,5 +7,5 @@ function updateTerrain(dt)
    -- Generate a new far right column (map[1+offset + (numColums, AKA ARENA_WIDTH/map[howLong])
 
    -- Increment the offset counter by one
-   map[counter] = map[counter]+1
+   map["counter"] = map["counter"]+1
 end
