@@ -16,9 +16,13 @@ function initTerrain()
       map[colCount] = {}
 
       for rowCount = 1, map.howHigh, 1 do
-         local x = (boxw * colCount) - boxw/2
-         local y = (boxw * rowCount) - boxw/2
-         map[colCount][rowCount] = makeCube(boxw, x, y)
+         if rowCount == 1 or rowCount == 12 then
+            local x = (boxw * colCount) - boxw/2
+            local y = (boxw * rowCount) - boxw/2
+            map[colCount][rowCount] = makeCube(boxw, x, y)
+         else
+            map[colCount][rowCount] = nil
+         end
       end
    end
 end
