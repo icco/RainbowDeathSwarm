@@ -1,7 +1,7 @@
 all: run
 
 run:
-	love .
+	@love .
 
 deploy: *.lua
 	zip -r ../RainbowDeathSwarm.love *
