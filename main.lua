@@ -2,7 +2,7 @@ require "hump.vector"
 require "hump.camera"
 require "hump.gamestate"  --gamestates, title screen. intro. gameplay. game over
 Class = require "hump.class"  -- horaay OO!
-require "hump.vector" 
+require "hump.vector"
 
 local terrainLoad = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
@@ -11,19 +11,16 @@ local swarmLoad = require("swarmLoad")
 local swarmUpdate = require("swarmUpdate")
 local swarmDraw = require("swarmDraw")
 
-
---dofile "myfilename.lua
-
 -- convenience renaming (Alases for ease of typing)
 local vector = hump.vector
 local camera = hump.camera
 
---Global Vars (technically, there's no constants)
+-- Global Vars (technically, there's no constants)
+-- Also, sadly we can't pull in from config...
 SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 400
+SCREEN_HEIGHT = 600
 ARENA_WIDTH = 2400
 ARENA_HEIGHT = 400
-
 
 walls = {
    left = {},
@@ -32,9 +29,8 @@ walls = {
    bottom = {}
 }
 
-ball = {
-   RADIUS = 50
-}
+ball = { RADIUS = 50 }
+
 function love.load()
    -- convenience
    local gfx = love.graphics
@@ -43,36 +39,31 @@ function love.load()
    -- lol background color
    gfx.setBackgroundColor(220, 220, 220) -- 0-255
 
-
    --camera
-   cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_WIDTH/2))   
+   cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_WIDTH/2))
 
    -- new physics world
    world = phys.newWorld(0,0, ARENA_WIDTH, ARENA_HEIGHT)
-   world:setGravity(0, 350)      
-
-
-
+   world:setGravity(0, 350)
 
    --define teh walls. In Physics, define point and shape
    walls.left.body = phys.newBody(world, 2, ARENA_HEIGHT/2, 0 ,0)
    walls.left.shape = phys.newRectangleShape(walls.left.body, 0,0, 5, ARENA_HEIGHT )
-   
+
    walls.right.body = phys.newBody(world, ARENA_WIDTH-2, ARENA_HEIGHT/2, 0 ,0)
    walls.right.shape = phys.newRectangleShape(walls.right.body, 0,0, 5, ARENA_HEIGHT )
-   
+
    walls.top.body = phys.newBody(world, ARENA_WIDTH/2, 2, 0 ,0)
    walls.top.shape = phys.newRectangleShape(walls.top.body, 0,0, ARENA_WIDTH, 5 )
-   
+
    walls.bottom.body = phys.newBody(world, ARENA_WIDTH/2, ARENA_HEIGHT - 2, 0 ,0)
    walls.bottom.shape = phys.newRectangleShape(walls.bottom.body, 0,0, ARENA_WIDTH, 5 )
-   
+
    --BALLS
    ball.img = gfx.newImage("ball.png")
    ball.body = phys.newBody(world, 2 * ball.RADIUS, ARENA_HEIGHT/2, 10, 15)
    ball.shape = phys.newCircleShape(ball.body, 0, 0, ball.RADIUS)
    ball.shape:setRestitution(.5)
-
 end
 
 function love.update(dt)
@@ -88,7 +79,6 @@ function drawSimpleRect(obj)
    local h = y2 - y1
    love.graphics.rectangle("fill", obj.body:getX() - (w / 2), obj.body:getY() - (h / 2), w, h)
 end
-
 
 function love.draw()
    -- convenience
@@ -115,17 +105,15 @@ function love.draw()
    --ball
    gfx.setColor(255,255,255)
    gfx.draw(ball.img, ball.body:getX(), ball.body:getY(), ball.body:getAngle(), 1, 1, ball.RADIUS, ball.RADIUS)
-   
+
    --camera postdraw
    cam:postdraw();
 
    --Anything stuck to screen is drawn after postdraw
 end
 
-
 function love.keypressed(key, unicode)
    if key == " " and ball.body:getY() > ARENA_HEIGHT - ball.RADIUS - 20   then
       ball.body:applyImpulse(0, -140)
    end
-   
 end
