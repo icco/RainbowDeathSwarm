@@ -43,6 +43,8 @@ end
 
 function love.update(dt)
    world:update(dt)
+
+   updateTerrain()
 end
 
 function drawSimpleRect(obj)
