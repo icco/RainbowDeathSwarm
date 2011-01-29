@@ -61,6 +61,7 @@ function love.load()
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
    load_time = love.timer.getTime()
+   now = 0
 end
 
 function love.update(dt)
@@ -71,12 +72,12 @@ function love.update(dt)
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
       if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
-      updateTerrain()
+      --updateTerrain()
       end
       swarmUpdateFunction(dt)
 
       -- always update camera
-      cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
+      cam.pos = vector.new(now*100, Swarm[1].body:getY() - 100)
 
        for count = 1, #Swarm do
          local csqu = Swarm[count]
@@ -111,7 +112,7 @@ function love.draw()
    cam:postdraw()
 
    -- draw the clock
-   local now = love.timer.getTime() - load_time
+   now = love.timer.getTime() - load_time
    local playing_string = string.format("%4.2fs", now)
    love.graphics.setFont(seconds_font)
    gfx.setColor(255, 5, 5)
