@@ -63,30 +63,34 @@ function love.load()
 end
 
 function love.update(dt)
-   -- TODO: Check if the furthest left column is completely off screen.
-   -- If it is, then we should actually update the terrain.
-   -- leftCameraBoundaryX - (boxW/2)
-   if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
-   updateTerrain()
-   end
    swarmUpdateFunction(dt)
 
-   -- always update camera
-   cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
-
-	for count = 1, #Swarm do
-      local csqu = Swarm[count]
-      x, y = csqu.body:getLinearVelocity( )
-      if (love.keyboard.isDown("d")) and x <= 200 then
-         csqu.body:applyImpulse(100, 0)
+   if wereInActualGameNowLoLGlobalsBad then
+      -- TODO: Check if the furthest left column is completely off screen.
+      -- If it is, then we should actually update the terrain.
+      -- leftCameraBoundaryX - (boxW/2)
+      if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
+      updateTerrain()
       end
-
-      if (love.keyboard.isDown("a"))  and x > -200 then
-         csqu.body:applyImpulse(-100, 0)
+      swarmUpdateFunction(dt)
+   
+      -- always update camera
+      cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
+   
+       for count = 1, #Swarm do
+         local csqu = Swarm[count]
+         x, y = csqu.body:getLinearVelocity( )
+         if (love.keyboard.isDown("d")) and x <= 200 then
+            csqu.body:applyImpulse(100, 0)
+         end
+   
+         if (love.keyboard.isDown("a"))  and x > -200 then
+            csqu.body:applyImpulse(-100, 0)
+         end
       end
+      
+      world:update(dt)
    end
-
-   world:update(dt)
 end
 
 function love.draw()
