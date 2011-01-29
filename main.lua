@@ -55,7 +55,7 @@ function love.load()
    cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_HEIGHT / 2))
    cam.moving = false
    cam.lastCoords = vector.new(-1, -1)
-
+   now = 0
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
    load_time = love.timer.getTime()
@@ -66,7 +66,7 @@ function love.update(dt)
    swarmUpdateFunction(dt)
 
    -- always update camera
-   cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
+   cam.pos = vector.new(now*100, Swarm[1].body:getY() - 100)
 
 	for count = 1, #Swarm do
       local csqu = Swarm[count]
@@ -100,7 +100,7 @@ function love.draw()
    cam:postdraw()
 
    -- draw the clock
-   local now = love.timer.getTime() - load_time
+   now = love.timer.getTime() - load_time
    local playing_string = string.format("%4.2fs", now)
    love.graphics.setFont(seconds_font)
    gfx.setColor(255, 5, 5)
