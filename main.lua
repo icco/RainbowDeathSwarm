@@ -39,10 +39,16 @@ function love.load()
 
    -- Init Terrain ... *&$#!$
    initTerrain()
+
+   --init
+   swarmLoadFunction()
 end
 
 function love.update(dt)
    world:update(dt)
+
+   updateTerrain()
+   swarmUpdateFunction(dt)
 end
 
 function drawSimpleRect(obj)
@@ -58,6 +64,8 @@ function love.draw()
 
    --draw your mom
    drawTerrain()
+
+   swarmDrawFunction()
 end
 
 function love.keypressed(key, unicode)
