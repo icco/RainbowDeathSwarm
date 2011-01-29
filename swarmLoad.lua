@@ -8,9 +8,6 @@ SQUIRREL_RADIUS = 20
 SQUIRREL_SPEED = 108
 
 Squirrel = Class(function(self, posx, posy, spee)
-	--self.Sposition = vector.new(posx,posy)
-
-	gfx.setBackgroundColor(220, 220, 220) -- 0-255
 	self.Sspeed = spee
 
 	self.img = ASSETS.swarm

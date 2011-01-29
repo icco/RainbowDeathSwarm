@@ -70,9 +70,6 @@ function love.load()
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
    now = 0
-
-   -- lol background color
-   gfx.setBackgroundColor(90, 90, 90) -- 0-255
 end
 
 function love.update(dt)
@@ -116,6 +113,9 @@ function love.draw()
    -- convenience
    local gfx = love.graphics
 
+   -- lol background color
+   gfx.setBackgroundColor(90, 90, 90) -- 0-255
+
    -- draw the world
    cam:predraw()
 
@@ -145,6 +145,7 @@ function love.draw()
                swarmLoopCount = swarmLoopCount + 1
          end
       end
+
       local swarmCountString = string.format("%d Nats", swarmLoopCount)
       love.graphics.setFont(seconds_font)
       gfx.setColor(255, 5, 5)
