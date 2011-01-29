@@ -62,6 +62,7 @@ function love.update(dt)
    -- If it is, then we should actually update the terrain.
    -- leftCameraBoundaryX - (boxW/2)
    --if(map[1+map["counter"]][1].body.getX() < (leftCameraBoundaryX - (math.floor(ARENA_HEIGHT / map.howHigh))) then
+
    updateTerrain()
    swarmUpdateFunction(dt)
 
