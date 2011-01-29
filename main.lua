@@ -42,7 +42,7 @@ function love.load()
    -- new physics world
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
    world:setGravity(0, 750)
-   world:setCallbacks(Cadd, Cpersist, nil, nil)
+   world:setCallbacks(Cadd, Cpersist, Cremove, nil)
 
    -- Init Terrain ... *&$#!$
    initTerrain()
@@ -124,7 +124,7 @@ end
 function love.keypressed(key, unicode)
 	for count = 1, #Swarm do
       local csqu = Swarm[count]
-      if key == " " and csqu.body:getY() > ARENA_HEIGHT - SQUIRREL_RADIUS - 100   then
+      if key == " " and csqu.isTouching   then
             csqu.body:applyImpulse(0, -140)
       end
    end
