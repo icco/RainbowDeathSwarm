@@ -45,10 +45,10 @@ function love.load()
 end
 
 function love.update(dt)
-   world:update(dt)
-
-   updateTerrain()
+   updateTerrain(dt)
    swarmUpdateFunction(dt)
+
+   world:update(dt)
 end
 
 function drawSimpleRect(obj)

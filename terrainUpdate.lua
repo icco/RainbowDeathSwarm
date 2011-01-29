@@ -1,4 +1,3 @@
 -- update function for the terrain
-
-function updateTerrain()
+function updateTerrain(dt)
 end
