@@ -26,8 +26,6 @@ local swarmDraw = require("swarmDraw")
 local vector = hump.vector
 local camera = hump.camera
 
-
-
 function love.load()
    -- convenience
    local gfx = love.graphics
@@ -74,7 +72,7 @@ function love.update(dt)
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
       if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
-      updateTerrain()
+         --updateTerrain()
       end
       swarmUpdateFunction(dt)
 
