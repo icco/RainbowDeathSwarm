@@ -6,7 +6,7 @@ local phys = love.physics
 
 SQUIRREL_RADIUS =2 
 SQUIRREL_SPEED = 8
-
+NAT = gfx.newImage("nat.jpg")
 
 Squirrel = Class(function(self, posx, posy, spee)
 	--self.Sposition = vector.new(posx,posy)
@@ -14,7 +14,7 @@ Squirrel = Class(function(self, posx, posy, spee)
 	gfx.setBackgroundColor(220, 220, 220) -- 0-255
 	self.Sspeed = spee
 
-	self.img = gfx.newImage("nat.jpg")
+	self.img = NAT --gfx.newImage("nat.jpg")
 	self.body = phys.newBody(world, posx, posy, 10, 15)
 	self.shape = phys.newCircleShape(self.body, 0, 0, SQUIRREL_RADIUS)
 	self.shape:setRestitution(.2)
