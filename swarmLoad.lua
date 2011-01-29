@@ -26,7 +26,7 @@ function initSwarm()
 	Swarm = {}
 	--init the first swarm
 	for count = 1 , 20 do
-	Swarm[count] = Squirrel(2*SQUIRREL_RADIUS + math.random(), ARENA_HEIGHT/2 + math.random(),
+	Swarm[count] = Squirrel(2*SQUIRREL_RADIUS + math.random() + 100, ARENA_HEIGHT/2 + math.random(),
 			SQUIRREL_SPEED + math.random())
 	end
 end
