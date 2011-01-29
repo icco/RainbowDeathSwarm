@@ -4,9 +4,16 @@ function updateTerrain()
       -- then copy the map back to index 1 and reset the counter.
 
    -- Clear out the left hand column (map[1+offset])
-   map[1 + map["counter"]] = nil
+print(map["counter"])
+   --map[1 + map["counter"]] = nil
+
    -- Generate a new far right column (map[1+offset + (numColums, AKA ARENA_WIDTH/map[howLong])
-   
+   for rowCount = 1, map.howHigh, 1 do
+            local x = (boxw * colCount)
+            local y = (boxw * rowCount)
+                                -- + map["boxw"][rowCount]
+            map[1 + map["counter"] + map["howLong"]][rowCount] = makeCube(boxw, x, y)
+   end
 
    -- Increment the offset counter by one
    map["counter"] = map["counter"]+1
