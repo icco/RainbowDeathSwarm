@@ -51,6 +51,11 @@ function love.load()
    Gamestate.registerEvents()
    Gamestate.switch(menuDraw)
 
+   -- camera
+   cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_HEIGHT / 2))
+   cam.moving = false
+   cam.lastCoords = vector.new(-1, -1)
+
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
    load_time = love.timer.getTime()
@@ -59,6 +64,9 @@ end
 function love.update(dt)
    updateTerrain(dt)
    swarmUpdateFunction(dt)
+
+   -- always update camera
+   cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
 
 	for count = 1, #Swarm do
       local csqu = Swarm[count]
@@ -87,6 +95,9 @@ function love.draw()
    local gfx = love.graphics
 
    -- draw the world
+   cam:predraw()
+
+   -- draw the world
    drawTerrain()
 
    -- draw the swarm
@@ -98,6 +109,9 @@ function love.draw()
    love.graphics.setFont(seconds_font)
    gfx.setColor(255, 5, 5)
    love.graphics.print(playing_string, SCREEN_WIDTH-100, 70)
+
+   -- done drawing the world
+   cam:postdraw()
 end
 
 function love.keypressed(key, unicode)
