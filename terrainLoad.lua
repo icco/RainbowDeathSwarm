@@ -38,15 +38,15 @@ function initTerrain()
          end
       end
    end
+
    map[40] = {}
-   
 end
 
 -- Posx and Posy should be top left
 function makeCube(size, posx, posy)
-   local gfx = love.graphics
+   local gfx  = love.graphics
    local phys = love.physics
-   local ret = {}
+   local ret  = {}
 
    -- love.physics.newBody( world, x, y, mass, inertia )
    ret.body = phys.newBody(world, posx, posy, 0 ,0)
@@ -55,4 +55,4 @@ function makeCube(size, posx, posy)
    ret.shape = phys.newRectangleShape(ret.body, 0, 0, size, size, 0)
 
    return ret
-end math.floor(ARENA_HEIGHT / map.howHigh)
+end

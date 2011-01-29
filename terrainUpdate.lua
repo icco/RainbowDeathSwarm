@@ -37,3 +37,4 @@ function updateTerrain()
    -- Increment the offset counter by one
    map["counter"] = map["counter"]+1
 end
+
