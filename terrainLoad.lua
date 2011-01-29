@@ -25,6 +25,7 @@ function initTerrain()
             local x = (map["boxw"] * colCount)
             local y = (map["boxw"] * rowCount)
             map[colCount][rowCount] = makeCube(map["boxw"], x, y)
+            map[colCount]["NumOfBlocks"] = 9
          end
       else
          for rowCount = 1, map.howHigh, 1 do
@@ -35,6 +36,7 @@ function initTerrain()
             else
                map[colCount][rowCount] = nil
             end
+            map[colCount]["NumOfBlocks"] = 0
          end
       end
    end

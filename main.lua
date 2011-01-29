@@ -58,7 +58,7 @@ function love.load()
    Gamestate.switch(menuDraw)
 
    -- Init the Camera
-   cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_HEIGHT / 2))
+   cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
    cam.moving = false
    cam.lastCoords = vector.new(-1, -1)
 
@@ -82,7 +82,7 @@ function love.update(dt)
       updateWall(dt)
 
       -- always update camera
-      cam.pos = vector.new(now*100, Swarm[1].body:getY() - 150)
+      cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 80)
 
       -- Update teh swarm
       swarmUpdateFunction(dt)
@@ -125,19 +125,29 @@ function love.draw()
 
    -- draw the clock
    if wereInActualGameNowLoLGlobalsBad then      
-
       now = love.timer.getTime() - load_time
-      local playing_string = string.format("%4.2fs", now)
+      local secondsString = string.format("%4.2fs", now)
       love.graphics.setFont(seconds_font)
       gfx.setColor(255, 5, 5)
-      love.graphics.print(playing_string, SCREEN_WIDTH-100, 70)
+      love.graphics.print(secondsString, SCREEN_WIDTH-100, 70)
+
+      local swarmLoopCount = 0
+	   for count = 1, #Swarm do
+         if Swarm[count] == nil then
+               swarmLoopCount = swarmLoopCount + 1
+         end
+      end
+      local swarmCountString = string.format("%d Nats", swarmLoopCount)
+      love.graphics.setFont(seconds_font)
+      gfx.setColor(255, 5, 5)
+      love.graphics.print(swarmCountString, SCREEN_WIDTH-100, 90)
    end
 end
 
 function love.keypressed(key, unicode)
 	for count = 1, #Swarm do
       local csqu = Swarm[count]
-      if key == " " and csqu.isTouching   then
+      if key == " "   then
             csqu.body:applyImpulse(0, -140)
       end
    end

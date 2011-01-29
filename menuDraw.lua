@@ -30,6 +30,7 @@ function drawMenuItemStuff()
 end
 
 function menu:keyreleased(key)
+
    if key == 'up' then
       selected = selected - 1
       drawMenuItemStuff()
