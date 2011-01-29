@@ -60,7 +60,6 @@ function love.load()
 
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
-   load_time = love.timer.getTime()
    now = 0
 end
 
@@ -112,11 +111,14 @@ function love.draw()
    cam:postdraw()
 
    -- draw the clock
-   now = love.timer.getTime() - load_time
-   local playing_string = string.format("%4.2fs", now)
-   love.graphics.setFont(seconds_font)
-   gfx.setColor(255, 5, 5)
-   love.graphics.print(playing_string, SCREEN_WIDTH-100, 70)
+   if wereInActualGameNowLoLGlobalsBad then      
+
+      now = love.timer.getTime() - load_time
+      local playing_string = string.format("%4.2fs", now)
+      love.graphics.setFont(seconds_font)
+      gfx.setColor(255, 5, 5)
+      love.graphics.print(playing_string, SCREEN_WIDTH-100, 70)
+   end
 end
 
 function love.keypressed(key, unicode)

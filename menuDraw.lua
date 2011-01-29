@@ -7,6 +7,8 @@ local levelllll = Gamestate.new()
 -- Menu
 local menu = Gamestate.new()
 
+wereInActualGameNowLoLGlobalsBad = false
+
 function menu:draw()
    gfx.setColor(224, 27, 99, 200)
    gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
@@ -36,6 +38,7 @@ function menu:keyreleased(key)
       drawMenuItemStuff()
    elseif key == 'return' then
       wereInActualGameNowLoLGlobalsBad = true
+      load_time = love.timer.getTime()
       Gamestate.switch(levelllll)
    end
 end
