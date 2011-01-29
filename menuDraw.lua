@@ -2,15 +2,17 @@ local gfx = love.graphics
 local selected = 1
 
 -- newGameState
-local newGameState = Gamestate.new()
+newGameState = Gamestate.new()
 
 -- menuGameState
-local menuGameState = Gamestate.new()
+menuGameState = Gamestate.new()
 
 -- gameOverState
-local gameOverState = Gamestate.new()
+gameOverState = Gamestate.new()
 
 wereInActualGameNowLoLGlobalsBad = false
+
+--menuGameState functions
 
 function menuGameState:draw()
    gfx.setColor(224, 27, 99, 200)
@@ -45,6 +47,27 @@ function menuGameState:keyreleased(key)
       end
    end
 end
+
+--gameOverState functions
+
+function gameOverState:draw()
+   gfx.setColor(224, 27, 99, 200)
+   gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
+
+   local gameOverString = string.format("Game Over! Score was %f", score)
+   love.graphics.setFont(seconds_font)
+   gfx.setColor(5, 255, 5)
+   love.graphics.print(gameOverString, SCREEN_HEIGHT/2 - gameOverString:len()*4, SCREEN_HEIGHT/2)
+   wereInActualGameNowLoLGlobalsBad = false
+end
+
+function gameOverState:keyreleased(key)
+   if key == 'q' then
+      love.event.push('q')
+   end
+end
+
+--Helper functions
 
 function drawMenuItemStuff()
    local offset = 0
