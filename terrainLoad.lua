@@ -8,7 +8,8 @@ map = {
 
 -- Load function for the terrain
 function initTerrain()
-   local boxw = ARENA_HEIGHT / map.howHigh
+   local boxw = math.floor(ARENA_HEIGHT / map.howHigh)
+   boxw = 50 -- for consistancy, but should be same as above
    local colCount = 0
    local rowCount = 0
 
@@ -16,9 +17,9 @@ function initTerrain()
       map[colCount] = {}
 
       for rowCount = 1, map.howHigh, 1 do
-         if rowCount == 1 or rowCount == 12 then
-            local x = (boxw * colCount) - boxw/2
-            local y = (boxw * rowCount) - boxw/2
+         if rowCount == 1 or rowCount == 11 or rowCount == 12 then
+            local x = (boxw * colCount)
+            local y = (boxw * rowCount)
             map[colCount][rowCount] = makeCube(boxw, x, y)
          else
             map[colCount][rowCount] = nil
