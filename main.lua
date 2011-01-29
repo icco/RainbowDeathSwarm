@@ -96,15 +96,15 @@ function love.draw()
    -- draw the swarm
    swarmDrawFunction()
 
+   -- done drawing the world
+   cam:postdraw()
+
    -- draw the clock
    local now = love.timer.getTime() - load_time
    local playing_string = string.format("%4.2fs", now)
    love.graphics.setFont(seconds_font)
    gfx.setColor(255, 5, 5)
    love.graphics.print(playing_string, SCREEN_WIDTH-100, 70)
-
-   -- done drawing the world
-   cam:postdraw()
 end
 
 function love.keypressed(key, unicode)
