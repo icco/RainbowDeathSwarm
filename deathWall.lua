@@ -3,7 +3,11 @@ function initWall()
 end
 
 function updateWall()
-
+	for i, nanoBot in ipairs(Swarm) do
+		if nanoBot.body:getX() < (cam.pos.x - SCREEN_WIDTH/2) then
+			nanoBot:poof()
+		end
+	end
 end
 
 function drawWall()
