@@ -70,6 +70,7 @@ function love.load()
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
    now = 0
+   score = 0
 end
 
 function love.update(dt)
@@ -106,6 +107,7 @@ function love.update(dt)
       end
 
       world:update(dt)
+      score = score + ((now/100) * (#Swarm / 10))
    end
 end
 
@@ -137,7 +139,7 @@ function love.draw()
       local secondsString = string.format("%4.2fs", now)
       love.graphics.setFont(seconds_font)
       gfx.setColor(255, 5, 5)
-      love.graphics.print(secondsString, SCREEN_WIDTH-100, 70)
+      love.graphics.print(secondsString, SCREEN_WIDTH-150, 20)
 
       local swarmLoopCount = 0
 	   for count = 1, #Swarm do
@@ -148,8 +150,13 @@ function love.draw()
 
       local swarmCountString = string.format("%d Nats", swarmLoopCount)
       love.graphics.setFont(seconds_font)
-      gfx.setColor(255, 5, 5)
-      love.graphics.print(swarmCountString, SCREEN_WIDTH-100, 90)
+      gfx.setColor(5, 255, 5)
+      love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 40)
+
+      local swarmCountString = string.format("%4.2f score", score)
+      gfx.setColor(5, 5, 255)
+      love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 60)
+
    end
 end
 
