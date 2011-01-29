@@ -53,6 +53,7 @@ function love.load()
    Gamestate.switch(menuDraw)
 
    -- Start the clock!
+   seconds_font = love.graphics.newFont(25)
    load_time = love.timer.getTime()
 end
 
@@ -86,8 +87,18 @@ function love.draw()
 
    -- draw the clock
    local now = love.timer.getTime() - load_time
-   print("Playing for " .. (now) .. " seconds.")
+   local playing_string = string.format("%0.2fs", now)
+   love.graphics.setFont(seconds_font)
+   gfx.setColor(255, 5, 5)
+   love.graphics.print(playing_string, SCREEN_WIDTH-80, 70)
 end
 
 function love.keypressed(key, unicode)
+	for count = 1, #Swarm do
+                local csqu = Swarm[count]
+                if key == " " and csqu.body:getY() > ARENA_HEIGHT - SQUIRREL_RADIUS - 100   then
+                        csqu.body:applyImpulse(0, -140)
+                end
+        end
+
 end
