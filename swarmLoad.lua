@@ -4,7 +4,7 @@
 local gfx = love.graphics
 local phys = love.physics
 
-SQUIRREL_RADIUS =2
+SQUIRREL_RADIUS = 20
 SQUIRREL_SPEED = 108
 
 Squirrel = Class(function(self, posx, posy, spee)

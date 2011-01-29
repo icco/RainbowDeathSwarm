@@ -37,15 +37,13 @@ function love.load()
    -- Init all of our textures and fonts
    ASSETS.swarm = gfx.newImage("assets/nat.jpg")
    ASSETS.tile  = gfx.newImage("assets/ground.png")
+   -- ASSETS.tile  = gfx.newImage("assets/nat.jpg")
    ASSETS.wall  = gfx.newImage("assets/nat.jpg")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
    -- The description page for Math says the first few values aren't so random. Burn a few.
    math.random(); math.random(); math.random()
-
-   -- lol background color
-   gfx.setBackgroundColor(220, 220, 220) -- 0-255
 
    -- new physics world
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
@@ -72,6 +70,9 @@ function love.load()
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
    now = 0
+
+   -- lol background color
+   gfx.setBackgroundColor(90, 90, 90) -- 0-255
 end
 
 function love.update(dt)

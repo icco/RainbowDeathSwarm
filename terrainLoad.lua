@@ -1,9 +1,5 @@
 -- Terrain, 2D Array
-map = {
-   howHigh = 12,
-   counter = 0,
-   howLong = 20
-}
+map = { howHigh = 12, counter = 0, howLong = 20 }
 
 map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
 -- print("box width is " .. map["boxw"])
