@@ -11,7 +11,7 @@ require "math"
 -- Also, sadly we can't pull in from config...
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-ARENA_WIDTH = 800
+ARENA_WIDTH = 40000
 ARENA_HEIGHT = 600
 
 local menuDraw      = require("menuDraw")
@@ -51,20 +51,19 @@ function love.load()
    -- Init death wall
    initWall()
 
-   -- init
+   -- Init the swarm
    swarmLoadFunction()
 
    Gamestate.registerEvents()
    Gamestate.switch(menuDraw)
 
-   -- camera
-   cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_HEIGHT / 2))
+   -- Init the Camera
+   cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
    cam.moving = false
    cam.lastCoords = vector.new(-1, -1)
 
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
-   load_time = love.timer.getTime()
    now = 0
 end
 
@@ -75,17 +74,17 @@ function love.update(dt)
       -- TODO: Check if the furthest left column is completely off screen.
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
-      if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
-         --updateTerrain()
+      if(map[1 + map["counter"]][1].body:getX() +(8*map["boxw"]) < ((now*100) - map["boxw"])) then
+         updateTerrain()
       end
 
       -- Update Wall, kill all touching
       updateWall(dt)
 
       -- always update camera
-      cam.pos = vector.new(now*100, Swarm[1].body:getY() - 100)
+      cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 80)
 
-      -- Update teh sarm
+      -- Update teh swarm
       swarmUpdateFunction(dt)
 
       for count = 1, #Swarm do
@@ -125,23 +124,41 @@ function love.draw()
    cam:postdraw()
 
    -- draw the clock
-   now = love.timer.getTime() - load_time
-   local playing_string = string.format("%4.2fs", now)
-   love.graphics.setFont(seconds_font)
-   gfx.setColor(255, 5, 5)
-   love.graphics.print(playing_string, SCREEN_WIDTH-100, 70)
+   if wereInActualGameNowLoLGlobalsBad then      
+      now = love.timer.getTime() - load_time
+      local secondsString = string.format("%4.2fs", now)
+      love.graphics.setFont(seconds_font)
+      gfx.setColor(255, 5, 5)
+      love.graphics.print(secondsString, SCREEN_WIDTH-100, 70)
+
+      local swarmLoopCount = 0
+	   for count = 1, #Swarm do
+         if Swarm[count] ~= nil then
+               swarmLoopCount = swarmLoopCount + 1
+         end
+      end
+      local swarmCountString = string.format("%d Nats", swarmLoopCount)
+      love.graphics.setFont(seconds_font)
+      gfx.setColor(255, 5, 5)
+      love.graphics.print(swarmCountString, SCREEN_WIDTH-100, 90)
+   end
 end
 
 function love.keypressed(key, unicode)
 	for count = 1, #Swarm do
       local csqu = Swarm[count]
-      if key == " " and csqu.isTouching   then
+      if key == " "   then
             csqu.body:applyImpulse(0, -140)
       end
    end
 
    if key == 'escape' then
       love.event.push('q')
+   end
+
+   if key == 'f' then
+	Swarm[#Swarm + 1] = Squirrel(now*100+50, 100,
+	   SQUIRREL_SPEED + math.random())
    end
 
 end

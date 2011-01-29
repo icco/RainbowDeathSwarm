@@ -4,12 +4,12 @@
 function Cadd(obj1, obj2, Ccontact)
 	if (obj1.body:getY() >= obj2.body:getY()) then
 		local norx, nory = Ccontact:getNormal()
-		if math.cos(norx/nory) < 0 then
+		if math.cos(nory*1/(nory*nory+norx*norx)) < 0 then
 			obj1:isTouching = true
 		end
 	elseif obj1.body:getY() < obj2.body:getY() then
 		local norx, nory = Ccontact:getNormal()
-                if math.cos(norx/nory) > 0 then
+                if math.cos(nory*1/(nory*nory+norx*norx)) > 0 then
                         obj2:isTouching = true
                 end
 	end
