@@ -41,7 +41,7 @@ function love.load()
 
    -- new physics world
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
-   world:setGravity(0, 350)
+   world:setGravity(0, 750)
 
    -- Init Terrain ... *&$#!$
    initTerrain()
@@ -51,6 +51,11 @@ function love.load()
    
    Gamestate.registerEvents()
    Gamestate.switch(menuDraw)
+
+   -- camera
+   cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_HEIGHT / 2))
+   cam.moving = false
+   cam.lastCoords = vector.new(-1, -1)
 
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
@@ -66,14 +71,22 @@ function love.update(dt)
    updateTerrain()
    swarmUpdateFunction(dt)
 
-   world:update(dt)
-end
+   -- always update camera
+   cam.pos = vector.new(Swarm[1].body:getX(), Swarm[1].body:getY() - 100)
 
-function drawSimpleRect(obj)
-   local x1, y1, x2, y2, x3, y3, x4, y4 = obj.shape:getBoundingBox()
-   local w = x3 - x2
-   local h = y2 - y1
-   love.graphics.rectangle("fill", obj.body:getX() - (w / 2), obj.body:getY() - (h / 2), w, h)
+	for count = 1, #Swarm do
+      local csqu = Swarm[count]
+      x, y = csqu.body:getLinearVelocity( )
+      if (love.keyboard.isDown("d")) and x <= 200 then
+         csqu.body:applyImpulse(100, 0)
+      end
+
+      if (love.keyboard.isDown("a"))  and x > -200 then
+         csqu.body:applyImpulse(-100, 0)
+      end
+   end
+
+   world:update(dt)
 end
 
 function love.draw()
@@ -81,25 +94,35 @@ function love.draw()
    local gfx = love.graphics
 
    -- draw the world
+   cam:predraw()
+
+   -- draw the world
    drawTerrain()
 
    -- draw the swarm
    swarmDrawFunction()
 
+   -- done drawing the world
+   cam:postdraw()
+
    -- draw the clock
    local now = love.timer.getTime() - load_time
-   local playing_string = string.format("%0.2fs", now)
+   local playing_string = string.format("%4.2fs", now)
    love.graphics.setFont(seconds_font)
    gfx.setColor(255, 5, 5)
-   love.graphics.print(playing_string, SCREEN_WIDTH-80, 70)
+   love.graphics.print(playing_string, SCREEN_WIDTH-100, 70)
 end
 
 function love.keypressed(key, unicode)
 	for count = 1, #Swarm do
-                local csqu = Swarm[count]
-                if key == " " and csqu.body:getY() > ARENA_HEIGHT - SQUIRREL_RADIUS - 100   then
-                        csqu.body:applyImpulse(0, -140)
-                end
-        end
+      local csqu = Swarm[count]
+      if key == " " and csqu.body:getY() > ARENA_HEIGHT - SQUIRREL_RADIUS - 100   then
+            csqu.body:applyImpulse(0, -140)
+      end
+   end
+
+   if key == 'escape' then
+      love.event.push('q')
+   end
 
 end
