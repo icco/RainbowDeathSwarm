@@ -1,8 +1,15 @@
 require "hump.vector"
 require "hump.camera"
 require "hump.gamestate"  --gamestates, title screen. intro. gameplay. game over
-require "hump.class"  -- horaay OO!
+Class = require "hump.class"  -- horaay OO!
 require "hump.vector" 
+
+local terrainLoad = require("terrainLoad")
+local terrainUpdate = require("terrainUpdate")
+local terrainDraw = require("terrainDraw")
+local swarmLoad = require("swarmLoad")
+local swarmUpdate = require("swarmUpdate")
+local swarmDraw = require("swarmDraw")
 
 
 --dofile "myfilename.lua
