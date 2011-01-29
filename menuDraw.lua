@@ -61,12 +61,6 @@ function gameOverState:draw()
    wereInActualGameNowLoLGlobalsBad = false
 end
 
-function gameOverState:keyreleased(key)
-   if key == 'q' then
-      love.event.push('q')
-   end
-end
-
 --Helper functions
 
 function drawMenuItemStuff()

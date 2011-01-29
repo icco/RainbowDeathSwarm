@@ -4,8 +4,7 @@ Gamestate = require "hump.gamestate"
 Class = require "hump.class"
 
 -- highscore lib
-require("highscore.lua")
-
+require("sick.lua")
 
 -- Random numbers
 require "math"
@@ -79,8 +78,7 @@ function love.load()
    highscore_filename = "scores.txt"
    local places = 10
 
-   highscore_new(highscore_filename, places, "Anonymous", 0)
-   highscore_load(highscore_filename)
+   highscore.set(highscore_filename, places, "Anonymous", 0)
 end
 
 function love.update(dt)
@@ -123,8 +121,9 @@ function love.update(dt)
       -- Game Over, save score...
       if #Swarm == 0 then
          local username =  os.getenv("USERNAME")
-         highscore_add(score, username)
-         love.event.push('q') -- quit the game
+         highscore.add(username, score)
+
+         Gamestate.switch(gameOverState)
       end
    end
 end
@@ -171,11 +170,7 @@ function love.draw()
       gfx.setColor(5, 255, 5)
       love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 40)
 
-      if swarmLoopCount == 0 then
-         Gamestate.switch(gameOverState)
-      end
-
-      local swarmCountString = string.format("%4.2f score", score)
+      local swarmCountString = string.format("%4.2f Score", score)
       gfx.setColor(5, 5, 255)
       love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 60)
    end
@@ -200,7 +195,7 @@ function love.keypressed(key, unicode)
 end
 
 function love.quit()
-   highscore_write(highscore_filename)
+   highscore.save()
 
    print("Thanks for playing. Please play again soon!")
 end
