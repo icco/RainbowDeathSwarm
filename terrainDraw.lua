@@ -19,8 +19,7 @@ function drawUnit(obj)
    if obj then
       local x1, y1, x2, y2, x3, y3, x4, y4 = obj.shape:getBoundingBox()
       local w = x3 - x2
-      gfx.setColor(math.random(0, 255), math.random(0, 255), math.random(0, 255))
 
-      gfx.draw(img, x2, y2, obj.body:getAngle(), 1, 1, w/2, w/2)
+      gfx.draw(img, x2, y2, 0, 1, 1, w/2, w/2)
    end
 end
