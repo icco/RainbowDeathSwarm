@@ -7,8 +7,9 @@ function initWall()
 end
 
 function updateWall()
-	for i, nanoBot in ipairs(Swarm) do
-		if nanoBot.body:getX() < (cam.pos.x - SCREEN_WIDTH/2) then
+	for i, nanoBot in ipairs(Swarm) do 
+		if (nanoBot.body:getX() < (cam.pos.x - SCREEN_WIDTH/2)) or (nanoBot.body:getY() + SQUIRREL_RADIUS > ( SCREEN_HEIGHT - 10)) then
+		--if nanoBot.body:getX() < (cam.pos.x - SCREEN_WIDTH/2) then
 			swarmPoof(i)
 		end
 	end

@@ -16,7 +16,7 @@ ARENA_HEIGHT = 600
 
 ASSETS = { }
 
-local menuDraw      = require("menuDraw")
+require("menuDraw")
 local terrainLoad   = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
 local terrainDraw   = require("terrainDraw")
@@ -60,7 +60,7 @@ function love.load()
    swarmLoadFunction()
 
    Gamestate.registerEvents()
-   Gamestate.switch(menuDraw)
+   Gamestate.switch(menuGameState)
 
    -- Init the Camera
    cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
@@ -70,6 +70,7 @@ function love.load()
    -- Start the clock!
    seconds_font = love.graphics.newFont(25)
    now = 0
+   score = 0
 end
 
 function love.update(dt)
@@ -106,6 +107,7 @@ function love.update(dt)
       end
 
       world:update(dt)
+      score = score + ((now/100) * (#Swarm / 10))
    end
 end
 
@@ -131,25 +133,34 @@ function love.draw()
    -- done drawing the world
    cam:postdraw()
 
-   -- draw the clock
+   -- draw the top right stats (seconds, # of swarm, score)
    if wereInActualGameNowLoLGlobalsBad then      
       now = love.timer.getTime() - load_time
       local secondsString = string.format("%4.2fs", now)
       love.graphics.setFont(seconds_font)
       gfx.setColor(255, 5, 5)
-      love.graphics.print(secondsString, SCREEN_WIDTH-100, 70)
+      love.graphics.print(secondsString, SCREEN_WIDTH-150, 20)
 
-      local swarmLoopCount = 0
+      local swarmLoopCount = #Swarm
 	   for count = 1, #Swarm do
          if Swarm[count] ~= nil then
                swarmLoopCount = swarmLoopCount + 1
          end
       end
 
-      local swarmCountString = string.format("%d Nats", swarmLoopCount)
+      local swarmCountString = string.format("%d Nats", #Swarm)
       love.graphics.setFont(seconds_font)
-      gfx.setColor(255, 5, 5)
-      love.graphics.print(swarmCountString, SCREEN_WIDTH-100, 90)
+      gfx.setColor(5, 255, 5)
+      love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 40)
+
+      if swarmLoopCount == 0 then
+         Gamestate.switch(gameOverState)
+      end
+
+      local swarmCountString = string.format("%4.2f score", score)
+      gfx.setColor(5, 5, 255)
+      love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 60)
+
    end
 end
 
