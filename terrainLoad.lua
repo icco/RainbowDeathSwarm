@@ -3,9 +3,10 @@
 map = {
    howHigh = 12,
    counter = 0,
-   howLong = 16
+   howLong = 20
 }
 map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
+print("box width is " .. map["boxw"])
 
 -- Load function for the terrain
 function initTerrain()
@@ -37,6 +38,8 @@ function initTerrain()
          end
       end
    end
+   map[40] = {}
+   
 end
 
 -- Posx and Posy should be top left

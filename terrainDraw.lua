@@ -5,7 +5,7 @@ function drawTerrain()
    local colCount = 0
    local rowCount = 0
 
-   for colCount = 1, map.howLong, 1 do
+   for colCount = (1 + map["counter"]), (map.howLong + map["counter"]), 1 do
       for rowCount = 1, map.howHigh, 1 do
          drawUnit(map[colCount][rowCount])
       end

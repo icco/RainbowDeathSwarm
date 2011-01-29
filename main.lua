@@ -11,7 +11,7 @@ require "math"
 -- Also, sadly we can't pull in from config...
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-ARENA_WIDTH = 800
+ARENA_WIDTH = 40000
 ARENA_HEIGHT = 600
 
 local menuDraw      = require("menuDraw")
@@ -51,13 +51,13 @@ function love.load()
    -- Init death wall
    initWall()
 
-   -- init
+   -- Init the swarm
    swarmLoadFunction()
 
    Gamestate.registerEvents()
    Gamestate.switch(menuDraw)
 
-   -- camera
+   -- Init the Camera
    cam = camera.new(vector.new(SCREEN_WIDTH / 4, ARENA_HEIGHT / 2))
    cam.moving = false
    cam.lastCoords = vector.new(-1, -1)
@@ -75,7 +75,7 @@ function love.update(dt)
       -- TODO: Check if the furthest left column is completely off screen.
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
-      if(map[1 + map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
+      if(map[1 + map["counter"]][1].body:getX() +(8*map["boxw"]) < ((now*100) - map["boxw"])) then
          updateTerrain()
       end
 
@@ -83,9 +83,9 @@ function love.update(dt)
       updateWall(dt)
 
       -- always update camera
-      cam.pos = vector.new(now*100, Swarm[1].body:getY() - 100)
+      cam.pos = vector.new(now*100, Swarm[1].body:getY() - 150)
 
-      -- Update teh sarm
+      -- Update teh swarm
       swarmUpdateFunction(dt)
 
       for count = 1, #Swarm do
