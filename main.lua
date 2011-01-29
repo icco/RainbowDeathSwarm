@@ -1,5 +1,9 @@
 require "hump.vector"
 require "hump.camera"
+require "hump.gamestate"  --gamestates, title screen. intro. gameplay. game over
+require "hump.class"  -- horaay OO!
+require "hump.vector" 
+
 
 --dofile "myfilename.lua
 
