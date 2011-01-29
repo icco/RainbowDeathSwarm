@@ -19,14 +19,21 @@ function initTerrain()
 
    for colCount = 1, map.howLong, 1 do
       map[colCount] = {}
-
-      for rowCount = 1, map.howHigh, 1 do
-         if rowCount == 1 or rowCount == 11 or rowCount == 12 then
+      if colCount == 1 then
+         for rowCount = 1, map.howHigh, 1 do
             local x = (boxw * colCount)
             local y = (boxw * rowCount)
             map[colCount][rowCount] = makeCube(boxw, x, y)
-         else
-            map[colCount][rowCount] = nil
+         end
+      else
+         for rowCount = 1, map.howHigh, 1 do
+            if rowCount == 1 or rowCount == 11 or rowCount == 12 then
+               local x = (boxw * colCount)
+               local y = (boxw * rowCount)
+               map[colCount][rowCount] = makeCube(boxw, x, y)
+            else
+               map[colCount][rowCount] = nil
+            end
          end
       end
    end

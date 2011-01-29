@@ -18,6 +18,8 @@ Squirrel = Class(function(self, posx, posy, spee)
 	self.body = phys.newBody(world, posx, posy, 10, 15)
 	self.shape = phys.newCircleShape(self.body, 0, 0, SQUIRREL_RADIUS)
 	self.shape:setRestitution(.2)
+	self.isTouching = false
+
 end)
 
 --make something that maintains a table of Squirrels that init and delete
@@ -26,7 +28,7 @@ function initSwarm()
 	Swarm = {}
 	--init the first swarm
 	for count = 1 , 20 do
-	Swarm[count] = Squirrel(2*SQUIRREL_RADIUS + math.random(), ARENA_HEIGHT/2 + math.random(),
+	Swarm[count] = Squirrel(2*SQUIRREL_RADIUS + math.random() + 100, ARENA_HEIGHT/2 + math.random(),
 			SQUIRREL_SPEED + math.random())
 	end
 end

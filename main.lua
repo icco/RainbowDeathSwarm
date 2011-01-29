@@ -42,7 +42,7 @@ function love.load()
    -- new physics world
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
    world:setGravity(0, 750)
-
+   world:setCallbacks(Cadd, Cpersist, nil, nil)
    -- Init Terrain ... *&$#!$
    initTerrain()
 
