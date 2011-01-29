@@ -133,7 +133,7 @@ function love.draw()
 
       local swarmLoopCount = 0
 	   for count = 1, #Swarm do
-         if Swarm[count] == nil then
+         if Swarm[count] ~= nil then
                swarmLoopCount = swarmLoopCount + 1
          end
       end
@@ -154,6 +154,11 @@ function love.keypressed(key, unicode)
 
    if key == 'escape' then
       love.event.push('q')
+   end
+
+   if key == 'f' then
+	Swarm[#Swarm + 1] = Squirrel(now*100+50, 100,
+	   SQUIRREL_SPEED + math.random())
    end
 
 end
