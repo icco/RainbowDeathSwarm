@@ -4,6 +4,9 @@ require "hump.gamestate"  --gamestates, title screen. intro. gameplay. game over
 Class = require "hump.class"  -- horaay OO!
 require "hump.vector"
 
+-- Random numbers
+require "math"
+
 local terrainLoad = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
 local terrainDraw = require("terrainDraw")
@@ -19,7 +22,7 @@ local camera = hump.camera
 -- Also, sadly we can't pull in from config...
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-ARENA_WIDTH = 2400
+ARENA_WIDTH = 800
 ARENA_HEIGHT = 600
 
 function love.load()

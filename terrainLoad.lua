@@ -8,8 +8,7 @@ map = {
 
 -- Load function for the terrain
 function initTerrain()
-   local boxw = SCREEN_HEIGHT / map.howHigh
-   boxw = 25
+   local boxw = ARENA_HEIGHT / map.howHigh
    local colCount = 0
    local rowCount = 0
 
@@ -17,7 +16,9 @@ function initTerrain()
       map[colCount] = {}
 
       for rowCount = 1, map.howHigh, 1 do
-         map[colCount][rowCount] = makeCube(boxw, (boxw * (colCount-1)), (boxw * (rowCount-1)))
+         local x = (boxw * colCount) - boxw/2
+         local y = (boxw * rowCount) - boxw/2
+         map[colCount][rowCount] = makeCube(boxw, x, y)
       end
    end
 end
@@ -29,10 +30,10 @@ function makeCube(size, posx, posy)
    local ret = {}
 
    -- love.physics.newBody( world, x, y, mass, inertia )
-   ret.body = phys.newBody(world, posx+(size/2), posy+(size/2), 0 ,0)
+   ret.body = phys.newBody(world, posx, posy, 0 ,0)
 
    -- love.physics.newRectangleShape( body, x, y, w, h, angle )
-   ret.shape = phys.newRectangleShape(ret.body, posx, posy, size, size, 0)
+   ret.shape = phys.newRectangleShape(ret.body, 0, 0, size, size, 0)
 
    return ret
 end
