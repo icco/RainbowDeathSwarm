@@ -1,12 +1,13 @@
 require "hump.vector"
 require "hump.camera"
-require "hump.gamestate"  --gamestates, title screen. intro. gameplay. game over
+Gamestate = require "hump.gamestate"  --gamestates, title screen. intro. gameplay. game over
 Class = require "hump.class"  -- horaay OO!
 require "hump.vector"
 
 -- Random numbers
 require "math"
 
+local menuDraw = require("menuDraw")
 local terrainLoad = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
 local terrainDraw = require("terrainDraw")
@@ -42,6 +43,9 @@ function love.load()
 
    --init
    swarmLoadFunction()
+   
+   Gamestate.registerEvents()
+   Gamestate.switch(menuDraw)
 end
 
 function love.update(dt)
