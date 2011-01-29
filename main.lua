@@ -40,7 +40,7 @@ function love.load()
 
    -- new physics world
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
-   world:setGravity(0, 350)
+   world:setGravity(0, 750)
 
    -- Init Terrain ... *&$#!$
    initTerrain()
@@ -59,6 +59,18 @@ end
 function love.update(dt)
    updateTerrain(dt)
    swarmUpdateFunction(dt)
+
+	for count = 1, #Swarm do
+      local csqu = Swarm[count]
+      x, y = csqu.body:getLinearVelocity( )
+      if (love.keyboard.isDown("d")) and x <= 200 then
+         csqu.body:applyImpulse(100, 0)
+      end
+
+      if (love.keyboard.isDown("a"))  and x > -200 then
+         csqu.body:applyImpulse(-100, 0)
+      end
+   end
 
    world:update(dt)
 end
@@ -90,10 +102,14 @@ end
 
 function love.keypressed(key, unicode)
 	for count = 1, #Swarm do
-                local csqu = Swarm[count]
-                if key == " " and csqu.body:getY() > ARENA_HEIGHT - SQUIRREL_RADIUS - 100   then
-                        csqu.body:applyImpulse(0, -140)
-                end
-        end
+      local csqu = Swarm[count]
+      if key == " " and csqu.body:getY() > ARENA_HEIGHT - SQUIRREL_RADIUS - 100   then
+            csqu.body:applyImpulse(0, -140)
+      end
+   end
+
+   if key == 'escape' then
+      love.event.push('q')
+   end
 
 end
