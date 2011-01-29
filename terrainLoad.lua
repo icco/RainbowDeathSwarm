@@ -11,7 +11,7 @@ map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
 function initTerrain()
    local gfx = love.graphics
 
-   cubeTexture = gfx.newImage("nat.jpg")
+   cubeTexture = gfx.newImage("ground.png")
 
    map["boxw"] = 50 -- for consistancy, but should be same as above
    local colCount = 0
