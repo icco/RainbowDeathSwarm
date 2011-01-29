@@ -1,7 +1,7 @@
 require "hump.vector"
 require "hump.camera"
-Gamestate = require "hump.gamestate"  --gamestates, title screen. intro. gameplay. game over
-Class = require "hump.class"  -- horaay OO!
+Gamestate = require "hump.gamestate" --gamestates, title screen. intro. gameplay. game over
+Class = require "hump.class" -- horaay OO!
 require "hump.vector"
 
 -- Random numbers
@@ -14,13 +14,14 @@ SCREEN_HEIGHT = 600
 ARENA_WIDTH = 800
 ARENA_HEIGHT = 600
 
-local menuDraw = require("menuDraw")
-local terrainLoad = require("terrainLoad")
+local menuDraw      = require("menuDraw")
+local terrainLoad   = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
-local terrainDraw = require("terrainDraw")
-local swarmLoad = require("swarmLoad")
-local swarmUpdate = require("swarmUpdate")
-local swarmDraw = require("swarmDraw")
+local terrainDraw   = require("terrainDraw")
+local swarmLoad     = require("swarmLoad")
+local swarmUpdate   = require("swarmUpdate")
+local swarmDraw     = require("swarmDraw")
+local deathWall     = require("deathWall")
 
 -- convenience renaming (Aliases for ease of typing)
 local vector = hump.vector
@@ -46,6 +47,9 @@ function love.load()
 
    -- Init Terrain ... *&$#!$
    initTerrain()
+
+   -- Init death wall
+   initWall()
 
    -- init
    swarmLoadFunction()
@@ -74,14 +78,20 @@ function love.update(dt)
       if(map[1+map["counter"]][1].body:getX() < ((now*100) - (math.floor(ARENA_HEIGHT / map.howHigh)))) then
          --updateTerrain()
       end
-      swarmUpdateFunction(dt)
+
+      -- Update Wall, kill all touching
+      updateWall(dt)
 
       -- always update camera
       cam.pos = vector.new(now*100, Swarm[1].body:getY() - 100)
 
-       for count = 1, #Swarm do
+      -- Update teh sarm
+      swarmUpdateFunction(dt)
+
+      for count = 1, #Swarm do
          local csqu = Swarm[count]
          x, y = csqu.body:getLinearVelocity( )
+
          if (love.keyboard.isDown("d")) and x <= 200 then
             csqu.body:applyImpulse(100, 0)
          end
@@ -104,6 +114,9 @@ function love.draw()
 
    -- draw the world
    drawTerrain()
+
+   -- draw the wall
+   drawWall()
 
    -- draw the swarm
    swarmDrawFunction()
