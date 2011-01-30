@@ -91,15 +91,26 @@ function highScoreState:draw()
    gfx.setFont(ASSETS.largeFont)
    love.graphics.print("High Scores", 190, 100)
 
+   local backText = {
+      "Press 'b' to go back.",
+      "The other menus aren't as good.",
+      "Come back again soon!"
+   }
+
    gfx.setFont(ASSETS.smallFont)
    for i, score, name in highscore() do
       line = string.format("%2d.     %.2f", i, score)
       love.graphics.print(line, 250, (i * 30) + 150)
    end
+
+   gfx.setFont(ASSETS.verySmallFont)
+   for i, line in pairs(backText) do
+      love.graphics.print(line, 485, (i * 15) + 480)
+   end
 end
 
 function highScoreState:keyreleased(key)
-   if key == 'left' or key == 'b' or key == 'a' then
+   if key == 'left' or key == 'b' or key == 'a' or key == 'return' then
       Gamestate.switch(menuGameState)
    end
 end
