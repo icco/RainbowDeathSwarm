@@ -111,26 +111,41 @@ function helpStoryState:draw()
    gfx.setColor(255, 255, 255)
    local line = ""
    gfx.setFont(ASSETS.largeFont)
-   love.graphics.print("Help/Story", 200, 100)
+   love.graphics.print("Haiku Instructions", 175, 90)
 
    local text = {
       "Rainbows are scary.",
       "They will eat you alive, son.",
       "Run away with 'd'.",
       "",
-      "Jumping results from 'space'.",
-      "You may find it useful, mm?",
+      "Press 'spacebar' to jump.",
+      "If you do not, you will die.",
       "Stop to reproduce.",
+      "",
+      "Press 'm' to stop pain,",
+      "if sound irritates your ears.",
+      "'Escape' kills them all."
+   }
+   
+   local backText = {
+      "Press 'b' to go back.",
+      "The other menus aren't as good.",
+      "Come back again soon!"
    }
 
    gfx.setFont(ASSETS.smallFont)
    for i, line in pairs(text) do
-      love.graphics.print(line, 200, (i * 30) + 150)
+      love.graphics.print(line, 145, (i * 30) + 140)
+   end
+   
+   gfx.setFont(ASSETS.verySmallFont)
+   for i, line in pairs(backText) do
+      love.graphics.print(line, 485, (i * 15) + 480)
    end
 end
 
 function helpStoryState:keyreleased(key)
-   if key == 'left' or key == 'b' or key == 'a' then
+   if key == 'left' or key == 'b' or key == 'a' or key == 'return' then
       Gamestate.switch(menuGameState)
    end
 end
@@ -140,7 +155,7 @@ function drawMenuItemStuff()
    local offset = 0
 
    gfx.setFont(ASSETS.largeFont)
-   menuText = {'New Game', 'High Scores', 'Help/Story', 'Quit'}
+   menuText = {'New Game', 'High Scores', 'Controls & Story', 'Quit'}
    for i, text in pairs(menuText) do
       if i == selected then
          gfx.setColor(0, 255, 4)
