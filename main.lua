@@ -29,7 +29,7 @@ require "math"
             ARENA_HEIGHT = 600
               ZOOM_VALUE = 0.05
            ZOOM_MINVALUE = 0.5
-SEXY_MULTIPLICATION_TIME = 200
+SEXY_MULTIPLICATION_TIME = 5
           MAX_SQUIRRELS  = 150
 
 ASSETS = { }
@@ -133,7 +133,7 @@ function love.update(dt)
       -- TODO: Check if the furthest left column is completely off screen.
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
-      if(map[1 + map["counter"]][1].body:getX() +(16*map["boxw"]) < ((now*100) - map["boxw"])) then
+      if(map[1 + map["counter"]][1].body:getX() +(22*map["boxw"]) < ((now*100) - map["boxw"])) then
          updateTerrain()
       end
 
@@ -160,19 +160,19 @@ function love.update(dt)
          if (love.keyboard.isDown("a"))  and x > -200 then
             csqu.body:applyImpulse(-100, 0)
          end
-         
-         if (not love.keyboard.isDown("d")) and
-            (not love.keyboard.isDown("a")) and
-            (not love.keyboard.isDown(" ")) then
-            timeTilSexyMultiplication = timeTilSexyMultiplication - dt
-            if timeTilSexyMultiplication < 0 then
-               for i=1, #Swarm/2 do
-                  if #Swarm < MAX_SQUIRRELS then
-                     Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-                  end
+      end
+      
+      if (not love.keyboard.isDown("d")) and
+         (not love.keyboard.isDown("a")) and
+         (not love.keyboard.isDown(" ")) then
+         timeTilSexyMultiplication = timeTilSexyMultiplication - dt
+         if timeTilSexyMultiplication < 0 then
+            for i=1, (#Swarm/2) do
+               if #Swarm < MAX_SQUIRRELS then
+                  Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
                end
-               timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
             end
+            timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
          end
       end
 
