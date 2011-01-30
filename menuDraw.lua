@@ -79,6 +79,12 @@ function highScoreState:draw()
    end
 end
 
+function highScoreState:keyreleased(key)
+   if key == 'left' or key == 'b' or key == 'a' then
+      Gamestate.switch(menuGameState)
+   end
+end
+
 -- Helper functions
 function drawMenuItemStuff()
    local offset = 0
