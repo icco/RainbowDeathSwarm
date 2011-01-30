@@ -52,6 +52,7 @@ function love.load()
    ASSETS.background3  = gfx.newImage("assets/starrybg.png") --"assets/back3_2048x1024.png")
    ASSETS.smallFont    = love.graphics.newFont(25)
    ASSETS.largeFont    = love.graphics.newFont(50)
+   ASSETS.bgMusic      = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -60,6 +61,9 @@ function love.load()
 
    Gamestate.registerEvents()
    Gamestate.switch(menuGameState)
+   
+   -- Start the music, and just keep it looping
+   love.audio.play(ASSETS.bgMusic)
 
    -- Init the Camera
    cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
