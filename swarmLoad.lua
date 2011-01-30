@@ -1,10 +1,7 @@
--- load fuction for swarm
---require "math"
-
 local gfx = love.graphics
 local phys = love.physics
 
-SQUIRREL_RADIUS = 20
+SQUIRREL_RADIUS = 23
 SQUIRREL_SPEED = 108
 
 Squirrel = Class(function(self, posx, posy, spee)

@@ -54,24 +54,25 @@ function gameOverState:draw()
    gfx.setColor(224, 27, 99, 200)
    gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
 
-   local gameOverString = string.format("Game Over! Score was %f", score)
+   local gameOverString = string.format("Game Over!\nYour score was %f", score)
    love.graphics.setFont(seconds_font)
    gfx.setColor(5, 255, 5)
    love.graphics.print(gameOverString, SCREEN_HEIGHT/2 - gameOverString:len()*4, SCREEN_HEIGHT/2)
    wereInActualGameNowLoLGlobalsBad = false
-end
 
-function gameOverState:keyreleased(key)
-   if key == 'q' then
-      love.event.push('q')
-   end
+   -- To print out highscore.
+   --gfx.setColor(255, 255, 255)
+   --for i, score, name in highscore() do
+   --   love.graphics.print(name, 400, i * 20)
+   --   love.graphics.print(score, 500, i * 40)
+   --end
 end
 
 --Helper functions
 
 function drawMenuItemStuff()
    local offset = 0
-   menuText = {'New Game', 'Go Shpx Yourself', 'And A Third Item', 'Quit'}
+   menuText = {'New Game', 'Settings', 'High Scores', 'Quit'}
    for i, text in pairs(menuText) do
       if i == selected then
          gfx.setColor(0, 255, 4)

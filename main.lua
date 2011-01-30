@@ -1,22 +1,25 @@
 require "hump.vector"
 require "hump.camera"
-Gamestate = require "hump.gamestate" --gamestates, title screen. intro. gameplay. game over
-Class = require "hump.class" -- horaay OO!
-require "hump.vector"
+Gamestate = require "hump.gamestate"
+Class = require "hump.class"
+
+-- highscore lib
+highscore = require("sick")
 
 -- Random numbers
 require "math"
 
 -- Global Vars (technically, there's no constants)
 -- Also, sadly we can't pull in from config...
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-ARENA_WIDTH = 40000
-ARENA_HEIGHT = 600
+SCREEN_WIDTH   = 800
+SCREEN_HEIGHT  = 600
+ARENA_WIDTH    = 40000
+ARENA_HEIGHT   = 600
 
 ASSETS = { }
 
-require("menuDraw")
+local mapData       = require("mapData")
+local menuDraw      = require("menuDraw")
 local terrainLoad   = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
 local terrainDraw   = require("terrainDraw")
@@ -36,9 +39,15 @@ function love.load()
 
    -- Init all of our textures and fonts
    ASSETS.swarm = gfx.newImage("assets/nat.jpg")
-   ASSETS.tile  = gfx.newImage("assets/ground.png")
+   ASSETS.tile  = gfx.newImage("assets/dirtblock128x128.png")
    -- ASSETS.tile  = gfx.newImage("assets/nat.jpg")
-   ASSETS.wall  = gfx.newImage("assets/nat.jpg")
+   ASSETS.wall  = gfx.newImage("assets/dirtblock128x128.png")
+   ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
+   ASSETS.squDance = gfx.newImage("assets/SquirrelDance128x128.png")
+   ASSETS.background1 = gfx.newImage("assets/back1_2048x1024.png")
+   ASSETS.background2 = gfx.newImage("assets/back2_2048x1024.png")
+   ASSETS.background3 = gfx.newImage("assets/back3_2048x1024.png")
+   
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -66,11 +75,18 @@ function love.load()
    cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
    cam.moving = false
    cam.lastCoords = vector.new(-1, -1)
+   lastZoomed = love.timer.getTime()
 
    -- Start the clock!
-   seconds_font = love.graphics.newFont(25)
+   seconds_font= love.graphics.newFont(25)
    now = 0
    score = 0
+
+   -- Load the Highscore
+   highscore_filename = "highscores.txt"
+   local places = 10
+
+   highscore.set(highscore_filename, places, "Anonymous", 0)
 end
 
 function love.update(dt)
@@ -93,6 +109,7 @@ function love.update(dt)
       -- Update teh swarm
       swarmUpdateFunction(dt)
 
+      -- SWARM CONTROL!
       for count = 1, #Swarm do
          local csqu = Swarm[count]
          x, y = csqu.body:getLinearVelocity( )
@@ -108,6 +125,14 @@ function love.update(dt)
 
       world:update(dt)
       score = score + ((now/100) * (#Swarm / 10))
+
+      -- Game Over, save score...
+      if #Swarm == 0 then
+         local username =  os.getenv("USERNAME")
+         highscore.add(username, score)
+
+         Gamestate.switch(gameOverState)
+      end
    end
 end
 
@@ -144,7 +169,15 @@ function love.draw()
       local swarmLoopCount = #Swarm
 	   for count = 1, #Swarm do
          if Swarm[count] ~= nil then
-               swarmLoopCount = swarmLoopCount + 1
+            swarmLoopCount = swarmLoopCount + 1
+            
+            -- zoom out when Nats go off the right side of the screen
+            if Swarm[count].body:getX() > (cam.pos.x + SCREEN_WIDTH/2) then
+               if now - lastZoomed > 0.2 then
+                  lastZoomed = now
+                  cam.zoom = cam.zoom * 0.95
+               end
+            end
          end
       end
 
@@ -153,32 +186,36 @@ function love.draw()
       gfx.setColor(5, 255, 5)
       love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 40)
 
-      if swarmLoopCount == 0 then
-         Gamestate.switch(gameOverState)
-      end
-
-      local swarmCountString = string.format("%4.2f score", score)
+      local swarmCountString = string.format("%4.2f Score", score)
       gfx.setColor(5, 5, 255)
       love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 60)
-
    end
 end
 
 function love.keypressed(key, unicode)
-	for count = 1, #Swarm do
+   for count = 1, #Swarm do
       local csqu = Swarm[count]
       if key == " "   then
-            csqu.body:applyImpulse(0, -140)
+         csqu.body:applyImpulse(0, -140)
       end
    end
 
+   -- Quit on escape key
    if key == 'escape' then
       love.event.push('q')
    end
 
    if key == 'f' then
-	Swarm[#Swarm + 1] = Squirrel(now*100+50, 100,
-	   SQUIRREL_SPEED + math.random())
+      Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+   end
+end
+
+function love.quit()
+   highscore.save()
+
+   for i, score, name in highscore() do
+      print(i .. '. ' .. name .. "\t:\t" .. score)
    end
 
+   print("Thanks for playing. Please play again soon!")
 end
