@@ -73,6 +73,7 @@ function love.load()
    ASSETS.bgMusic       = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
    ASSETS.jumpSound     = love.audio.newSource("assets/yipee.wav", "static")
    ASSETS.jumpSound2    = love.audio.newSource("assets/yipee2.wav", "static")
+   ASSETS.jumpSound3    = love.audio.newSource("assets/yipee3.wav", "static")
    ASSETS.deathSound    = love.audio.newSource("assets/noes.wav", "static")
 
    -- Initialize the pseudo random number generator
@@ -283,11 +284,13 @@ end
 
 function love.keypressed(key, unicode)
                 local source
-
-                if(math.random(1,2) == 1) then
+                local rand = math.random(1,3)
+                if(rand == 1) then
 		   source = ASSETS.jumpSound
-                else
+                elseif(rand == 2) then
                    source = ASSETS.jumpSound2
+                else
+                   source = ASSETS.jumpSound3
                 end
 
 	for count = 1, #Swarm do
