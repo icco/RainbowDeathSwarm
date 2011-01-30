@@ -57,20 +57,23 @@ function love.load()
    local phys = love.physics
 
    -- Init all of our textures and fonts
-   ASSETS.swarm        = gfx.newImage("assets/nat.jpg")
-   ASSETS.tile         = gfx.newImage("assets/block50x50.png")--"assets/dirtblock50x50.png")
-   ASSETS.wall         = gfx.newImage("assets/dirtblock128x128.png")
-   ASSETS.rainbow      = gfx.newImage("assets/deathbow.png")
-   ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
-   ASSETS.squDance     = gfx.newImage("assets/SquirrelDance128x128.png")
-   ASSETS.background1  = gfx.newImage("assets/star2.png")--"assets/back1_2048x1024.png")
-   ASSETS.background2  = gfx.newImage("assets/star1.png")--"assets/back2_2048x1024.png")
-   ASSETS.background3  = gfx.newImage("assets/starrybg.png") --"assets/back3_2048x1024.png")
-   ASSETS.smallFont    = love.graphics.newFont(25)
-   ASSETS.largeFont    = love.graphics.newFont(50)
-   ASSETS.bgMusic      = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
-   ASSETS.jumpSound    = love.audio.newSource("assets/yipee.wav", "static")
-   ASSETS.deathSound   = love.audio.newSource("assets/noes.wav", "static")
+   ASSETS.swarm         = gfx.newImage("assets/nat.jpg")
+   ASSETS.tile          = gfx.newImage("assets/block50x50.png")--"assets/dirtblock50x50.png")
+   ASSETS.wall          = gfx.newImage("assets/dirtblock128x128.png")
+   ASSETS.rainbow       = gfx.newImage("assets/deathbow.png")
+   ASSETS.squAnimation  = gfx.newImage("assets/SquirrelAnimation128x128.png")
+   ASSETS.squDance      = gfx.newImage("assets/SquirrelDance128x128.png")
+   ASSETS.background1   = gfx.newImage("assets/star2.png")--"assets/back1_2048x1024.png")
+   ASSETS.background2   = gfx.newImage("assets/star1.png")--"assets/back2_2048x1024.png")
+   ASSETS.background3   = gfx.newImage("assets/starrybg.png") --"assets/back3_2048x1024.png")
+   ASSETS.verySmallFont = love.graphics.newFont(15)
+   ASSETS.smallFont     = love.graphics.newFont(25)
+   ASSETS.largeFont     = love.graphics.newFont(50)
+   ASSETS.bgMusic       = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
+   ASSETS.jumpSound     = love.audio.newSource("assets/yipee.wav", "static")
+   ASSETS.jumpSound2    = love.audio.newSource("assets/yipee2.wav", "static")
+   ASSETS.jumpSound3    = love.audio.newSource("assets/yipee3.wav", "static")
+   ASSETS.deathSound    = love.audio.newSource("assets/noes.wav", "static")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -279,13 +282,21 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
+   local source
+   local rand = math.random(1,3)
+   if(rand == 1) then
+      source = ASSETS.jumpSound
+   elseif(rand == 2) then
+      source = ASSETS.jumpSound2
+   else
+      source = ASSETS.jumpSound3
+   end
+
    if key == " " and now - nowminus > 1 then
       for count = 1, #Swarm do
          local csqu = Swarm[count]
          csqu.body:applyImpulse(0, -140)
          runanimation:seek(1)
-
-         local source = ASSETS.jumpSound
 
          if source:isStopped() then
             love.audio.play(source)

@@ -8,3 +8,6 @@ run:
 
 deploy: *.lua
 	zip -r ../RainbowDeathSwarm.love $(PACKAGE)
+	#cat $(which love) ../RainbowDeathSwarm.love > ../rds
+	cat /usr/bin/love ../RainbowDeathSwarm.love > ../rds
+	chmod +x ../rds
