@@ -29,7 +29,7 @@ local swarmLoad     = require("swarmLoad")
 local swarmUpdate   = require("swarmUpdate")
 local swarmDraw     = require("swarmDraw")
 local deathWall     = require("deathWall")
-
+local background    = require("Background")
 -- convenience renaming (Aliases for ease of typing)
 local vector = hump.vector
 local camera = hump.camera
@@ -82,6 +82,9 @@ function love.load()
    -- Start the clock!
    now = 0
    score = 0
+
+   --asdasdasd asdasdasd
+   backgroundLoad()
 
    -- Load the Highscore
    highscore_filename = "highscores.txt"
@@ -241,7 +244,7 @@ function love.quit()
    highscore.save()
 
    for i, score, name in highscore() do
-      print(i .. '. ' .. name .. "\t:\t" .. score)
+      -- print(i .. '. ' .. name .. "\t:\t" .. score)
    end
 
    print("Thanks for playing. Please play again soon!")
