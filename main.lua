@@ -42,14 +42,14 @@ function love.load()
 
    -- Init all of our textures and fonts
    ASSETS.swarm        = gfx.newImage("assets/nat.jpg")
-   ASSETS.tile         = gfx.newImage("assets/dirtblock50x50.png")
+   ASSETS.tile         = gfx.newImage("assets/block50x50.png")--"assets/dirtblock50x50.png")
    ASSETS.wall         = gfx.newImage("assets/dirtblock128x128.png")
-   ASSETS.rainbow      = gfx.newImage("assets/rainbow.png")
+   ASSETS.rainbow      = gfx.newImage("assets/deathbow.png")
    ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
    ASSETS.squDance     = gfx.newImage("assets/SquirrelDance128x128.png")
-   ASSETS.background1  = gfx.newImage("assets/back1_2048x1024.png")
-   ASSETS.background2  = gfx.newImage("assets/back2_2048x1024.png")
-   ASSETS.background3  = gfx.newImage("assets/back3_2048x1024.png")
+   ASSETS.background1  = gfx.newImage("assets/star2.png")--"assets/back1_2048x1024.png")
+   ASSETS.background2  = gfx.newImage("assets/star1.png")--"assets/back2_2048x1024.png")
+   ASSETS.background3  = gfx.newImage("assets/starrybg.png") --"assets/back3_2048x1024.png")
    ASSETS.smallFont    = love.graphics.newFont(25)
    ASSETS.largeFont    = love.graphics.newFont(50)
 
@@ -105,7 +105,7 @@ end
 
 function love.update(dt)
    swarmUpdateFunction(dt)
-
+   
    if wereInActualGameNowLoLGlobalsBad then
       -- TODO: Check if the furthest left column is completely off screen.
       -- If it is, then we should actually update the terrain.
@@ -117,7 +117,8 @@ function love.update(dt)
       -- Update Wall, kill all touching
       updateWall(dt)
       backgroundUpdate(dt)
-      -- always update camera
+      rainAni:update(dt) 
+     -- always update camera
       cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
       -- Update teh swarm

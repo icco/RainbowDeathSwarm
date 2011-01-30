@@ -9,6 +9,8 @@ function initWall()
    deathWall.body = phys.newBody(world, 2, ARENA_HEIGHT / 2, 0, 0)
    deathWall.shape = phys.newRectangleShape(deathWall.body, 0, 0, 5, ARENA_HEIGHT, 0)
    deathWall.img = ASSETS.rainbow
+   rainAni = newAnimation(deathWall.img, 155, 600, .2, 0)
+   rainAni:setMode("bounce")
 end
 
 function updateWall()
@@ -19,6 +21,7 @@ function updateWall()
 			swarmPoof(i)
 		end
 	end
+
 end
 
 function drawWall()
@@ -28,6 +31,7 @@ function drawWall()
 
    gfx.setColor(255, 255, 255)
    gfx.draw(ASSETS.wall, x2, y2, 0, 1, 1, w-w, w-w-w)
+   
 end
 
 function drawDeathWall()
@@ -36,5 +40,6 @@ function drawDeathWall()
    local w = x3 - x2
 
    gfx.setColor(255, 255, 255)
-   gfx.draw(deathWall.img, x2, y2)
+   --gfx.draw(deathWall.img, x2, y2, )
+   rainAni:draw(0, 0, 0, 1, 1, 0,0)
 end

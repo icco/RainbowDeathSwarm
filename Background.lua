@@ -81,15 +81,15 @@ function backgroundDraw()
 	gfx.drawq(ASSETS.background1, b12, back1pos2x-SCREEN_WIDTH/2, back1pos2y-SCREEN_HEIGHT/2,0,1,1,0,0)
 	gfx.drawq(ASSETS.background1, b13, back1pos3x-SCREEN_WIDTH/2, back1pos3y-SCREEN_HEIGHT/2,0,1,1,0,0)
 ]]
-	gfx.draw(ASSETS.background3, back3posx-SCREEN_WIDTH/2, back3posy-SCREEN_HEIGHT/2,0,.7,.7,0,0)
+	gfx.draw(ASSETS.background3, back3posx-SCREEN_WIDTH/2, back3posy-SCREEN_HEIGHT/2,0,1,1,0,0)
 	
-	--gfx.draw(ASSETS.background2, back2pos1x-SCREEN_WIDTH/2, back2pos1y-SCREEN_HEIGHT/2,0,1,.5,0,0)
-	--gfx.draw(ASSETS.background2, back2pos2x-SCREEN_WIDTH/2, back2pos2y-SCREEN_HEIGHT/2,0,1,.5,0,0)
-	--gfx.draw(ASSETS.background2, back2pos3x-SCREEN_WIDTH/2, back2pos3y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+	gfx.draw(ASSETS.background2, back2pos1x-SCREEN_WIDTH/2, back2pos1y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.draw(ASSETS.background2, back2pos2x-SCREEN_WIDTH/2, back2pos2y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.draw(ASSETS.background2, back2pos3x-SCREEN_WIDTH/2, back2pos3y-SCREEN_HEIGHT/2,0,1,1,0,0)
 	
-	--gfx.draw(ASSETS.background1, back1pos1x-SCREEN_WIDTH/2, back1pos1y-SCREEN_HEIGHT/2,0,1,.5,0,0)
-	--gfx.draw(ASSETS.background1, back1pos2x-SCREEN_WIDTH/2, back1pos2y-SCREEN_HEIGHT/2,0,1,.5,0,0)
-	--gfx.draw(ASSETS.background1, back1pos3x-SCREEN_WIDTH/2, back1pos3y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+	gfx.draw(ASSETS.background1, back1pos1x-SCREEN_WIDTH/2, back1pos1y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.draw(ASSETS.background1, back1pos2x-SCREEN_WIDTH/2, back1pos2y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.draw(ASSETS.background1, back1pos3x-SCREEN_WIDTH/2, back1pos3y-SCREEN_HEIGHT/2,0,1,1,0,0)
 
 
 end
