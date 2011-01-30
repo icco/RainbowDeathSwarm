@@ -12,7 +12,9 @@ Squirrel = Class(function(self, posx, posy, spee)
 	self.shape = phys.newCircleShape(self.body, 0, 0, SQUIRREL_RADIUS)
 	self.shape:setRestitution(.2)
 	self.isTouching = false
-	
+	self.redness = math.random(0,20);
+	self.greenness = math.random(0,50);
+	self.blueness = math.random(0,150);
 	self.poof = function(self)
 		-- disappear and stuff
 		self.body:applyImpulse(0, -50)
@@ -23,6 +25,9 @@ end)
 function initSwarm()
 	math.randomseed(329840)
 	Swarm = {}
+	--SwarmAnimations = {}
+	local aniimg = gfx.newImage("assets/SquirrelAnimation128x128.png")
+	runanimation = newAnimation(aniimg, 128, 128, .1, 8)
 	--init the first swarm
 	for count = 1 , 20 do
 	Swarm[count] = Squirrel(2*SQUIRREL_RADIUS + math.random() + 100, ARENA_HEIGHT/2 + math.random(),
