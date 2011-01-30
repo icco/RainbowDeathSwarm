@@ -62,19 +62,19 @@ function gameOverState:draw()
    gfx.setColor(224, 27, 99, 200)
    gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
 
-   local gameOverString = string.format("Game Over!\nYour score was %0.2f\n\nPress 'h' for high scores\nor 'm' for the main menu.", score)
+   local gameOverString = string.format("Extinction!\nYour score was %0.2f\n\nPress 'h' for high scores.", score)
    love.graphics.setFont(ASSETS.largeFont)
    gfx.setColor(5, 255, 5)
-   love.graphics.print(gameOverString, SCREEN_WIDTH/2 - gameOverString:len()*4, SCREEN_HEIGHT/4)
+   love.graphics.print(gameOverString, SCREEN_WIDTH/2 - gameOverString:len()*4 - 55, SCREEN_HEIGHT/4)
    wereInActualGameNowLoLGlobalsBad = false
 end
 
 function gameOverState:keyreleased(key)
    if key == 'h' then
       Gamestate.switch(highScoreState)
-   elseif key == 'm' then
-      resetGame()
-      Gamestate.switch(menuGameState)
+   --elseif key == 'm' then
+   --   resetGame()
+   --   Gamestate.switch(menuGameState)
    end
 
    if key == 'escape' then
@@ -177,6 +177,18 @@ function drawMenuItemStuff()
       gfx.print(text, 150, 200+offset, 0, 1, 1)
       offset = offset + 90
    end
+
+   local madeByText = {
+      "Made by: Nat Welch, James Pearson,",
+      "Taylor Arnicar, Katherine Blizard",
+      "& Ryuho Kudo for GGJ 2011"
+   }
+
+   gfx.setFont(ASSETS.verySmallFont)
+   for i, line in pairs(madeByText) do
+      love.graphics.print(line, 470, (i * 15) + 480)
+   end
+   gfx.setFont(ASSETS.largeFont)
 end
 
 function newGame()
