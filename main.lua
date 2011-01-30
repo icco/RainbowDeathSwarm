@@ -29,6 +29,7 @@ ARENA_WIDTH    = 40000
 ARENA_HEIGHT   = 600
 ZOOM_VALUE     = 0.05
 ZOOM_MINVALUE     = 0.5
+SEXY_MULTIPLICATION_TIME = 200
 
 ASSETS = { }
 
@@ -116,6 +117,9 @@ function resetGame()
    -- Start the clock!
    now = 0
    score = 0
+   
+   -- Reset clock-time 'til reproduction
+   timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
 
    --asdasdasd asdasdasd
    backgroundLoad()
@@ -154,6 +158,18 @@ function love.update(dt)
 
          if (love.keyboard.isDown("a"))  and x > -200 then
             csqu.body:applyImpulse(-100, 0)
+         end
+         
+         if (not love.keyboard.isDown("d")) and
+            (not love.keyboard.isDown("a")) and
+            (not love.keyboard.isDown(" ")) then
+            timeTilSexyMultiplication = timeTilSexyMultiplication - dt
+            if timeTilSexyMultiplication < 0 then
+               for i=1, #Swarm/2 do
+                  Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+               end
+               timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
+            end
          end
       end
 
