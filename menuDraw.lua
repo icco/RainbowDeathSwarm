@@ -20,6 +20,9 @@ wereInActualGameNowLoLGlobalsBad = false
 function menuGameState:draw()
    gfx.setColor(224, 27, 99, 200)
    gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
+
+   gfx.setColor(255, 255, 255)
+   gfx.print("Rainbow Death Swarm", 100, 100, 0, 1, 1)
    
    drawMenuItemStuff()
 end
@@ -40,12 +43,9 @@ function menuGameState:keyreleased(key)
          newGame()
       end
       if selected == 2 then
-         newGame()
-      end
-      if selected == 3 then
          Gamestate.switch(highScoreState)
       end
-      if selected == 4 then
+      if selected == 3 then
          love.event.push('q')
       end
    end
@@ -82,7 +82,9 @@ end
 -- Helper functions
 function drawMenuItemStuff()
    local offset = 0
-   menuText = {'New Game', 'Settings', 'High Scores', 'Quit'}
+
+   gfx.setFont(ASSETS.largeFont)
+   menuText = {'New Game', 'High Scores', 'Quit'}
    for i, text in pairs(menuText) do
       if i == selected then
          gfx.setColor(0, 255, 4)
@@ -90,9 +92,8 @@ function drawMenuItemStuff()
          gfx.setColor(133, 249, 255)
       end
 
-      gfx.setFont(ASSETS.largeFont)
-      gfx.print(text, 150, 120+offset, 0, 1, 1)
-      offset = offset + 100
+      gfx.print(text, 150, 200+offset, 0, 1, 1)
+      offset = offset + 90
    end
 end
 
