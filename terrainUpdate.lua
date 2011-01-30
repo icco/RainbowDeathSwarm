@@ -1,5 +1,6 @@
 -- This function should be called whenever we need to delete the far left column, and draw a new right column.
 function updateTerrain()
+   print("update terrain called")
    local difficulty = math.floor(now/12)
 
 --print("difficulty is " .. difficulty)
@@ -7,10 +8,17 @@ function updateTerrain()
    -- then copy the map back to index 1 and reset the counter.
 
    -- Clear out the left hand column (map[1+offset])
-   map[map["counter"]] = nil
+   --map[map["counter"]] = nil
 
+   -- colCount is the column we'll be starting to draw into.
    local colCount = (1 + map["counter"] + map["howLong"])
 
+   -- TODO: Pick out a world_piece to use.
+   --startIndex = world_pieces[
+   --toUse = {}
+
+   --while (compare(
+   
    -- Initialize this column to nothing
    map[colCount] = {}
 

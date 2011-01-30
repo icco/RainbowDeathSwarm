@@ -15,19 +15,38 @@ function load_map_file(filename)
    local rowc = 1
    local colc = 1
    local ret = {}
+
+   -- Initialize the number of pieces with each difficulty to 0
    ret.difficulties = {}
    for idx = 1, 10, 1 do
       ret.difficulties[idx] = 0
    end
+
+   -- Initialize the starting index where each difficulty can be found to 0
+   ret.startIndeces = {}
+   for idx = 1, 10, 1 do
+      ret.startIndeces[idx] = 0
+   end
+
    idx = 0
 
-   -- Break into lines
+   -- Break the file input into lines
    for row in contents:gmatch("[^\r\n]+") do
 
       -- If the row just has a number on it.
       if row:gmatch("^\d$") and tonumber(row) then
          idx = idx + 1
          ret[idx] = {}
+         --local diff = tonumber(row)
+         --local storeIdx = 
+
+         -- If the start Index for this difficulty level is 0, store the real 
+         -- start index for this difficulty
+         if (ret.startIndeces[ret[idx].difficulty] == 0) then
+            ret.startIndeces[ret[idx].difficulty] = idx
+         end
+
+
          ret[idx].difficulty = tonumber(row)
          ret[idx].data = {}
          ret.difficulties[ret[idx].difficulty] = ret.difficulties[ret[idx].difficulty] + 1
@@ -47,4 +66,5 @@ function load_map_file(filename)
    return ret
 end
 
+-- The input file MUST have the maps in order of difficulty!
 world_pieces = load_map_file('mapStrings.txt')
