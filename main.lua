@@ -69,7 +69,7 @@ function love.load()
    ASSETS.smallFont     = love.graphics.newFont(25)
    ASSETS.largeFont     = love.graphics.newFont(50)
    ASSETS.bgMusic       = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
-   ASSETS.jumpSound     = love.audio.newSource("assets/yipee2.wav", "static")
+   ASSETS.jumpSound     = love.audio.newSource("assets/yipee.wav", "static")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
