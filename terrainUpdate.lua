@@ -27,12 +27,19 @@ print("difficulty is " .. difficulty)
    --local toUse = world_pieces[math.random(startIndex, startIndex + numToChooseFrom - 1)]
 
 local toUse = world_pieces[1]
+for i=1, #world_pieces[1].data[1], 1 do
+  --print(world_pieces[1].data[1][i])
+end
+
+   -- If difficulty is not 1, let's test compare
+if(difficulty ~= 1) then
    -- Compare the last known column with the upcoming piece
    while (compare(toUse.data, map[map["counter"] + map["howLong"]]) == false) do
       print("trying to find a new piece to use")
       --toUse = world_pieces[math.random(startIndex, startIndex + numToChooseFrom - 1)]
-      toUse = world_pieces[math.random(1, 3)]
+      toUse = world_pieces[1]
    end
+end
    
    -- Initialize this column to nothing
    map[colCount] = {}
@@ -71,8 +78,9 @@ end
 function countWalls(column)
    local count = 0;
    print("column")
-   for i = 1, #column do
-      if(column[i]) then
+   for i = 1, map.howHigh, 1 do
+      print("column[i] is " .. tostring(column[i]))
+      if(column[i] == true) then
          count = count + 1
       end
    end
@@ -84,19 +92,25 @@ end
 -- A piece is a hand-generated set of columns which will be put into the game
 function compare(data1, data2)
    local decision
-
+   
+   for i = 1, #data1, 1 do
+      for j = 1, map.howHigh, 1  do
+      --   print(i .. ", " .. j .. " is: " .. data1[i][j])
+      end
+   end
    -- We need to acess this index within data1
    size1 = #data1
+   print("size of data1 is " .. size1)
 
    -- The two columns we care about are data1[size1] and data2[1]
-   wallCount1 = countWalls(data1[size1])
-   wallCount2 = countWalls(data2[1])
+   local wallCount1 = countWalls(data1[size1-1])
+   local wallCount2 = countWalls(data2[1])
 
    -- If there's too big of a difference i the number of walls between the linking parts
    -- of the two pieces, then we should fail.
    if(math.abs(wallCount1-wallCount2) > 4) then
       print("Failing comparison because of large # of walls difference.")
-      return false
+      return true--return false
    end
 
    -- Make sure that somewhere between the two, there is a 2 square tall gap that connects.
@@ -122,6 +136,6 @@ function compare(data1, data2)
    -- If we made it through all this without returning true, then these pieces
    -- are incompatible
    print("Failing comparison because of no compatible gaps.")
-   return false
+   return true--return false
 end
 

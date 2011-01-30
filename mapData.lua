@@ -32,13 +32,10 @@ function load_map_file(filename)
 
    -- Break the file input into lines
    for row in contents:gmatch("[^\r\n]+") do
-
       -- If the row just has a number on it.
       if row:gmatch("^\d$") and tonumber(row) then
          idx = idx + 1
          ret[idx] = {}
-         --local diff = tonumber(row)
-         --local storeIdx = 
 
          -- If the start Index for this difficulty level is 0, store the real 
          -- start index for this difficulty
@@ -54,12 +51,16 @@ function load_map_file(filename)
          ret[idx].data[colc] = {}
       else -- all other rows
          for char in row:gmatch(".") do
-            ret[idx].data[colc][rowc] = (char == "#")
+            if char then
+               ret[idx].data[colc][rowc] = (char == "#")
+               print("storing " .. tostring(char == "#") .. " for " .. char .. " " .. idx .. " " .. rowc .. " " .. colc)
+               rowc = rowc + 1
+            end
          end
+         colc = colc + 1
       end
 
       rowc = 1
-      colc = colc + 1
       ret[idx].data[colc] = {}
    end
 
