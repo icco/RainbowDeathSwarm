@@ -45,10 +45,11 @@ local swarmDraw     = require("swarmDraw")
 local deathWall     = require("deathWall")
 local background    = require("Background")
 local physicscallbacks    = require("physFuncs")
+nowminus = 0   -- timer keeper for jumping
 
 -- convenience renaming (Aliases for ease of typing)
-	local vector = hump.vector
-	local camera = hump.camera
+local vector = hump.vector
+local camera = hump.camera
 
 function love.load()
    -- convenience
@@ -56,6 +57,7 @@ function love.load()
    local phys = love.physics
 
    -- Init all of our textures and fonts
+
    ASSETS.swarm         = gfx.newImage("assets/nat.jpg")
    ASSETS.tile          = gfx.newImage("assets/block50x50.png")--"assets/dirtblock50x50.png")
    ASSETS.wall          = gfx.newImage("assets/dirtblock128x128.png")
@@ -71,6 +73,7 @@ function love.load()
    ASSETS.bgMusic       = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
    ASSETS.jumpSound     = love.audio.newSource("assets/yipee.wav", "static")
    ASSETS.jumpSound2    = love.audio.newSource("assets/yipee2.wav", "static")
+   ASSETS.deathSound    = love.audio.newSource("assets/noes.wav", "static")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -98,102 +101,101 @@ function love.load()
    resetGame()
 end
 
-
 function resetGame()
-	-- convenience
-	local gfx = love.graphics
-	local phys = love.physics
+   -- convenience
+   local gfx = love.graphics
+   local phys = love.physics
 
-	-- new physics world
-	world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
-	world:setGravity(0, 750)
-        --world:setCallbacks(Cadd, Cpersist, Cremove,Cresult )
+   -- new physics world
+   world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
+   world:setGravity(0, 750)
+   --world:setCallbacks(Cadd, Cpersist, Cremove,Cresult )
 
-	-- Init Terrain ... *&$#!$
-initTerrain()
+   -- Init Terrain ... *&$#!$
+   initTerrain()
 
-	-- Init death wall
-initWall()
+   -- Init death wall
+   initWall()
 
-	-- Init the swarm
-swarmLoadFunction()
+   -- Init the swarm
+   swarmLoadFunction()
 
-	-- Start the clock!
-	now = 0
-	score = 0
+   -- Start the clock!
+   now = 0
+   score = 0
 
-	-- Reset clock-time 'til reproduction
-	timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
+   -- Reset clock-time 'til reproduction
+   timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
 
-	--asdasdasd asdasdasd
-backgroundLoad()
-	end
+   --asdasdasd asdasdasd
+   backgroundLoad()
+end
 
-	function love.update(dt)
-swarmUpdateFunction(dt)
+function love.update(dt)
+   swarmUpdateFunction(dt)
 
-	if wereInActualGameNowLoLGlobalsBad then
-	-- TODO: Check if the furthest left column is completely off screen.
-	-- If it is, then we should actually update the terrain.
--- leftCameraBoundaryX - (boxW/2)
-	if(map[1 + map["counter"]][1].body:getX() +(22*map["boxw"]) < ((now*100) - map["boxw"])) then
-updateTerrain()
-	end
+   if wereInActualGameNowLoLGlobalsBad then
+      -- TODO: Check if the furthest left column is completely off screen.
+      -- If it is, then we should actually update the terrain.
+      -- leftCameraBoundaryX - (boxW/2)
+      if(map[1 + map["counter"]][1].body:getX() +(22*map["boxw"]) < ((now*100) - map["boxw"])) then
+         updateTerrain()
+      end
 
-	-- Update Wall, kill all touching
-	updateWall(dt)
-	backgroundUpdate(dt)
-rainAni:update(dt)
+      -- Update Wall, kill all touching
+      updateWall(dt)
+      backgroundUpdate(dt)
+      rainAni:update(dt)
 
-	-- always update camera
-cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
+      -- always update camera
+      cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
-	-- Update teh swarm
-swarmUpdateFunction(dt)
+      -- Update teh swarm
+      swarmUpdateFunction(dt)
 
-	-- SWARM CONTROL!
-	for count = 1, #Swarm do
-	local csqu = Swarm[count]
-x, y = csqu.body:getLinearVelocity( )
+      -- SWARM CONTROL!
+      for count = 1, #Swarm do
+         local csqu = Swarm[count]
+         x, y = csqu.body:getLinearVelocity( )
 
-	if (love.keyboard.isDown("d")) and x <= 200 then
-csqu.body:applyImpulse(100, 0)
-	end
+         if (love.keyboard.isDown("d")) and x <= 200 then
+            csqu.body:applyImpulse(100, 0)
+         end
 
-	if (love.keyboard.isDown("a"))  and x > -200 then
-csqu.body:applyImpulse(-100, 0)
-	end
-	end
+         if (love.keyboard.isDown("a"))  and x > -200 then
+            csqu.body:applyImpulse(-100, 0)
+         end
+      end
 
-	if (not love.keyboard.isDown("d")) and
-	(not love.keyboard.isDown("a")) and
-	(not love.keyboard.isDown(" ")) then
-	timeTilSexyMultiplication = timeTilSexyMultiplication - dt
-	if timeTilSexyMultiplication < 0 then
-	for i=1, (#Swarm/2) do
-	if #Swarm < MAX_SQUIRRELS then
-Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-	end
-	end
-	timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
-	end
-	end
+      if (not love.keyboard.isDown("d")) and
+         (not love.keyboard.isDown("a")) and
+         (not love.keyboard.isDown(" ")) then
+         timeTilSexyMultiplication = timeTilSexyMultiplication - dt
+         if timeTilSexyMultiplication < 0 then
+            for i=1, (#Swarm/2) do
+               if #Swarm < MAX_SQUIRRELS then
+                  Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+               end
+            end
+            timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
+         end
+      end
 
-	-- STATS.
-score = score + ((now/100) * (#Swarm / 10))
-	now = love.timer.getTime() - load_time
+      -- STATS.
+      score = score + ((now/100) * (#Swarm / 10))
+      now = love.timer.getTime() - load_time
 
-world:update(dt)
+      world:update(dt)
 
-	-- Game Over, save score...
-	if #Swarm == 0 then
-	local username =  os.getenv("USERNAME")
-highscore.add(username, score)
+      -- Game Over, save score...
+      if #Swarm == 0 then
+         local username =  os.getenv("USERNAME")
+         highscore.add(username, score)
 
-Gamestate.switch(gameOverState)
-	end
-	end
-	end
+         Gamestate.switch(gameOverState)
+      end
+   end
+end
 
 function love.draw()
    -- convenience
@@ -280,6 +282,7 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
+<<<<<<< HEAD
 	for count = 1, #Swarm do
 		local csqu = Swarm[count]
 		if key == " " --[[and csqu.isTouching]]  then
@@ -318,14 +321,49 @@ function love.keypressed(key, unicode)
 	end
 	end
 	end
+=======
+   if key == " " and now - nowminus > 1 then
+      for count = 1, #Swarm do
+         local csqu = Swarm[count]
+         csqu.body:applyImpulse(0, -140)
+         runanimation:seek(1)
+
+         local source = ASSETS.jumpSound
+
+         if source:isStopped() then
+            love.audio.play(source)
+         else
+            love.audio.stop(source)
+            love.audio.play(source)
+         end
+      end
+      nowminus = now
+   end	
+
+   -- Quit on escape key
+   if key == 'escape' then
+      love.event.push('q')
+   end
+
+   if key == 'f' then
+      Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+   elseif key == 'm' then
+      if love.audio.getVolume() == 0 then
+         love.audio.setVolume(1)
+      else
+         love.audio.setVolume(0)
+      end
+   end
+>>>>>>> 63ace22268cb7da29f36a9c59c5c6e27ef491b1a
 end
 
 function love.quit()
-highscore.save()
+   highscore.save()
 
-	for i, score, name in highscore() do
-	-- print(i .. '. ' .. name .. "\t:\t" .. score)
-	end
-	Zombies = nil
-	print("Thanks for playing. Please play again soon!")
-	end
+   for i, score, name in highscore() do
+      -- print(i .. '. ' .. name .. "\t:\t" .. score)
+   end
+
+   Zombies = nil
+   print("Thanks for playing. Please play again soon!")
+end
