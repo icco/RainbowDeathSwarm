@@ -45,6 +45,7 @@ local swarmDraw     = require("swarmDraw")
 local deathWall     = require("deathWall")
 local background    = require("Background")
 local physicscallbacks    = require("physFuncs")
+nowminus = 0   -- timer keeper for jumping
 
 -- convenience renaming (Aliases for ease of typing)
 	local vector = hump.vector
@@ -105,7 +106,7 @@ function resetGame()
 	-- new physics world
 	world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
 	world:setGravity(0, 750)
-        world:setCallbacks(Cadd, Cpersist, Cremove,Cresult )
+        --world:setCallbacks(Cadd, Cpersist, Cremove,Cresult )
 
 	-- Init Terrain ... *&$#!$
 initTerrain()
@@ -278,37 +279,38 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
-	for count = 1, #Swarm do
-		local csqu = Swarm[count]
-		if key == " " and csqu.isTouching  then
+        if key == " " and now - nowminus > 1 then
+		for count = 1, #Swarm do
+			local csqu = Swarm[count]
+	
 			csqu.body:applyImpulse(0, -140)
 			runanimation:seek(1)
+				
+			local source = ASSETS.jumpSound
 
-		local source = ASSETS.jumpSound
-
-		if source:isStopped() then
-			love.audio.play(source)
-		else
-			love.audio.stop(source)
-			love.audio.play(source)
+			if source:isStopped() then
+				love.audio.play(source)
+			else
+				love.audio.stop(source)
+				love.audio.play(source)
+			end
 		end
-	end
-
+		nowminus = now
+	end	
 
 	-- Quit on escape key
 	if key == 'escape' then
-	love.event.push('q')
+		love.event.push('q')
 	end
 
 	if key == 'f' then
 		Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
 	elseif key == 'm' then
-	if love.audio.getVolume() == 0 then
-		love.audio.setVolume(1)
-	else
-		love.audio.setVolume(0)
-	end
-	end
+		if love.audio.getVolume() == 0 then
+			love.audio.setVolume(1)
+		else
+			love.audio.setVolume(0)
+		end
 	end
 end
 
