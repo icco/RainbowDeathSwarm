@@ -23,14 +23,14 @@ require "math"
 
 -- Global Vars (technically, there's no constants)
 -- Also, sadly we can't pull in from config...
-SCREEN_WIDTH   = 800
-SCREEN_HEIGHT  = 600
-ARENA_WIDTH    = 40000
-ARENA_HEIGHT   = 600
-ZOOM_VALUE     = 0.05
-ZOOM_MINVALUE     = 0.5
+            SCREEN_WIDTH = 800
+           SCREEN_HEIGHT = 600
+             ARENA_WIDTH = 40000
+            ARENA_HEIGHT = 600
+              ZOOM_VALUE = 0.05
+           ZOOM_MINVALUE = 0.5
 SEXY_MULTIPLICATION_TIME = 5
-MAX_SQUIRRELS  = 150
+          MAX_SQUIRRELS  = 150
 
 ASSETS = { }
 
