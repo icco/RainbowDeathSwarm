@@ -66,6 +66,7 @@ function love.load()
    ASSETS.smallFont    = love.graphics.newFont(25)
    ASSETS.largeFont    = love.graphics.newFont(50)
    ASSETS.bgMusic      = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
+   ASSETS.jumpSound    = love.audio.newSource("assets/yipee2.wav", "static")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -74,7 +75,7 @@ function love.load()
 
    Gamestate.registerEvents()
    Gamestate.switch(menuGameState)
-   
+
    -- Start the music, and just keep it looping
    love.audio.play(ASSETS.bgMusic)
 
@@ -264,6 +265,17 @@ function love.keypressed(key, unicode)
       local csqu = Swarm[count]
       if key == " " --[[and csqu.isTouching]]  then
          csqu.body:applyImpulse(0, -140)
+      end
+   end
+
+   if key == " " --[[and csqu.isTouching]]  then
+      local source = ASSETS.jumpSound
+
+      if source:isStopped() then
+         love.audio.play(source)
+      else
+         love.audio.stop(source)
+         love.audio.play(source)
       end
    end
 
