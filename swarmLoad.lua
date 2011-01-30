@@ -33,7 +33,7 @@ function initSwarm()
 
    --init the first swarm
    for count = 1 , 20 do
-      local radius = 2*SQUIRREL_RADIUS + math.random() + 100
+      local radius = 2*SQUIRREL_RADIUS + 100
       local spawnx = ARENA_HEIGHT/2 + math.random()
       local spawny = 20 + math.random()
       local speed = SQUIRREL_SPEED
