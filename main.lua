@@ -233,9 +233,9 @@ function love.draw()
       local swarmCountString = string.format("%d Nats", #Swarm)
       love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(5, 255, 5)
-      love.graphics.print(swarmCountString, 310, SCREEN_HEIGHT-40)
+      love.graphics.print(swarmCountString, 290, SCREEN_HEIGHT-40)
 
-      local scoreCountString = string.format("%.2f Score", score)
+      local scoreCountString = string.format("%.2f Points", score)
       gfx.setColor(5, 5, 255)
       love.graphics.print(scoreCountString, 440, SCREEN_HEIGHT-40)
 
