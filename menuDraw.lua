@@ -76,6 +76,10 @@ function gameOverState:keyreleased(key)
       resetGame()
       Gamestate.switch(menuGameState)
    end
+
+   if key == 'escape' then
+      love.event.push('q')
+   end
 end
 
 -- Highscore menu

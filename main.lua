@@ -297,9 +297,13 @@ function love.keypressed(key, unicode)
    -- Quit on escape key
    if key == 'escape' then
       love.event.push('q')
-   elseif key == 'f' then -- Spawn on f
-      Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-   elseif key == 'm' then -- Mute
+   end
+
+   if key == 'f' then -- Spawn on f
+      -- Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+   end
+
+   if key == 'm' then -- Mute
       if love.audio.getVolume() == 0 then
          love.audio.setVolume(1)
       else
@@ -315,6 +319,7 @@ function love.quit()
    for i, score, name in highscore() do
       -- print(i .. '. ' .. name .. "\t:\t" .. score)
    end
+
    Zombies = nil
    print("Thanks for playing. Please play again soon!")
 end
