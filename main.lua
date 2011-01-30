@@ -194,94 +194,6 @@ Gamestate.switch(gameOverState)
 	end
 
 function love.draw()
-<<<<<<< HEAD
-	-- convenience
-	local gfx = love.graphics
-
-	-- lol background color
-	gfx.setBackgroundColor(90, 90, 90) -- 0-255
-
-	--background behind camera
-backgroundDraw()
-
-	-- draw the world
-cam:predraw()
-
-	-- draw the world
-drawTerrain()
-
-	-- draw the swarm
-swarmDrawFunction()
-
-	-- done drawing the world
-cam:postdraw()
-
-	-- draw the wall
-drawDeathWall()
-
-	if wereInActualGameNowLoLGlobalsBad then
-
-	-- draw the stats (seconds, # of swarm, score)
-gfx.setColor(250, 250, 250, 150)
-	love.graphics.rectangle('fill', 100, SCREEN_HEIGHT-40, SCREEN_WIDTH-240, 30)
-
-	local secondsString = string.format("%4.2fs", now)
-	love.graphics.setFont(ASSETS.smallFont)
-	gfx.setColor(255, 5, 5)
-love.graphics.print(secondsString, 160, SCREEN_HEIGHT-40)
-
-	local swarmCountString = string.format("%d Nats", #Swarm)
-	love.graphics.setFont(ASSETS.smallFont)
-	gfx.setColor(5, 255, 5)
-love.graphics.print(swarmCountString, 290, SCREEN_HEIGHT-40)
-
-	local scoreCountString = string.format("%.2f Points", score)
-	gfx.setColor(5, 5, 255)
-love.graphics.print(scoreCountString, 440, SCREEN_HEIGHT-40)
-
-	-- Camera Draw Logic
-	local swarmLoopCount = #Swarm
-	local vec, vec2
-
-vec2 = cam:toCameraCoords(cam.pos)
-	vec2.x = vec2.x - 50
-	local swarmXMax = -1
-	for count = 1, #Swarm do
-vec = cam:toCameraCoords(vector.new(Swarm[count].body:getX(),Swarm[count].body:getY()))
-
-	if swarmXMax < vec.x then
-	swarmXMax = vec.x
-	end
-
-	--gfx.circle( 'fill', vec.x, SCREEN_HEIGHT/2+10, 5, 50 )
-	-- zoom out when Nats go off the right side of the screen
-	if vec.x > (vec2.x + SCREEN_WIDTH/2 - SCREEN_WIDTH/4) and cam.zoom >= 0.5 then
-	if now - lastZoomed > 0.2 then
-	lastZoomed = now
-	cam.zoom = cam.zoom * 1.0 - ZOOM_VALUE
-	if cam.zoom <= ZOOM_MINVALUE then
-	cam.zoom = ZOOM_MINVALUE
-	end
-	end
-	end
-	end
-
-	-- this is for zooming in
-	if swarmXMax > -1 and swarmXMax < vec2.x + SCREEN_WIDTH/4 and cam.zoom < 1.0 then
-	if now - lastZoomed > 0.2 then
-	lastZoomed = now
-	cam.zoom = cam.zoom * 1.0 + ZOOM_VALUE
-	if cam.zoom >= 1.0 then
-	cam.zoom = 1.0
-	end
-	end
-	end
-
---gfx.setColor(5, 5, 255)
-	--gfx.circle('fill', (vec2.x + SCREEN_WIDTH/2), SCREEN_HEIGHT/2, 5, 50)
-	end
-	end
-=======
    -- convenience
    local gfx = love.graphics
 
@@ -364,7 +276,6 @@ vec = cam:toCameraCoords(vector.new(Swarm[count].body:getX(),Swarm[count].body:g
       --gfx.circle('fill', (vec2.x + SCREEN_WIDTH/2), SCREEN_HEIGHT/2, 5, 50)
    end
 end
->>>>>>> db217995e41ed4628dcd628e0532fcb3a250b5d6
 
 function love.keypressed(key, unicode)
 	for count = 1, #Swarm do
