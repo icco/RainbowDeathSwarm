@@ -27,8 +27,8 @@ SCREEN_WIDTH   = 800
 SCREEN_HEIGHT  = 600
 ARENA_WIDTH    = 40000
 ARENA_HEIGHT   = 600
-ZOOM_VALUE     = 0.05
-ZOOM_MINVALUE     = 0.5
+ZOOM_VALUE     = 0.005
+ZOOM_MINVALUE  = 0.5
 SEXY_MULTIPLICATION_TIME = 5
 MAX_SQUIRRELS  = 150
 
@@ -256,24 +256,20 @@ function love.draw()
          --gfx.circle( 'fill', vec.x, SCREEN_HEIGHT/2+10, 5, 50 )
          -- zoom out when Nats go off the right side of the screen
          if vec.x > (vec2.x + SCREEN_WIDTH/2 - SCREEN_WIDTH/4) and cam.zoom >= 0.5 then
-            if now - lastZoomed > 0.2 then
-               lastZoomed = now
-               cam.zoom = cam.zoom * 1.0 - ZOOM_VALUE
-               if cam.zoom <= ZOOM_MINVALUE then
-                  cam.zoom = ZOOM_MINVALUE
-               end
+            lastZoomed = now
+            cam.zoom = cam.zoom * (1.0 - ZOOM_VALUE)
+            if cam.zoom <= ZOOM_MINVALUE then
+               cam.zoom = ZOOM_MINVALUE
             end
          end
       end
 
       -- this is for zooming in
       if swarmXMax > -1 and swarmXMax < vec2.x + SCREEN_WIDTH/4 and cam.zoom < 1.0 then
-         if now - lastZoomed > 0.2 then
-            lastZoomed = now
-            cam.zoom = cam.zoom * 1.0 + ZOOM_VALUE
-            if cam.zoom >= 1.0 then
-               cam.zoom = 1.0
-            end
+         lastZoomed = now
+         cam.zoom = cam.zoom / (1.0 - ZOOM_VALUE)
+         if cam.zoom >= 1.0 then
+            cam.zoom = 1.0
          end
       end
 
