@@ -230,7 +230,7 @@ function love.draw()
       gfx.setColor(255, 5, 5)
       love.graphics.print(secondsString, 160, SCREEN_HEIGHT-40)
 
-      local swarmCountString = string.format("%d Nats", #Swarm)
+      local swarmCountString = string.format("%d Squirrels", #Swarm)
       love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(5, 255, 5)
       love.graphics.print(swarmCountString, 290, SCREEN_HEIGHT-40)
@@ -247,14 +247,14 @@ function love.draw()
       vec2.x = vec2.x - 50
       local swarmXMax = -1
       for count = 1, #Swarm do
-         vec = cam:toCameraCoords(vector.new(Swarm[count].body:getX(),Swarm[count].body:getY()))
+         vec = cam:toCameraCoords(vector.new(Swarm[count].body:getX(), Swarm[count].body:getY()))
 
          if swarmXMax < vec.x then
             swarmXMax = vec.x
          end
 
          --gfx.circle( 'fill', vec.x, SCREEN_HEIGHT/2+10, 5, 50 )
-         -- zoom out when Nats go off the right side of the screen
+         -- zoom out when Nats (Squirrels) go off the right side of the screen
          if vec.x > (vec2.x + SCREEN_WIDTH/2 - SCREEN_WIDTH/4) and cam.zoom >= 0.5 then
             if now - lastZoomed > 0.2 then
                lastZoomed = now
