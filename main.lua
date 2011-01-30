@@ -222,6 +222,9 @@ function love.draw()
    if wereInActualGameNowLoLGlobalsBad then
 
       -- draw the stats (seconds, # of swarm, score)
+      gfx.setColor(250, 250, 250, 150)
+      love.graphics.rectangle('fill', 100, SCREEN_HEIGHT-40, SCREEN_WIDTH-240, 30)
+
       local secondsString = string.format("%4.2fs", now)
       love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(255, 5, 5)
@@ -230,9 +233,9 @@ function love.draw()
       local swarmCountString = string.format("%d Nats", #Swarm)
       love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(5, 255, 5)
-      love.graphics.print(swarmCountString, 310, SCREEN_HEIGHT-40)
+      love.graphics.print(swarmCountString, 290, SCREEN_HEIGHT-40)
 
-      local scoreCountString = string.format("%.2f Score", score)
+      local scoreCountString = string.format("%.2f Points", score)
       gfx.setColor(5, 5, 255)
       love.graphics.print(scoreCountString, 440, SCREEN_HEIGHT-40)
 
