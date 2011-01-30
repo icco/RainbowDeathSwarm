@@ -40,15 +40,16 @@ function love.load()
    local phys = love.physics
 
    -- Init all of our textures and fonts
-   ASSETS.swarm = gfx.newImage("assets/nat.jpg")
-   ASSETS.tile  = gfx.newImage("assets/dirtblock50x50.png")
-   -- ASSETS.tile  = gfx.newImage("assets/nat.jpg")
-   ASSETS.wall  = gfx.newImage("assets/dirtblock128x128.png")
+   ASSETS.swarm        = gfx.newImage("assets/nat.jpg")
+   ASSETS.tile         = gfx.newImage("assets/dirtblock50x50.png")
+   ASSETS.wall         = gfx.newImage("assets/dirtblock128x128.png")
    ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
-   ASSETS.squDance = gfx.newImage("assets/SquirrelDance128x128.png")
-   ASSETS.background1 = gfx.newImage("assets/back1_2048x1024.png")
-   ASSETS.background2 = gfx.newImage("assets/back2_2048x1024.png")
-   ASSETS.background3 = gfx.newImage("assets/back3_2048x1024.png")
+   ASSETS.squDance     = gfx.newImage("assets/SquirrelDance128x128.png")
+   ASSETS.background1  = gfx.newImage("assets/back1_2048x1024.png")
+   ASSETS.background2  = gfx.newImage("assets/back2_2048x1024.png")
+   ASSETS.background3  = gfx.newImage("assets/back3_2048x1024.png")
+   ASSETS.smallFont    = love.graphics.newFont(25)
+   ASSETS.largeFont    = love.graphics.newFont(50)
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -79,7 +80,6 @@ function love.load()
    lastZoomed = love.timer.getTime()
 
    -- Start the clock!
-   seconds_font= love.graphics.newFont(25)
    now = 0
    score = 0
 
@@ -166,7 +166,7 @@ function love.draw()
    if wereInActualGameNowLoLGlobalsBad then      
       now = love.timer.getTime() - load_time
       local secondsString = string.format("%4.2fs", now)
-      love.graphics.setFont(seconds_font)
+      love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(255, 5, 5)
       love.graphics.print(secondsString, SCREEN_WIDTH-150, 20)
 
@@ -212,7 +212,7 @@ function love.draw()
       --gfx.circle( 'fill', (vec2.x + SCREEN_WIDTH/2), SCREEN_HEIGHT/2, 5, 50 )
 
       local swarmCountString = string.format("%d Nats", #Swarm)
-      love.graphics.setFont(seconds_font)
+      love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(5, 255, 5)
       love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 40)
 

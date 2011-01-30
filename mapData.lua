@@ -6,22 +6,34 @@
 world_string = {}
 
 function load_map_file(filename) 
+
+   -- Read from file
    contents, size = love.filesystem.read(filename)
+
+   -- init values
    local idx = 0
-   local rowc, colc = 1
+   local rowc = 1
+   local colc = 1
    local ret = {}
    ret.difficulties = {}
+   for idx = 1, 10, 1 do
+      ret.difficulties[idx] = 0
+   end
+   idx = 0
 
+   -- Break into lines
    for row in contents:gmatch("[^\r\n]+") do
-      if row:gmatch("^\d$") then
+
+      -- If the row just has a number on it.
+      if row:gmatch("^\d$") and tonumber(row) then
          idx = idx + 1
          ret[idx] = {}
          ret[idx].difficulty = tonumber(row)
-         ret.difficulties[tonumber(row)] = ret.difficulties[tonumber(row)] + 1
          ret[idx].data = {}
+         ret.difficulties[ret[idx].difficulty] = ret.difficulties[ret[idx].difficulty] + 1
          colc = 1
          ret[idx].data[colc] = {}
-      else
+      else -- all other rows
          for char in row:gmatch(".") do
             ret[idx].data[colc][rowc] = (char == "#")
          end
@@ -29,6 +41,7 @@ function load_map_file(filename)
 
       rowc = 1
       colc = colc + 1
+      ret[idx].data[colc] = {}
    end
 
    return ret
