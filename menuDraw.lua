@@ -13,6 +13,9 @@ gameOverState = Gamestate.new()
 -- highScoreState
 highScoreState = Gamestate.new()
 
+-- misleadingState
+helpStoryState = Gamestate.new()
+
 wereInActualGameNowLoLGlobalsBad = false
 
 --menuGameState functions
@@ -46,6 +49,9 @@ function menuGameState:keyreleased(key)
          Gamestate.switch(highScoreState)
       end
       if selected == 3 then
+         Gamestate.switch(helpStoryState)
+      end
+      if selected == 4 then
          love.event.push('q')
       end
    end
@@ -85,12 +91,43 @@ function highScoreState:keyreleased(key)
    end
 end
 
+-- Help/Story menu
+function helpStoryState:draw()
+   gfx.setColor(224, 27, 99, 200)
+   gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
+   gfx.setColor(255, 255, 255)
+   local line = ""
+   gfx.setFont(ASSETS.largeFont)
+   love.graphics.print("Help/Story", 200, 100)
+   
+   local text = {
+   "Rainbows are scary.",
+   "They will eat you alive, son.",
+   "Run away with 'd'.",
+   "",
+   "Jumping results from 'space'.",
+   "You may find it useful, mm?",
+   "Stop to reproduce.",
+   }
+
+   gfx.setFont(ASSETS.smallFont)
+   for i, line in pairs(text) do
+      love.graphics.print(line, 200, (i * 30) + 150)
+   end
+end
+
+function helpStoryState:keyreleased(key)
+   if key == 'left' or key == 'b' or key == 'a' then
+      Gamestate.switch(menuGameState)
+   end
+end
+
 -- Helper functions
 function drawMenuItemStuff()
    local offset = 0
 
    gfx.setFont(ASSETS.largeFont)
-   menuText = {'New Game', 'High Scores', 'Quit'}
+   menuText = {'New Game', 'High Scores', 'Help/Story', 'Quit'}
    for i, text in pairs(menuText) do
       if i == selected then
          gfx.setColor(0, 255, 4)
