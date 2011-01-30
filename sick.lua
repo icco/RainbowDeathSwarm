@@ -45,9 +45,6 @@ function h.save()
 		data = data .. item[1] .. "\t" .. item[2] .. "\n"
 	end
 
-   print(data)
-   print(h.filename)
-
 	return love.filesystem.write(h.filename, data)
 end
 
