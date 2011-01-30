@@ -58,6 +58,23 @@ function love.load()
    -- The description page for Math says the first few values aren't so random. Burn a few.
    math.random(); math.random(); math.random()
 
+   Gamestate.registerEvents()
+   Gamestate.switch(menuGameState)
+
+   -- Init the Camera
+   cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
+   cam.moving = false
+   cam.lastCoords = vector.new(-1, -1)
+   lastZoomed = love.timer.getTime()
+
+   resetGame()
+end
+
+function resetGame()
+   -- convenience
+   local gfx = love.graphics
+   local phys = love.physics
+
    -- new physics world
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
    world:setGravity(0, 750)
@@ -71,15 +88,6 @@ function love.load()
 
    -- Init the swarm
    swarmLoadFunction()
-
-   Gamestate.registerEvents()
-   Gamestate.switch(menuGameState)
-
-   -- Init the Camera
-   cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
-   cam.moving = false
-   cam.lastCoords = vector.new(-1, -1)
-   lastZoomed = love.timer.getTime()
 
    -- Start the clock!
    now = 0

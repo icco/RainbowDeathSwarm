@@ -62,11 +62,20 @@ function gameOverState:draw()
    gfx.setColor(224, 27, 99, 200)
    gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
 
-   local gameOverString = string.format("Game Over!\nYour score was %0.2f", score)
+   local gameOverString = string.format("Game Over!\nYour score was %0.2f\n\nPress 'h' for high scores\nor 'm' for the main menu.", score)
    love.graphics.setFont(ASSETS.largeFont)
    gfx.setColor(5, 255, 5)
-   love.graphics.print(gameOverString, SCREEN_HEIGHT/2 - gameOverString:len()*4, SCREEN_HEIGHT/2)
+   love.graphics.print(gameOverString, SCREEN_WIDTH/2 - gameOverString:len()*4, SCREEN_HEIGHT/4)
    wereInActualGameNowLoLGlobalsBad = false
+end
+
+function gameOverState:keyreleased(key)
+   if key == 'h' then
+      Gamestate.switch(highScoreState)
+   elseif key == 'm' then
+      resetGame()
+      Gamestate.switch(menuGameState)
+   end
 end
 
 -- Highscore menu
@@ -145,5 +154,5 @@ function newGame()
    load_time = love.timer.getTime()
    Gamestate.switch(newGameState)
 end
-
+   
 return menuGameState, newGameState, gameOverState, highScoreState
