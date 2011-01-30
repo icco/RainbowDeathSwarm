@@ -53,14 +53,15 @@ end
 function swarmPoof(i)
    --zombieIndex = zombieIndex + 1
    --Zombies[zombieIndex] = Swarm[i].body
-      local source = ASSETS.deathSound
+   local source = ASSETS.deathSound
 
-      if source:isStopped() then
-         love.audio.play(source)
-      else
-         love.audio.stop(source)
-         love.audio.play(source)
-      end
+   if source:isStopped() then
+      love.audio.play(source)
+   else
+      love.audio.stop(source)
+      love.audio.play(source)
+   end
+
    Swarm[i]:poof()
    table.remove(Swarm, i)
 end
