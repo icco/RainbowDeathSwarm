@@ -233,7 +233,7 @@ function love.draw()
 
          --gfx.circle( 'fill', vec.x, SCREEN_HEIGHT/2+10, 5, 50 )
          -- zoom out when Nats go off the right side of the screen
-         if vec.x > (vec2.x + SCREEN_WIDTH/2) and cam.zoom >= 0.5 then
+         if vec.x > (vec2.x + SCREEN_WIDTH/2 - SCREEN_WIDTH/4) and cam.zoom >= 0.5 then
             if now - lastZoomed > 0.2 then
                lastZoomed = now
                cam.zoom = cam.zoom * 1.0 - ZOOM_VALUE
