@@ -57,23 +57,20 @@ function love.load()
    local phys = love.physics
 
    -- Init all of our textures and fonts
-
-   ASSETS.swarm         = gfx.newImage("assets/nat.jpg")
-   ASSETS.tile          = gfx.newImage("assets/block50x50.png")--"assets/dirtblock50x50.png")
-   ASSETS.wall          = gfx.newImage("assets/dirtblock128x128.png")
-   ASSETS.rainbow       = gfx.newImage("assets/deathbow.png")
-   ASSETS.squAnimation  = gfx.newImage("assets/SquirrelAnimation128x128.png")
-   ASSETS.squDance      = gfx.newImage("assets/SquirrelDance128x128.png")
-   ASSETS.background1   = gfx.newImage("assets/star2.png")--"assets/back1_2048x1024.png")
-   ASSETS.background2   = gfx.newImage("assets/star1.png")--"assets/back2_2048x1024.png")
-   ASSETS.background3   = gfx.newImage("assets/starrybg.png") --"assets/back3_2048x1024.png")
-   ASSETS.verySmallFont = love.graphics.newFont(15)
-   ASSETS.smallFont     = love.graphics.newFont(25)
-   ASSETS.largeFont     = love.graphics.newFont(50)
-   ASSETS.bgMusic       = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
-   ASSETS.jumpSound     = love.audio.newSource("assets/yipee.wav", "static")
-   ASSETS.jumpSound2    = love.audio.newSource("assets/yipee2.wav", "static")
-   ASSETS.deathSound    = love.audio.newSource("assets/noes.wav", "static")
+   ASSETS.swarm        = gfx.newImage("assets/nat.jpg")
+   ASSETS.tile         = gfx.newImage("assets/block50x50.png")--"assets/dirtblock50x50.png")
+   ASSETS.wall         = gfx.newImage("assets/dirtblock128x128.png")
+   ASSETS.rainbow      = gfx.newImage("assets/deathbow.png")
+   ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
+   ASSETS.squDance     = gfx.newImage("assets/SquirrelDance128x128.png")
+   ASSETS.background1  = gfx.newImage("assets/star2.png")--"assets/back1_2048x1024.png")
+   ASSETS.background2  = gfx.newImage("assets/star1.png")--"assets/back2_2048x1024.png")
+   ASSETS.background3  = gfx.newImage("assets/starrybg.png") --"assets/back3_2048x1024.png")
+   ASSETS.smallFont    = love.graphics.newFont(25)
+   ASSETS.largeFont    = love.graphics.newFont(50)
+   ASSETS.bgMusic      = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
+   ASSETS.jumpSound    = love.audio.newSource("assets/yipee.wav", "static")
+   ASSETS.deathSound   = love.audio.newSource("assets/noes.wav", "static")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -282,44 +279,38 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
-	for count = 1, #Swarm do
-		local csqu = Swarm[count]
-		if key == " " --[[and csqu.isTouching]]  then
-			csqu.body:applyImpulse(0, -140)
-			runanimation:seek(1)
+   if key == " " and now - nowminus > 1 then
+      for count = 1, #Swarm do
+         local csqu = Swarm[count]
+         csqu.body:applyImpulse(0, -140)
+         runanimation:seek(1)
 
-                local source
+         local source = ASSETS.jumpSound
 
-                if(math.random(1,2) == 1) then
-		   source = ASSETS.jumpSound
-                else
-                   source = ASSETS.jumpSound2
-                end
+         if source:isStopped() then
+            love.audio.play(source)
+         else
+            love.audio.stop(source)
+            love.audio.play(source)
+         end
+      end
+      nowminus = now
+   end	
 
-		if source:isStopped() then
-			love.audio.play(source)
-		else
-			love.audio.stop(source)
-			love.audio.play(source)
-		end
-	end
+   -- Quit on escape key
+   if key == 'escape' then
+      love.event.push('q')
+   end
 
-
-	-- Quit on escape key
-	if key == 'escape' then
-	love.event.push('q')
-	end
-
-	if key == 'f' then
-		Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-	elseif key == 'm' then
-	if love.audio.getVolume() == 0 then
-		love.audio.setVolume(1)
-	else
-		love.audio.setVolume(0)
-	end
-	end
-	end
+   if key == 'f' then
+      Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+   elseif key == 'm' then
+      if love.audio.getVolume() == 0 then
+         love.audio.setVolume(1)
+      else
+         love.audio.setVolume(0)
+      end
+   end
 end
 
 function love.quit()
