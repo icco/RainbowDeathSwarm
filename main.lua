@@ -68,7 +68,8 @@ function love.load()
    ASSETS.smallFont    = love.graphics.newFont(25)
    ASSETS.largeFont    = love.graphics.newFont(50)
    ASSETS.bgMusic      = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
-   ASSETS.jumpSound    = love.audio.newSource("assets/yipee2.wav", "static")
+   ASSETS.jumpSound    = love.audio.newSource("assets/yipee.wav", "static")
+   ASSETS.deathSound   = love.audio.newSource("assets/noes.wav", "static")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -208,15 +209,13 @@ function love.draw()
    -- draw the world
    drawTerrain()
 
-   -- draw the wall
-   drawWall()
-
    -- draw the swarm
    swarmDrawFunction()
 
    -- done drawing the world
    cam:postdraw()
 
+   -- draw the wall
    drawDeathWall()
 
    if wereInActualGameNowLoLGlobalsBad then
@@ -287,17 +286,15 @@ function love.keypressed(key, unicode)
       local csqu = Swarm[count]
       if key == " " --[[and csqu.isTouching]]  then
          csqu.body:applyImpulse(0, -140)
-      end
-   end
 
-   if key == " " --[[and csqu.isTouching]]  then
-      local source = ASSETS.jumpSound
+         local source = ASSETS.jumpSound
 
-      if source:isStopped() then
-         love.audio.play(source)
-      else
-         love.audio.stop(source)
-         love.audio.play(source)
+         if source:isStopped() then
+            love.audio.play(source)
+         else
+            love.audio.stop(source)
+            love.audio.play(source)
+         end
       end
    end
 
