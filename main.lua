@@ -282,7 +282,6 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
-<<<<<<< HEAD
 	for count = 1, #Swarm do
 		local csqu = Swarm[count]
 		if key == " " --[[and csqu.isTouching]]  then
@@ -321,40 +320,6 @@ function love.keypressed(key, unicode)
 	end
 	end
 	end
-=======
-   if key == " " and now - nowminus > 1 then
-      for count = 1, #Swarm do
-         local csqu = Swarm[count]
-         csqu.body:applyImpulse(0, -140)
-         runanimation:seek(1)
-
-         local source = ASSETS.jumpSound
-
-         if source:isStopped() then
-            love.audio.play(source)
-         else
-            love.audio.stop(source)
-            love.audio.play(source)
-         end
-      end
-      nowminus = now
-   end	
-
-   -- Quit on escape key
-   if key == 'escape' then
-      love.event.push('q')
-   end
-
-   if key == 'f' then
-      Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-   elseif key == 'm' then
-      if love.audio.getVolume() == 0 then
-         love.audio.setVolume(1)
-      else
-         love.audio.setVolume(0)
-      end
-   end
->>>>>>> 63ace22268cb7da29f36a9c59c5c6e27ef491b1a
 end
 
 function love.quit()
