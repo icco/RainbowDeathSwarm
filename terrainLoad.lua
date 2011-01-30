@@ -1,5 +1,5 @@
 -- Terrain, 2D Array
-map = { howHigh = 12, counter = 0, howLong = 20 }
+map = { howHigh = 12, counter = 0, howLong = 35 }
 
 map["boxw"] = math.floor(ARENA_HEIGHT / map.howHigh)
 -- print("box width is " .. map["boxw"])
@@ -14,6 +14,7 @@ function initTerrain()
 
    for colCount = 1, map.howLong, 1 do
       map[colCount] = {}
+      -- Draw the far left wall
       if colCount == 1 then
          for rowCount = 1, map.howHigh, 1 do
             local x = (map["boxw"] * colCount)
@@ -22,6 +23,7 @@ function initTerrain()
             map[colCount]["NumOfBlocks"] = 9
          end
       else
+         -- Draw the floor & ceiling
          for rowCount = 1, map.howHigh, 1 do
             if rowCount == 1 or rowCount == 11 or rowCount == 12 then
                local x = (map["boxw"] * colCount)
