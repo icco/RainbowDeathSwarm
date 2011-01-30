@@ -2,7 +2,7 @@ require "hump.vector"
 require "hump.camera"
 Gamestate = require "hump.gamestate"
 Class = require "hump.class"
-
+Anal = require "Anal/AnAL"
 -- highscore lib
 highscore = require("sick")
 
@@ -41,7 +41,7 @@ function love.load()
 
    -- Init all of our textures and fonts
    ASSETS.swarm = gfx.newImage("assets/nat.jpg")
-   ASSETS.tile  = gfx.newImage("assets/dirtblock128x128.png")
+   ASSETS.tile  = gfx.newImage("assets/dirtblock64x64.png")
    -- ASSETS.tile  = gfx.newImage("assets/nat.jpg")
    ASSETS.wall  = gfx.newImage("assets/dirtblock128x128.png")
    ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
