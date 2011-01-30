@@ -264,6 +264,7 @@ function love.keypressed(key, unicode)
       local csqu = Swarm[count]
       if key == " " --[[and csqu.isTouching]]  then
          csqu.body:applyImpulse(0, -140)
+         runanimation:seek(1)
       end
    end
 
