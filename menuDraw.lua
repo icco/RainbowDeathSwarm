@@ -131,12 +131,12 @@ function helpStoryState:draw()
 
    gfx.setFont(ASSETS.smallFont)
    for i, line in pairs(text) do
-      love.graphics.print(line, 150, (i * 30) + 140)
+      love.graphics.print(line, 145, (i * 30) + 140)
    end
    
    gfx.setFont(ASSETS.verySmallFont)
    for i, line in pairs(backText) do
-      love.graphics.print(line, 480, (i * 15) + 480)
+      love.graphics.print(line, 485, (i * 15) + 480)
    end
 end
 
