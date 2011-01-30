@@ -106,7 +106,7 @@ function love.update(dt)
 
       -- Update Wall, kill all touching
       updateWall(dt)
-
+      backgroundUpdate(dt)
       -- always update camera
       cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
@@ -146,6 +146,9 @@ function love.draw()
 
    -- lol background color
    gfx.setBackgroundColor(90, 90, 90) -- 0-255
+
+   --background behind camera
+   backgroundDraw()
 
    -- draw the world
    cam:predraw()
