@@ -49,7 +49,6 @@ function love.load()
    ASSETS.background1 = gfx.newImage("assets/back1_2048x1024.png")
    ASSETS.background2 = gfx.newImage("assets/back2_2048x1024.png")
    ASSETS.background3 = gfx.newImage("assets/back3_2048x1024.png")
-   
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
