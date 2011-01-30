@@ -49,18 +49,18 @@ function backgroundUpdate()
         end  
 
 --now decrement positions
-	back1pos1x = back1pos1x - 100
-	back1pos2x = back1pos2x - 100
-	back1pos3x = back1pos3x - 100
-	back2pos1x = back2pos1x - 30 
-	back2pos2x = back2pos2x - 30 
-	back2pos3x = back2pos3x - 30 
+	back1pos1x = back1pos1x - 3
+	back1pos2x = back1pos2x - 3
+	back1pos3x = back1pos3x - 3
+	back2pos1x = back2pos1x - 1 
+	back2pos2x = back2pos2x - 1 
+	back2pos3x = back2pos3x - 1 
 end
 
 function backgroundDraw()
 	local gfx = love.graphics
 	gfx.setColor(255,255,255)
-	b3 = gfx.newQuad(back3posx-SCREEN_WIDTH/2, back3posy-SCREEN_HEIGHT/2, 1600, 1200, 0, 0)
+--[[	b3 = gfx.newQuad(back3posx-SCREEN_WIDTH/2, back3posy-SCREEN_HEIGHT/2, 1600, 1200, 0, 0)
 	
 	b21 = gfx.newQuad(back2pos1x-SCREEN_WIDTH/2, back2pos1y-SCREEN_HEIGHT/2, 1600, 1200,0,0)
 	b22 = gfx.newQuad(back2pos2x-SCREEN_WIDTH/2, back2pos2y-SCREEN_HEIGHT/2, 1600, 1200,0,0)
@@ -69,14 +69,27 @@ function backgroundDraw()
 	b11 = gfx.newQuad(back1pos1x-SCREEN_WIDTH/2, back1pos1y-SCREEN_HEIGHT/2, 1600, 1200,0,0)
 	b12 = gfx.newQuad(back1pos2x-SCREEN_WIDTH/2, back1pos2y-SCREEN_HEIGHT/2, 1600, 1200,0,0)
 	b13 = gfx.newQuad(back1pos3x-SCREEN_WIDTH/2, back1pos3y-SCREEN_HEIGHT/2, 1600, 1200,0,0)
+
 	
-	gfx.drawq(ASSETS.background3, b3, back3posx-SCREEN_WIDTH/2, back3posy-SCREEN_HEIGHT/2,0,0.4,0.4,0,0)
+	gfx.drawq(ASSETS.background3, b3, back3posx-SCREEN_WIDTH/2, back3posy-SCREEN_HEIGHT/2,0,1,1,0,0)
 	
-	--gfx.drawq(ASSETS.background2, b2, back2pos1x-SCREEN_WIDTH/2, back2pos1y-SCREEN_HEIGHT/2,0,0.4,0.4,0,0)
-	--gfx.drawq(ASSETS.background2, b2, back2pos2x-SCREEN_WIDTH/2, back2pos2y-SCREEN_HEIGHT/2,0,0.4,0.4,0,0)
-	--gfx.drawq(ASSETS.background2, b2, back2pos3x-SCREEN_WIDTH/2, back2pos3y-SCREEN_HEIGHT/2,0,0.4,0.4,0,0)
+	gfx.drawq(ASSETS.background2, b21, back2pos1x-SCREEN_WIDTH/2, back2pos1y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.drawq(ASSETS.background2, b22, back2pos2x-SCREEN_WIDTH/2, back2pos2y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.drawq(ASSETS.background2, b23, back2pos3x-SCREEN_WIDTH/2, back2pos3y-SCREEN_HEIGHT/2,0,1,1,0,0)
 	
-	--gfx.drawq(ASSETS.background1, b1, back1pos1x-SCREEN_WIDTH/2, back1pos1y-SCREEN_HEIGHT/2,0,0.4,0.4,0,0)
-	--gfx.drawq(ASSETS.background1, b1, back1pos2x-SCREEN_WIDTH/2, back1pos2y-SCREEN_HEIGHT/2,0,0.4,0.4,0,0)
-	--gfx.drawq(ASSETS.background1, b1, back1pos3x-SCREEN_WIDTH/2, back1pos3y-SCREEN_HEIGHT/2,0,0.4,0.4,0,0)
+	gfx.drawq(ASSETS.background1, b11, back1pos1x-SCREEN_WIDTH/2, back1pos1y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.drawq(ASSETS.background1, b12, back1pos2x-SCREEN_WIDTH/2, back1pos2y-SCREEN_HEIGHT/2,0,1,1,0,0)
+	gfx.drawq(ASSETS.background1, b13, back1pos3x-SCREEN_WIDTH/2, back1pos3y-SCREEN_HEIGHT/2,0,1,1,0,0)
+]]
+	gfx.draw(ASSETS.background3, back3posx-SCREEN_WIDTH/2, back3posy-SCREEN_HEIGHT/2,0,.7,.7,0,0)
+	
+	gfx.draw(ASSETS.background2, back2pos1x-SCREEN_WIDTH/2, back2pos1y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+	gfx.draw(ASSETS.background2, back2pos2x-SCREEN_WIDTH/2, back2pos2y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+	gfx.draw(ASSETS.background2, back2pos3x-SCREEN_WIDTH/2, back2pos3y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+	
+	gfx.draw(ASSETS.background1, back1pos1x-SCREEN_WIDTH/2, back1pos1y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+	gfx.draw(ASSETS.background1, back1pos2x-SCREEN_WIDTH/2, back1pos2y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+	gfx.draw(ASSETS.background1, back1pos3x-SCREEN_WIDTH/2, back1pos3y-SCREEN_HEIGHT/2,0,1,.5,0,0)
+
+
 end
