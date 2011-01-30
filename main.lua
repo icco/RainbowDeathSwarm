@@ -282,12 +282,6 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
-	for count = 1, #Swarm do
-		local csqu = Swarm[count]
-		if key == " " --[[and csqu.isTouching]]  then
-			csqu.body:applyImpulse(0, -140)
-			runanimation:seek(1)
-
                 local source
 
                 if(math.random(1,2) == 1) then
@@ -295,6 +289,14 @@ function love.keypressed(key, unicode)
                 else
                    source = ASSETS.jumpSound2
                 end
+
+	for count = 1, #Swarm do
+		local csqu = Swarm[count]
+		if key == " " --[[and csqu.isTouching]]  then
+			csqu.body:applyImpulse(0, -140)
+			runanimation:seek(1)
+
+                --local source = ASSETS.jumpSound
 
 		if source:isStopped() then
 			love.audio.play(source)
