@@ -70,6 +70,7 @@ function love.load()
    ASSETS.largeFont     = love.graphics.newFont(50)
    ASSETS.bgMusic       = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
    ASSETS.jumpSound     = love.audio.newSource("assets/yipee.wav", "static")
+   ASSETS.jumpSound2    = love.audio.newSource("assets/yipee2.wav", "static")
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
@@ -285,7 +286,13 @@ function love.keypressed(key, unicode)
 			csqu.body:applyImpulse(0, -140)
 			runanimation:seek(1)
 
-		local source = ASSETS.jumpSound
+                local source
+
+                if(math.random(1,2) == 1) then
+		   source = ASSETS.jumpSound
+                else
+                   source = ASSETS.jumpSound2
+                end
 
 		if source:isStopped() then
 			love.audio.play(source)
