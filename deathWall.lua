@@ -18,6 +18,12 @@ function updateWall()
       end
    end
 
+   for i, nanoBot in ipairs(Swarm) do
+      local vec = cam:toCameraCoords(hump.vector.new(nanoBot.body:getX(), nanoBot.body:getY()))
+      if (vec.x > (vec2.x + SCREEN_WIDTH/2 - 30)) then
+         swarmPoof(i)
+      end
+   end
 end
 
 function drawDeathWall()
