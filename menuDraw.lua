@@ -56,8 +56,8 @@ function gameOverState:draw()
    gfx.setColor(224, 27, 99, 200)
    gfx.rectangle('fill', 50, 50, SCREEN_WIDTH-100, SCREEN_HEIGHT-100)
 
-   local gameOverString = string.format("Game Over!\nYour score was %f", score)
-   love.graphics.setFont(seconds_font)
+   local gameOverString = string.format("Game Over!\nYour score was %0.2f", score)
+   love.graphics.setFont(ASSETS.largeFont)
    gfx.setColor(5, 255, 5)
    love.graphics.print(gameOverString, SCREEN_HEIGHT/2 - gameOverString:len()*4, SCREEN_HEIGHT/2)
    wereInActualGameNowLoLGlobalsBad = false
