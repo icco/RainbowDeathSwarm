@@ -4,7 +4,7 @@ Gamestate = require "hump.gamestate"
 Class = require "hump.class"
 
 -- highscore lib
-require("sick.lua")
+highscore = require("sick")
 
 -- Random numbers
 require "math"
@@ -75,7 +75,7 @@ function love.load()
    score = 0
 
    -- Load the Highscore
-   highscore_filename = "scores.txt"
+   highscore_filename = "highscores.txt"
    local places = 10
 
    highscore.set(highscore_filename, places, "Anonymous", 0)
