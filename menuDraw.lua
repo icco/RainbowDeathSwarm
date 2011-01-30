@@ -27,7 +27,22 @@ function menuGameState:draw()
    gfx.setColor(255, 255, 255)
    gfx.print("Rainbow Death Swarm", 100, 100, 0, 1, 1)
 
+   local madeByText = {
+      "Made by: Nat Welch, James Pearson,",
+      "Taylor Arnicar, Katherine Blizard",
+      "& Ryuho Kudo for GGJ 2011"
+   }
+
+   gfx.setFont(ASSETS.verySmallFont)
+   for i, line in pairs(madeByText) do
+      love.graphics.print(line, 470, (i * 15) + 480)
+   end
+
    drawMenuItemStuff()
+
+
+
+   
 end
 
 function menuGameState:keyreleased(key)
@@ -178,17 +193,6 @@ function drawMenuItemStuff()
       offset = offset + 90
    end
 
-   local madeByText = {
-      "Made by: Nat Welch, James Pearson,",
-      "Taylor Arnicar, Katherine Blizard",
-      "& Ryuho Kudo for GGJ 2011"
-   }
-
-   gfx.setFont(ASSETS.verySmallFont)
-   for i, line in pairs(madeByText) do
-      love.graphics.print(line, 470, (i * 15) + 480)
-   end
-   gfx.setFont(ASSETS.largeFont)
 end
 
 function newGame()
