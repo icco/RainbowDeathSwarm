@@ -6,6 +6,7 @@ function Cadd(obj1, obj2, Ccontact)
       local norx, nory = Ccontact:getNormal()
       if obj1.isTouching ~= nil then --math.cos(nory*1/(nory*nory+norx*norx)) < 0 then
          obj1.isTouching = true
+
       end
    elseif obj2 ~= nil and obj1 ~= nil and obj1.body:getY() > obj2.body:getY() then
       local norx, nory = Ccontact:getNormal()
@@ -17,6 +18,12 @@ function Cadd(obj1, obj2, Ccontact)
    elseif obj2 ~= nil then
       obj2.isTouching = true
    end
+   --[[zombieIndex = zombieIndex + 1
+   Zombies[zombieIndex] = obj1
+   zombieIndex = zombieIndex + 1
+   Zombies[zombieIndex] = obj2
+   zombieIndex = zombieIndex + 1
+   Zombies[zombieIndex] = Ccontact]]
 end
 
 --called when two objects are touching
@@ -37,7 +44,11 @@ function Cremove(obj1, obj2, Ccontact)
    elseif obj2 ~= nil then
       obj2.isTouching = false
    end
-
+   
+   --[[zombieIndex = zombieIndex + 1
+   Zombies[zombieIndex] = obj1
+   zombieIndex = zombieIndex + 1
+   Zombies[zombieIndex] = obj2]]
 end
 
 function Cresult()

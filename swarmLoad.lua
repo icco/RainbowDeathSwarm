@@ -3,11 +3,15 @@ local phys = love.physics
 
 SQUIRREL_RADIUS = 23
 SQUIRREL_SPEED = 108
+ASSETS.cloud = love.graphics.newImage("assets/poof.png")
 
 Squirrel = Class(function(self, posx, posy, spee)
    self.Sspeed = spee
 
    self.img = ASSETS.swarm
+   self.Poofani = newAnimation(ASSETS.cloud, 50, 50, .01, 0)
+   self.Runani = newAnimation(ASSETS.squAnimation, 128, 128, .1, 8)
+   self.Runani:seek(math.random(1,8))
    self.body = phys.newBody(world, posx, posy, 10, 15)
    self.shape = phys.newCircleShape(self.body, 0, 0, SQUIRREL_RADIUS)
    self.shape:setRestitution(.2)
@@ -24,7 +28,8 @@ end)
 
 Zombies = {}  --for not deleting dead squirrels. hopes this solves it
 zombieIndex = 0
-
+ShapeZom = {}
+shzom = 0
 
 --make something that maintains a table of Squirrels that init and delete
 function initSwarm()
@@ -51,8 +56,12 @@ function swarmLoadFunction()
 end
 
 function swarmPoof(i)
-   --zombieIndex = zombieIndex + 1
-   --Zombies[zombieIndex] = Swarm[i].body
+   zombieIndex = zombieIndex + 1
+   Zombies[zombieIndex] = Swarm[i].body
+    shzom = shzom + 1
+   ShapeZom[shzom] = Swarm[i].shape
+      
+
    local source = ASSETS.deathSound
 
    if source:isStopped() then
