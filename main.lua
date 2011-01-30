@@ -17,7 +17,6 @@ ARENA_WIDTH    = 40000
 ARENA_HEIGHT   = 600
 ZOOM_VALUE     = 0.05
 ZOOM_MINVALUE     = 0.5
-SEXY_MULTIPLICATION_TIME = 200
 
 ASSETS = { }
 
@@ -31,7 +30,7 @@ local swarmUpdate   = require("swarmUpdate")
 local swarmDraw     = require("swarmDraw")
 local deathWall     = require("deathWall")
 local background    = require("Background")
-local phcallbacks    = require("physFuncs")
+local physicscallbacks    = require("physFuncs")
 -- convenience renaming (Aliases for ease of typing)
 local vector = hump.vector
 local camera = hump.camera
@@ -79,7 +78,7 @@ function resetGame()
    -- new physics world
    world = phys.newWorld(0, 0, ARENA_WIDTH, ARENA_HEIGHT)
    world:setGravity(0, 750)
-   world:setCallbacks(Cadd, Cpersist, Cremove, nil)
+   --world:setCallbacks(Cadd, Cpersist, Cremove,Cresult )
 
    -- Init Terrain ... *&$#!$
    initTerrain()
@@ -93,8 +92,6 @@ function resetGame()
    -- Start the clock!
    now = 0
    score = 0
-   
-   timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
 
    --asdasdasd asdasdasd
    backgroundLoad()
@@ -137,18 +134,6 @@ function love.update(dt)
 
          if (love.keyboard.isDown("a"))  and x > -200 then
             csqu.body:applyImpulse(-100, 0)
-         end
-         
-         if (not love.keyboard.isDown("d")) and
-            (not love.keyboard.isDown("a")) and
-            (not love.keyboard.isDown(" ")) then
-            timeTilSexyMultiplication = timeTilSexyMultiplication - dt
-            if timeTilSexyMultiplication < 0 then
-               for i=1, #Swarm/2 do
-                  Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-               end
-               timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
-            end
          end
       end
 
@@ -255,7 +240,7 @@ end
 function love.keypressed(key, unicode)
    for count = 1, #Swarm do
       local csqu = Swarm[count]
-      if key == " " and csqu.isTouching  then
+      if key == " " --[[and csqu.isTouching]]  then
          csqu.body:applyImpulse(0, -140)
       end
    end

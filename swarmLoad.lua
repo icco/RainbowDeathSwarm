@@ -15,7 +15,7 @@ Squirrel = Class(function(self, posx, posy, spee)
    self.redness = math.random(0,20);
    self.greenness = math.random(0,50);
    self.blueness = math.random(0,150);
-
+   self.shape:setData(self)
    -- disappear and stuff
    self.poof = function(self)
       self.body:applyImpulse(0, -50)
@@ -38,7 +38,7 @@ function initSwarm()
       local spawny = 20 + math.random()
       local speed = SQUIRREL_SPEED
 
-      Swarm[count] = Squirrel(radius, spawnx, spawny, speed)
+      Swarm[count] = Squirrel(radius, spawnx, spawny, speed )
    end
 end
 
