@@ -30,6 +30,7 @@ ARENA_HEIGHT   = 600
 ZOOM_VALUE     = 0.05
 ZOOM_MINVALUE     = 0.5
 SEXY_MULTIPLICATION_TIME = 200
+MAX_SQUIRRELS  = 150
 
 ASSETS = { }
 
@@ -166,7 +167,9 @@ function love.update(dt)
             timeTilSexyMultiplication = timeTilSexyMultiplication - dt
             if timeTilSexyMultiplication < 0 then
                for i=1, #Swarm/2 do
-                  Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+                  if #Swarm < MAX_SQUIRRELS then
+                     Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+                  end
                end
                timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
             end
