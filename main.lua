@@ -43,6 +43,7 @@ function love.load()
    ASSETS.swarm        = gfx.newImage("assets/nat.jpg")
    ASSETS.tile         = gfx.newImage("assets/dirtblock50x50.png")
    ASSETS.wall         = gfx.newImage("assets/dirtblock128x128.png")
+   ASSETS.rainbow      = gfx.newImage("assets/rainbow.png")
    ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
    ASSETS.squDance     = gfx.newImage("assets/SquirrelDance128x128.png")
    ASSETS.background1  = gfx.newImage("assets/back1_2048x1024.png")
@@ -106,7 +107,7 @@ function love.update(dt)
 
       -- Update Wall, kill all touching
       updateWall(dt)
-
+      backgroundUpdate(dt)
       -- always update camera
       cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
@@ -147,6 +148,9 @@ function love.draw()
    -- lol background color
    gfx.setBackgroundColor(90, 90, 90) -- 0-255
 
+   --background behind camera
+   backgroundDraw()
+
    -- draw the world
    cam:predraw()
 
@@ -161,6 +165,8 @@ function love.draw()
 
    -- done drawing the world
    cam:postdraw()
+   
+   drawDeathWall()
 
    -- draw the top right stats (seconds, # of swarm, score)
    if wereInActualGameNowLoLGlobalsBad then      
