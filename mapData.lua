@@ -8,12 +8,28 @@ world_string = {}
 function load_map_file(filename) 
    contents, size = love.filesystem.read(filename)
    local idx = 0
+   local rowc, colc = 1
+   local ret = {}
 
-   for idx = 1, string.len(contents), 1 do
-      --print(idx .. " " .. tostring(contents[i]))
+   for row in contents:gmatch("[^\r\n]+") do
+      if row:gmatch("^\d$") then
+         idx = idx + 1
+         ret[idx] = {}
+         ret[idx].difficulty = tonumber(row)
+         ret[idx].data = {}
+         colc = 1
+         ret[idx].data[colc] = {}
+      else
+         for char in row:gmatch(".") do
+            ret[idx].data[colc][rowc] = (char == "#")
+         end
+      end
+
+      rowc = 1
+      colc = colc + 1
    end
 
-   return {}
+   return ret
 end
 
 world_pieces = load_map_file('mapStrings.txt')
