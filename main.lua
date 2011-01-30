@@ -1,12 +1,24 @@
+-- Main file that LOVE runs
+--
+-- @author Nat Welch
+-- @author Taylor Arnicar
+-- @author Katherine Blizard
+-- @author James Pearon
+-- @author Ryuho Kudo
+
+-- Require HUMP
 require "hump.vector"
 require "hump.camera"
 Gamestate = require "hump.gamestate"
 Class = require "hump.class"
+
+-- Anal is an animation library you sicko
 Anal = require "Anal/AnAL"
+
 -- highscore lib
 highscore = require("sick")
 
--- Random numbers
+-- For Random numbers
 require "math"
 
 -- Global Vars (technically, there's no constants)
@@ -31,6 +43,7 @@ local swarmDraw     = require("swarmDraw")
 local deathWall     = require("deathWall")
 local background    = require("Background")
 local physicscallbacks    = require("physFuncs")
+
 -- convenience renaming (Aliases for ease of typing)
 local vector = hump.vector
 local camera = hump.camera
@@ -67,6 +80,12 @@ function love.load()
    cam.lastCoords = vector.new(-1, -1)
    lastZoomed = love.timer.getTime()
 
+   -- Load the Highscore (Only call once!)
+   highscore_filename = "highscores.txt"
+   local places = 10
+
+   highscore.set(highscore_filename, places, "Anony", 0)
+
    resetGame()
 end
 
@@ -95,12 +114,6 @@ function resetGame()
 
    --asdasdasd asdasdasd
    backgroundLoad()
-
-   -- Load the Highscore
-   highscore_filename = "highscores.txt"
-   local places = 10
-
-   highscore.set(highscore_filename, places, "Anonymous", 0)
 end
 
 function love.update(dt)
@@ -118,6 +131,7 @@ function love.update(dt)
       updateWall(dt)
       backgroundUpdate(dt)
       rainAni:update(dt)
+
       -- always update camera
       cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
@@ -138,8 +152,11 @@ function love.update(dt)
          end
       end
 
-      world:update(dt)
+      -- STATS.
       score = score + ((now/100) * (#Swarm / 10))
+      now = love.timer.getTime() - load_time
+
+      world:update(dt)
 
       -- Game Over, save score...
       if #Swarm == 0 then
@@ -178,14 +195,24 @@ function love.draw()
 
    drawDeathWall()
 
-   -- draw the top right stats (seconds, # of swarm, score)
    if wereInActualGameNowLoLGlobalsBad then
-      now = love.timer.getTime() - load_time
+
+      -- draw the stats (seconds, # of swarm, score)
       local secondsString = string.format("%4.2fs", now)
       love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(255, 5, 5)
-      love.graphics.print(secondsString, SCREEN_WIDTH-150, 20)
+      love.graphics.print(secondsString, 160, SCREEN_HEIGHT-40)
 
+      local swarmCountString = string.format("%d Nats", #Swarm)
+      love.graphics.setFont(ASSETS.smallFont)
+      gfx.setColor(5, 255, 5)
+      love.graphics.print(swarmCountString, 310, SCREEN_HEIGHT-40)
+
+      local scoreCountString = string.format("%.2f Score", score)
+      gfx.setColor(5, 5, 255)
+      love.graphics.print(scoreCountString, 440, SCREEN_HEIGHT-40)
+
+      -- Camera Draw Logic
       local swarmLoopCount = #Swarm
       local vec, vec2
 
@@ -212,7 +239,6 @@ function love.draw()
          end
       end
 
-
       -- this is for zooming in
       if swarmXMax > -1 and swarmXMax < vec2.x + SCREEN_WIDTH/4 and cam.zoom < 1.0 then
          if now - lastZoomed > 0.2 then
@@ -225,16 +251,7 @@ function love.draw()
       end
 
       --gfx.setColor(5, 5, 255)
-      --gfx.circle( 'fill', (vec2.x + SCREEN_WIDTH/2), SCREEN_HEIGHT/2, 5, 50 )
-
-      local swarmCountString = string.format("%d Nats", #Swarm)
-      love.graphics.setFont(ASSETS.smallFont)
-      gfx.setColor(5, 255, 5)
-      love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 40)
-
-      local swarmCountString = string.format("%4.2f Score", score)
-      gfx.setColor(5, 5, 255)
-      love.graphics.print(swarmCountString, SCREEN_WIDTH-150, 60)
+      --gfx.circle('fill', (vec2.x + SCREEN_WIDTH/2), SCREEN_HEIGHT/2, 5, 50)
    end
 end
 

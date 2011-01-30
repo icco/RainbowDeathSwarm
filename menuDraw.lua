@@ -85,12 +85,12 @@ function highScoreState:draw()
    gfx.setColor(255, 255, 255)
    local line = ""
    gfx.setFont(ASSETS.largeFont)
-   love.graphics.print("High Scores", 200, 100)
+   love.graphics.print("High Scores", 190, 100)
 
    gfx.setFont(ASSETS.smallFont)
    for i, score, name in highscore() do
-      line = string.format("%2d. %6.2f  %s", i, score, name)
-      love.graphics.print(line, 200, (i * 30) + 150)
+      line = string.format("%2d.     %.2f", i, score)
+      love.graphics.print(line, 250, (i * 30) + 150)
    end
 end
 
