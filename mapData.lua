@@ -43,7 +43,6 @@ function load_map_file(filename)
             ret.startIndeces[ret[idx].difficulty] = idx
          end
 
-
          ret[idx].difficulty = tonumber(row)
          ret[idx].data = {}
          ret.difficulties[ret[idx].difficulty] = ret.difficulties[ret[idx].difficulty] + 1
