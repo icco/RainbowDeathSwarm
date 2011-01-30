@@ -1,9 +1,11 @@
 -- This function should be called whenever we need to delete the far left column, and draw a new right column.
 function updateTerrain()
    print("update terrain called")
-   local difficulty = math.floor(now/12)
+   
+   -- Difficulty starts at 1 and counts up
+   local difficulty = math.floor(now/12) + 1
 
---print("difficulty is " .. difficulty)
+print("difficulty is " .. difficulty)
    -- If the offset counter has reached 2 million
    -- then copy the map back to index 1 and reset the counter.
 
@@ -13,11 +15,24 @@ function updateTerrain()
    -- colCount is the column we'll be starting to draw into.
    local colCount = (1 + map["counter"] + map["howLong"])
 
-   -- TODO: Pick out a world_piece to use.
-   --startIndex = world_pieces[
-   --toUse = {}
+   -- We need to pick out a world_piece to use.
 
-   --while (compare(
+   -- Get the starting index in the world_pieces list for this difficulty type.
+   local startIndex = world_pieces.startIndeces[difficulty]
+   
+   -- Get how many entries of this difficulty type there are in the world_pieces list
+   local numToChooseFrom = world_pieces.difficulties[difficulty]
+
+   -- Start off using the first index available for this difficulty.
+   --local toUse = world_pieces[math.random(startIndex, startIndex + numToChooseFrom - 1)]
+
+local toUse = world_pieces[1]
+   -- Compare the last known column with the upcoming piece
+   while (compare(toUse.data, map[map["counter"] + map["howLong"]]) == false) do
+      print("trying to find a new piece to use")
+      --toUse = world_pieces[math.random(startIndex, startIndex + numToChooseFrom - 1)]
+      toUse = world_pieces[math.random(1, 3)]
+   end
    
    -- Initialize this column to nothing
    map[colCount] = {}
@@ -51,25 +66,24 @@ function updateTerrain()
    map["counter"] = map["counter"]+1
 end
 
+-- Count the number of walls in a given column. Helper function used as a criteria
+-- in compare()
 function countWalls(column)
-local count = 0;
-print("column")
+   local count = 0;
+   print("column")
    for i = 1, #column do
-      print("  " .. column[i])
       if(column[i]) then
          count = count + 1
       end
    end
-print("  has " .. count .. " walls")
-return count
+   print("  has " .. count .. " walls")
+   return count
 end
 
 -- Function to compare the last column of the first piece with the first column of the second piece
 -- A piece is a hand-generated set of columns which will be put into the game
-function compare(p1, p2)
+function compare(data1, data2)
    local decision
-   data1 = p1.data
-   data2 = p2.data
 
    -- We need to acess this index within data1
    size1 = #data1
@@ -80,13 +94,13 @@ function compare(p1, p2)
 
    -- If there's too big of a difference i the number of walls between the linking parts
    -- of the two pieces, then we should fail.
-   if(math.abs(wallCount1-wallCount2) > 3) then
+   if(math.abs(wallCount1-wallCount2) > 4) then
       print("Failing comparison because of large # of walls difference.")
       return false
    end
 
    -- Make sure that somewhere between the two, there is a 2 square tall gap that connects.
-   for i = 1, map.howHigh do
+   for i = 1, map.howHigh, 1 do
       -- If a given square in one piece is an empty spot, then check for an empty spot
       -- right after it as well. If we find both of these to be empty, then check
       -- the other piece for these matching empty squares. If we find both of these additional 
