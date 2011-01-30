@@ -22,6 +22,10 @@ Squirrel = Class(function(self, posx, posy, spee)
    end
 end)
 
+Zombies = {}  --for not deleting dead squirrels. hopes this solves it
+zombieIndex = 0
+
+
 --make something that maintains a table of Squirrels that init and delete
 function initSwarm()
    local count = 0
@@ -47,6 +51,16 @@ function swarmLoadFunction()
 end
 
 function swarmPoof(i)
+   --zombieIndex = zombieIndex + 1
+   --Zombies[zombieIndex] = Swarm[i].body
+      local source = ASSETS.deathSound
+
+      if source:isStopped() then
+         love.audio.play(source)
+      else
+         love.audio.stop(source)
+         love.audio.play(source)
+      end
    Swarm[i]:poof()
    table.remove(Swarm, i)
 end
