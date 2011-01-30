@@ -2,7 +2,7 @@
 function updateTerrain()
    local difficulty = math.floor(now/12)
 
-print("difficulty is " .. difficulty)
+--print("difficulty is " .. difficulty)
    -- If the offset counter has reached 2 million
    -- then copy the map back to index 1 and reset the counter.
 
