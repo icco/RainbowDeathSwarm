@@ -39,9 +39,15 @@ function love.load()
 
    -- Init all of our textures and fonts
    ASSETS.swarm = gfx.newImage("assets/nat.jpg")
-   ASSETS.tile  = gfx.newImage("assets/ground.png")
+   ASSETS.tile  = gfx.newImage("assets/dirtblock128x128.png")
    -- ASSETS.tile  = gfx.newImage("assets/nat.jpg")
-   ASSETS.wall  = gfx.newImage("assets/nat.jpg")
+   ASSETS.wall  = gfx.newImage("assets/dirtblock128x128.png")
+   ASSETS.squAnimation = gfx.newImage("assets/SquirrelAnimation128x128.png")
+   ASSETS.squDance = gfx.newImage("assets/SquirrelDance128x128.png")
+   ASSETS.background1 = gfx.newImage("assets/back1_2048x1024.png")
+   ASSETS.background2 = gfx.newImage("assets/back2_2048x1024.png")
+   ASSETS.background3 = gfx.newImage("assets/back3_2048x1024.png")
+   
 
    -- Initialize the pseudo random number generator
    math.randomseed(os.time())
