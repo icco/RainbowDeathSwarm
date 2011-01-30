@@ -45,6 +45,7 @@ local swarmDraw     = require("swarmDraw")
 local deathWall     = require("deathWall")
 local background    = require("Background")
 local physicscallbacks    = require("physFuncs")
+nowminus = 0   -- timer keeper for jumping
 
 -- convenience renaming (Aliases for ease of typing)
 local vector = hump.vector
@@ -138,60 +139,60 @@ function love.update(dt)
          updateTerrain()
       end
 
-	-- Update Wall, kill all touching
-	updateWall(dt)
-	backgroundUpdate(dt)
-rainAni:update(dt)
+      -- Update Wall, kill all touching
+      updateWall(dt)
+      backgroundUpdate(dt)
+      rainAni:update(dt)
 
-	-- always update camera
-cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
+      -- always update camera
+      cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
-	-- Update teh swarm
-swarmUpdateFunction(dt)
+      -- Update teh swarm
+      swarmUpdateFunction(dt)
 
-	-- SWARM CONTROL!
-	for count = 1, #Swarm do
-	local csqu = Swarm[count]
-x, y = csqu.body:getLinearVelocity( )
+      -- SWARM CONTROL!
+      for count = 1, #Swarm do
+         local csqu = Swarm[count]
+         x, y = csqu.body:getLinearVelocity( )
 
-	if (love.keyboard.isDown("d")) and x <= 200 then
-csqu.body:applyImpulse(100, 0)
-	end
+         if (love.keyboard.isDown("d")) and x <= 200 then
+            csqu.body:applyImpulse(100, 0)
+         end
 
-	if (love.keyboard.isDown("a"))  and x > -200 then
-csqu.body:applyImpulse(-100, 0)
-	end
-	end
+         if (love.keyboard.isDown("a"))  and x > -200 then
+            csqu.body:applyImpulse(-100, 0)
+         end
+      end
 
-	if (not love.keyboard.isDown("d")) and
-	(not love.keyboard.isDown("a")) and
-	(not love.keyboard.isDown(" ")) then
-	timeTilSexyMultiplication = timeTilSexyMultiplication - dt
-	if timeTilSexyMultiplication < 0 then
-	for i=1, (#Swarm/2) do
-	if #Swarm < MAX_SQUIRRELS then
-Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-	end
-	end
-	timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
-	end
-	end
+      if (not love.keyboard.isDown("d")) and
+         (not love.keyboard.isDown("a")) and
+         (not love.keyboard.isDown(" ")) then
+         timeTilSexyMultiplication = timeTilSexyMultiplication - dt
+         if timeTilSexyMultiplication < 0 then
+            for i=1, (#Swarm/2) do
+               if #Swarm < MAX_SQUIRRELS then
+                  Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+               end
+            end
+            timeTilSexyMultiplication = SEXY_MULTIPLICATION_TIME
+         end
+      end
 
-	-- STATS.
-score = score + ((now/100) * (#Swarm / 10))
-	now = love.timer.getTime() - load_time
+      -- STATS.
+      score = score + ((now/100) * (#Swarm / 10))
+      now = love.timer.getTime() - load_time
 
-world:update(dt)
+      world:update(dt)
 
-	-- Game Over, save score...
-	if #Swarm == 0 then
-	local username =  os.getenv("USERNAME")
-highscore.add(username, score)
+      -- Game Over, save score...
+      if #Swarm == 0 then
+         local username =  os.getenv("USERNAME")
+         highscore.add(username, score)
 
-Gamestate.switch(gameOverState)
-	end
-	end
-	end
+         Gamestate.switch(gameOverState)
+      end
+   end
+end
 
 function love.draw()
    -- convenience
@@ -278,39 +279,39 @@ function love.draw()
 end
 
 function love.keypressed(key, unicode)
-	for count = 1, #Swarm do
-		local csqu = Swarm[count]
-		if key == " " --[[and csqu.isTouching]]  then
-			csqu.body:applyImpulse(0, -140)
-			runanimation:seek(1)
+   if key == " " and now - nowminus > 1 then
+      for count = 1, #Swarm do
+         local csqu = Swarm[count]
 
-		local source = ASSETS.jumpSound
+         csqu.body:applyImpulse(0, -140)
+         runanimation:seek(1)
 
-		if source:isStopped() then
-			love.audio.play(source)
-		else
-			love.audio.stop(source)
-			love.audio.play(source)
-		end
-	end
+         local source = ASSETS.jumpSound
+
+         if source:isStopped() then
+            love.audio.play(source)
+         else
+            love.audio.stop(source)
+            love.audio.play(source)
+         end
+      end
+      nowminus = now
+   end	
 
    -- Quit on escape key
    if key == 'escape' then
       love.event.push('q')
    end
 
-   if key == 'f' then -- Spawn on f
-      -- Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-   end
-
-   if key == 'm' then -- Mute
+   if key == 'f' then
+      Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+   elseif key == 'm' then
       if love.audio.getVolume() == 0 then
          love.audio.setVolume(1)
       else
          love.audio.setVolume(0)
       end
    end
-end
 end
 
 function love.quit()
