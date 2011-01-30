@@ -17,7 +17,7 @@ function updateWall()
    vec2 = cam:toCameraCoords(cam.pos)
    for i, nanoBot in ipairs(Swarm) do
       local vec = cam:toCameraCoords(hump.vector.new(nanoBot.body:getX(), nanoBot.body:getY()))
-      if (vec.x < (vec2.x - SCREEN_WIDTH/2)) or (nanoBot.body:getY() + SQUIRREL_RADIUS > ( SCREEN_HEIGHT - 10)) then
+      if (vec.x < (vec2.x - SCREEN_WIDTH/2 + 130)) or (nanoBot.body:getY() + SQUIRREL_RADIUS > ( SCREEN_HEIGHT - 10)) then
          swarmPoof(i)
       end
    end
