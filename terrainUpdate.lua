@@ -10,26 +10,38 @@ function updateTerrain()
    -- Initialize this column to nothing
    map[colCount] = {}
 
-   -- Generate a new far right column (map[1+offset + (numColums, AKA ARENA_WIDTH/map[howLong])
-   for rowCount = 1, map.howHigh, 1 do
-      if rowCount == 1 then
+   if math.random() <= 0.05 then
+      for rowCount = 1, 1, 1 do
+         if rowCount == 1 then
+            local x = (map["boxw"] * colCount)
+            local y = (map["boxw"] * rowCount)
+            map[colCount][rowCount] = makeCube(map["boxw"], x, y)
+         end
+      end
+
+      map[colCount]["NumOfBlocks"] = 0
+   else
+      -- Generate a new far right column (map[1+offset + (numColums, AKA ARENA_WIDTH/map[howLong])
+      for rowCount = 1, map.howHigh, 1 do
+         if rowCount == 1 then
+            local x = (map["boxw"] * colCount)
+            local y = (map["boxw"] * rowCount)
+            map[colCount][rowCount] = makeCube(map["boxw"], x, y)
+         end
+      end
+
+      local randomBlockCount = math.floor((math.random(0, map.howHigh/2)))
+
+      -- Generate a new far right column (map[1+offset + (numColums, AKA ARENA_WIDTH/map[howLong])
+      for rowCount = map.howHigh, map.howHigh-randomBlockCount, -1 do
          local x = (map["boxw"] * colCount)
          local y = (map["boxw"] * rowCount)
          map[colCount][rowCount] = makeCube(map["boxw"], x, y)
       end
+
+      map[colCount]["NumOfBlocks"] = randomBlockCount
    end
 
-   local randomBlockCount = math.floor((math.random(0, map.howHigh/2)))
-
-   -- Generate a new far right column (map[1+offset + (numColums, AKA ARENA_WIDTH/map[howLong])
-   for rowCount = map.howHigh, map.howHigh-randomBlockCount, -1 do
-      local x = (map["boxw"] * colCount)
-      local y = (map["boxw"] * rowCount)
-      map[colCount][rowCount] = makeCube(map["boxw"], x, y)
-   end
-
-   map[colCount]["NumOfBlocks"] = randomBlockCount
-   
    -- Increment the offset counter by one
    map["counter"] = map["counter"]+1
 end
