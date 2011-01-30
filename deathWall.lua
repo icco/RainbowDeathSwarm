@@ -4,7 +4,7 @@ function initWall()
    wall = {}
    wall.body = phys.newBody(world, 2, ARENA_HEIGHT / 2, 0, 0)
    wall.shape = phys.newRectangleShape(wall.body, 0, 0, 5, ARENA_HEIGHT, 0)
-   
+
    deathWall = {}
    deathWall.body = phys.newBody(world, 2, ARENA_HEIGHT / 2, 0, 0)
    deathWall.shape = phys.newRectangleShape(deathWall.body, 0, 0, 5, ARENA_HEIGHT, 0)
@@ -14,13 +14,13 @@ function initWall()
 end
 
 function updateWall()
-    vec2 = cam:toCameraCoords(cam.pos)
-	for i, nanoBot in ipairs(Swarm) do
-		local vec = cam:toCameraCoords(hump.vector.new(nanoBot.body:getX(), nanoBot.body:getY()))
-		if (vec.x < (vec2.x - SCREEN_WIDTH/2)) or (nanoBot.body:getY() + SQUIRREL_RADIUS > ( SCREEN_HEIGHT - 10)) then
-			swarmPoof(i)
-		end
-	end
+   vec2 = cam:toCameraCoords(cam.pos)
+   for i, nanoBot in ipairs(Swarm) do
+      local vec = cam:toCameraCoords(hump.vector.new(nanoBot.body:getX(), nanoBot.body:getY()))
+      if (vec.x < (vec2.x - SCREEN_WIDTH/2)) or (nanoBot.body:getY() + SQUIRREL_RADIUS > ( SCREEN_HEIGHT - 10)) then
+         swarmPoof(i)
+      end
+   end
 
 end
 
@@ -31,7 +31,7 @@ function drawWall()
 
    gfx.setColor(255, 255, 255)
    gfx.draw(ASSETS.wall, x2, y2, 0, 1, 1, w-w, w-w-w)
-   
+
 end
 
 function drawDeathWall()

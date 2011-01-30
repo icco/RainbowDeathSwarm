@@ -105,7 +105,7 @@ end
 
 function love.update(dt)
    swarmUpdateFunction(dt)
-   
+
    if wereInActualGameNowLoLGlobalsBad then
       -- TODO: Check if the furthest left column is completely off screen.
       -- If it is, then we should actually update the terrain.
@@ -117,8 +117,8 @@ function love.update(dt)
       -- Update Wall, kill all touching
       updateWall(dt)
       backgroundUpdate(dt)
-      rainAni:update(dt) 
-     -- always update camera
+      rainAni:update(dt)
+      -- always update camera
       cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
       -- Update teh swarm
@@ -175,11 +175,11 @@ function love.draw()
 
    -- done drawing the world
    cam:postdraw()
-   
+
    drawDeathWall()
 
    -- draw the top right stats (seconds, # of swarm, score)
-   if wereInActualGameNowLoLGlobalsBad then      
+   if wereInActualGameNowLoLGlobalsBad then
       now = love.timer.getTime() - load_time
       local secondsString = string.format("%4.2fs", now)
       love.graphics.setFont(ASSETS.smallFont)
@@ -192,7 +192,7 @@ function love.draw()
       vec2 = cam:toCameraCoords(cam.pos)
       vec2.x = vec2.x - 50
       local swarmXMax = -1
-	   for count = 1, #Swarm do
+      for count = 1, #Swarm do
          vec = cam:toCameraCoords(vector.new(Swarm[count].body:getX(),Swarm[count].body:getY()))
 
          if swarmXMax < vec.x then
@@ -204,7 +204,7 @@ function love.draw()
          if vec.x > (vec2.x + SCREEN_WIDTH/2) and cam.zoom >= 0.5 then
             if now - lastZoomed > 0.2 then
                lastZoomed = now
-               cam.zoom = cam.zoom * 1.0 - ZOOM_VALUE 
+               cam.zoom = cam.zoom * 1.0 - ZOOM_VALUE
                if cam.zoom <= ZOOM_MINVALUE then
                   cam.zoom = ZOOM_MINVALUE
                end

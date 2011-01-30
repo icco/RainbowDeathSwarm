@@ -26,7 +26,7 @@ function menuGameState:draw()
 
    gfx.setColor(255, 255, 255)
    gfx.print("Rainbow Death Swarm", 100, 100, 0, 1, 1)
-   
+
    drawMenuItemStuff()
 end
 
@@ -108,15 +108,15 @@ function helpStoryState:draw()
    local line = ""
    gfx.setFont(ASSETS.largeFont)
    love.graphics.print("Help/Story", 200, 100)
-   
+
    local text = {
-   "Rainbows are scary.",
-   "They will eat you alive, son.",
-   "Run away with 'd'.",
-   "",
-   "Jumping results from 'space'.",
-   "You may find it useful, mm?",
-   "Stop to reproduce.",
+      "Rainbows are scary.",
+      "They will eat you alive, son.",
+      "Run away with 'd'.",
+      "",
+      "Jumping results from 'space'.",
+      "You may find it useful, mm?",
+      "Stop to reproduce.",
    }
 
    gfx.setFont(ASSETS.smallFont)
@@ -154,5 +154,5 @@ function newGame()
    load_time = love.timer.getTime()
    Gamestate.switch(newGameState)
 end
-   
+
 return menuGameState, newGameState, gameOverState, highScoreState
