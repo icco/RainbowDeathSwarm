@@ -18,7 +18,8 @@ ARENA_HEIGHT   = 600
 
 ASSETS = { }
 
-require("menuDraw")
+local mapData       = require("mapData")
+local menuDraw      = require("menuDraw")
 local terrainLoad   = require("terrainLoad")
 local terrainUpdate = require("terrainUpdate")
 local terrainDraw   = require("terrainDraw")
