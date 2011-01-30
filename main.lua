@@ -30,6 +30,7 @@ local swarmUpdate   = require("swarmUpdate")
 local swarmDraw     = require("swarmDraw")
 local deathWall     = require("deathWall")
 local background    = require("Background")
+local phcallbacks    = require("physFuncs")
 -- convenience renaming (Aliases for ease of typing)
 local vector = hump.vector
 local camera = hump.camera
@@ -231,7 +232,7 @@ end
 function love.keypressed(key, unicode)
    for count = 1, #Swarm do
       local csqu = Swarm[count]
-      if key == " "   then
+      if key == " " and csqu.isTouching  then
          csqu.body:applyImpulse(0, -140)
       end
    end
