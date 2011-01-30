@@ -133,7 +133,7 @@ function love.update(dt)
       -- TODO: Check if the furthest left column is completely off screen.
       -- If it is, then we should actually update the terrain.
       -- leftCameraBoundaryX - (boxW/2)
-      if(map[1 + map["counter"]][1].body:getX() +(20*map["boxw"]) < ((now*100) - map["boxw"])) then
+      if(map[1 + map["counter"]][1].body:getX() +(22*map["boxw"]) < ((now*100) - map["boxw"])) then
          updateTerrain()
       end
 
