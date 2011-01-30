@@ -236,11 +236,11 @@ function love.draw()
       local swarmCountString = string.format("%d Squirrels", #Swarm)
       love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(5, 255, 5)
-      love.graphics.print(swarmCountString, 290, SCREEN_HEIGHT-40)
+      love.graphics.print(swarmCountString, 270, SCREEN_HEIGHT-40)
 
       local scoreCountString = string.format("%.2f Points", score)
       gfx.setColor(5, 5, 255)
-      love.graphics.print(scoreCountString, 440, SCREEN_HEIGHT-40)
+      love.graphics.print(scoreCountString, 460, SCREEN_HEIGHT-40)
 
       -- Camera Draw Logic
       local swarmLoopCount = #Swarm
