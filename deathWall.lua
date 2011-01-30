@@ -4,6 +4,11 @@ function initWall()
    wall = {}
    wall.body = phys.newBody(world, 2, ARENA_HEIGHT / 2, 0, 0)
    wall.shape = phys.newRectangleShape(wall.body, 0, 0, 5, ARENA_HEIGHT, 0)
+   
+   deathWall = {}
+   deathWall.body = phys.newBody(world, 2, ARENA_HEIGHT / 2, 0, 0)
+   deathWall.shape = phys.newRectangleShape(deathWall.body, 0, 0, 5, ARENA_HEIGHT, 0)
+   deathWall.img = ASSETS.rainbow
 end
 
 function updateWall()
@@ -23,4 +28,13 @@ function drawWall()
 
    gfx.setColor(255, 255, 255)
    gfx.draw(ASSETS.wall, x2, y2, 0, 1, 1, w-w, w-w-w)
+end
+
+function drawDeathWall()
+   local gfx = love.graphics
+   local x1, y1, x2, y2, x3, y3, x4, y4 = deathWall.shape:getBoundingBox()
+   local w = x3 - x2
+
+   gfx.setColor(255, 255, 255)
+   gfx.draw(deathWall.img, x2, y2)
 end
