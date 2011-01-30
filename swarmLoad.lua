@@ -10,7 +10,8 @@ Squirrel = Class(function(self, posx, posy, spee)
 
    self.img = ASSETS.swarm
    self.Poofani = newAnimation(ASSETS.cloud, 50, 50, .01, 0)
-   --self.Runani = newAnimation(ASSETS.squAnimation, 
+   self.Runani = newAnimation(ASSETS.squAnimation, 128, 128, .1, 8)
+   self.Runani:seek(math.random(1,8))
    self.body = phys.newBody(world, posx, posy, 10, 15)
    self.shape = phys.newCircleShape(self.body, 0, 0, SQUIRREL_RADIUS)
    self.shape:setRestitution(.2)
