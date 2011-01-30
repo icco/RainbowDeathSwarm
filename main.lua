@@ -68,6 +68,7 @@ function love.load()
    cam = camera.new(vector.new(SCREEN_WIDTH / 4, (ARENA_HEIGHT / 2) + 80))
    cam.moving = false
    cam.lastCoords = vector.new(-1, -1)
+   lastZoomed = love.timer.getTime()
 
    -- Start the clock!
    seconds_font= love.graphics.newFont(25)
@@ -162,6 +163,14 @@ function love.draw()
 	   for count = 1, #Swarm do
          if Swarm[count] ~= nil then
             swarmLoopCount = swarmLoopCount + 1
+            
+            -- zoom out when Nats go off the right side of the screen
+            if Swarm[count].body:getX() > (cam.pos.x + SCREEN_WIDTH/2) then
+               if now - lastZoomed > 0.2 then
+                  lastZoomed = now
+                  cam.zoom = cam.zoom * 0.95
+               end
+            end
          end
       end
 
