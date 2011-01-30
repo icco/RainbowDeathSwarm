@@ -197,5 +197,9 @@ end
 function love.quit()
    highscore.save()
 
+   for i, score, name in highscore() do
+      print(i .. '. ' .. name .. "\t:\t" .. score)
+   end
+
    print("Thanks for playing. Please play again soon!")
 end
