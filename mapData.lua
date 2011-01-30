@@ -10,12 +10,14 @@ function load_map_file(filename)
    local idx = 0
    local rowc, colc = 1
    local ret = {}
+   ret.difficulties = {}
 
    for row in contents:gmatch("[^\r\n]+") do
       if row:gmatch("^\d$") then
          idx = idx + 1
          ret[idx] = {}
          ret[idx].difficulty = tonumber(row)
+         ret.difficulties[tonumber(row)] = ret.difficulties[tonumber(row)] + 1
          ret[idx].data = {}
          colc = 1
          ret[idx].data[colc] = {}
