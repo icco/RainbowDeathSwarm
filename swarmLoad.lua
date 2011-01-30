@@ -63,12 +63,13 @@ function swarmPoof(i)
 
    local source = ASSETS.deathSound
 
-      if source:isStopped() then
-         love.audio.play(source)
-      else
-         love.audio.stop(source)
-         love.audio.play(source)
-      end
+   if source:isStopped() then
+      love.audio.play(source)
+   else
+      love.audio.stop(source)
+      love.audio.play(source)
+   end
+
    Swarm[i]:poof()
    table.remove(Swarm, i)
 end
