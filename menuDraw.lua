@@ -39,9 +39,6 @@ function menuGameState:draw()
    end
 
    drawMenuItemStuff()
-
-
-
    
 end
 
