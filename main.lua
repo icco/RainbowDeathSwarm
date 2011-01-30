@@ -66,7 +66,7 @@ function love.load()
 	ASSETS.background2  = gfx.newImage("assets/star1.png")--"assets/back2_2048x1024.png")
 	ASSETS.background3  = gfx.newImage("assets/starrybg.png") --"assets/back3_2048x1024.png")
 	ASSETS.smallFont    = love.graphics.newFont(25)
-ASSETS.largeFont    = love.graphics.newFont(50)
+   ASSETS.largeFont    = love.graphics.newFont(50)
 	ASSETS.bgMusic      = love.audio.newSource("assets/music/teru_-_Goodbye_War_Hello_Peace.mp3")
 	ASSETS.jumpSound    = love.audio.newSource("assets/yipee.wav", "static")
 	ASSETS.deathSound   = love.audio.newSource("assets/noes.wav", "static")
@@ -294,30 +294,27 @@ function love.keypressed(key, unicode)
 		end
 	end
 
-
-	-- Quit on escape key
-	if key == 'escape' then
-	love.event.push('q')
-	end
-
-	if key == 'f' then
-		Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
-	elseif key == 'm' then
-	if love.audio.getVolume() == 0 then
-		love.audio.setVolume(1)
-	else
-		love.audio.setVolume(0)
-	end
-	end
-	end
+   -- Quit on escape key
+   if key == 'escape' then
+      love.event.push('q')
+   elseif key == 'f' then -- Spawn on f
+      Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+   elseif key == 'm' then -- Mute
+      if love.audio.getVolume() == 0 then
+         love.audio.setVolume(1)
+      else
+         love.audio.setVolume(0)
+      end
+   end
+end
 end
 
 function love.quit()
-highscore.save()
+   highscore.save()
 
-	for i, score, name in highscore() do
-	-- print(i .. '. ' .. name .. "\t:\t" .. score)
-	end
-	Zombies = nil
-	print("Thanks for playing. Please play again soon!")
-	end
+   for i, score, name in highscore() do
+      -- print(i .. '. ' .. name .. "\t:\t" .. score)
+   end
+   Zombies = nil
+   print("Thanks for playing. Please play again soon!")
+end
