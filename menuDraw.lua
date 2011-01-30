@@ -22,12 +22,12 @@ function menuGameState:draw()
 end
 
 function menuGameState:keyreleased(key)
-   if key == 'up' then
+   if key == 'up' or key == 'k' then
       if selected ~= 1 then
          selected = selected - 1
          drawMenuItemStuff()
       end
-   elseif key == 'down' then
+   elseif key == 'down' or key == 'j' then
       if selected ~= #menuText then
          selected = selected + 1
          drawMenuItemStuff()
