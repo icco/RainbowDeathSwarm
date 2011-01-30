@@ -15,6 +15,8 @@ SCREEN_WIDTH   = 800
 SCREEN_HEIGHT  = 600
 ARENA_WIDTH    = 40000
 ARENA_HEIGHT   = 600
+ZOOM_VALUE     = 0.05
+ZOOM_MINVALUE     = 0.5
 
 ASSETS = { }
 
@@ -104,7 +106,7 @@ function love.update(dt)
       updateWall(dt)
 
       -- always update camera
-      cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 80)
+      cam.pos = vector.new(now*100,ARENA_HEIGHT / 2 + 30)
 
       -- Update teh swarm
       swarmUpdateFunction(dt)
@@ -167,19 +169,45 @@ function love.draw()
       love.graphics.print(secondsString, SCREEN_WIDTH-150, 20)
 
       local swarmLoopCount = #Swarm
+      local vec, vec2
+
+      vec2 = cam:toCameraCoords(cam.pos)
+      vec2.x = vec2.x - 50
+      local swarmXMax = -1
 	   for count = 1, #Swarm do
-         if Swarm[count] ~= nil then
-            swarmLoopCount = swarmLoopCount + 1
-            
-            -- zoom out when Nats go off the right side of the screen
-            if Swarm[count].body:getX() > (cam.pos.x + SCREEN_WIDTH/2) then
-               if now - lastZoomed > 0.2 then
-                  lastZoomed = now
-                  cam.zoom = cam.zoom * 0.95
+         vec = cam:toCameraCoords(vector.new(Swarm[count].body:getX(),Swarm[count].body:getY()))
+
+         if swarmXMax < vec.x then
+            swarmXMax = vec.x
+         end
+
+         --gfx.circle( 'fill', vec.x, SCREEN_HEIGHT/2+10, 5, 50 )
+         -- zoom out when Nats go off the right side of the screen
+         if vec.x > (vec2.x + SCREEN_WIDTH/2) and cam.zoom >= 0.5 then
+            if now - lastZoomed > 0.2 then
+               lastZoomed = now
+               cam.zoom = cam.zoom * 1.0 - ZOOM_VALUE 
+               if cam.zoom <= ZOOM_MINVALUE then
+                  cam.zoom = ZOOM_MINVALUE
                end
             end
          end
       end
+
+
+      -- this is for zooming in
+      if swarmXMax > -1 and swarmXMax < vec2.x + SCREEN_WIDTH/4 and cam.zoom < 1.0 then
+         if now - lastZoomed > 0.2 then
+            lastZoomed = now
+            cam.zoom = cam.zoom * 1.0 + ZOOM_VALUE
+            if cam.zoom >= 1.0 then
+               cam.zoom = 1.0
+            end
+         end
+      end
+
+      --gfx.setColor(5, 5, 255)
+      --gfx.circle( 'fill', (vec2.x + SCREEN_WIDTH/2), SCREEN_HEIGHT/2, 5, 50 )
 
       local swarmCountString = string.format("%d Nats", #Swarm)
       love.graphics.setFont(seconds_font)
