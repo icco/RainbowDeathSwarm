@@ -219,6 +219,9 @@ function love.draw()
    if wereInActualGameNowLoLGlobalsBad then
 
       -- draw the stats (seconds, # of swarm, score)
+      gfx.setColor(250, 250, 250, 150)
+      love.graphics.rectangle('fill', 100, SCREEN_HEIGHT-40, SCREEN_WIDTH-240, 30)
+
       local secondsString = string.format("%4.2fs", now)
       love.graphics.setFont(ASSETS.smallFont)
       gfx.setColor(255, 5, 5)
