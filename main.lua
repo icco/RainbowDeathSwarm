@@ -274,6 +274,12 @@ function love.keypressed(key, unicode)
 
    if key == 'f' then
       Swarm[#Swarm + 1] = Squirrel(now*100+50, 100, SQUIRREL_SPEED + math.random())
+   elseif key == 'm' then
+      if love.audio.getVolume() == 0 then
+         love.audio.setVolume(1)
+      else
+         love.audio.setVolume(0)
+      end
    end
 end
 
